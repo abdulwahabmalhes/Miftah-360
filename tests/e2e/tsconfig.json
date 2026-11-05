@@ -1,0 +1,14 @@
+{
+  "extends": "../../packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "baseUrl": "./",
+    "paths": {
+      "@miftah/contracts": ["../../packages/contracts/src"],
+      "@miftah/config": ["../../packages/config/src"]
+    }
+  },
+  "include": ["**/*.spec.ts", "**/*.ts"]
+}
+

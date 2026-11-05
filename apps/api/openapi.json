@@ -1,0 +1,1264 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/auth/register/email": {
+      "post": {
+        "operationId": "AuthController_registerEmail",
+        "summary": "Register a new Car Owner via Email and Password",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Car Owner registered and tokens returned"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/login/email": {
+      "post": {
+        "operationId": "AuthController_loginEmail",
+        "summary": "Login via Email and Password (Multi-Actor)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tokens returned OR MFA challenge required for Admins"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/otp/request": {
+      "post": {
+        "operationId": "AuthController_requestOtp",
+        "summary": "Request a phone OTP (Car Owner / Workshop Staff)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OTP sent"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/otp/verify": {
+      "post": {
+        "operationId": "AuthController_verifyOtp",
+        "summary": "Verify phone OTP and sign in / link account",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tokens returned"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/google": {
+      "post": {
+        "operationId": "AuthController_googleAuth",
+        "summary": "Google Sign-In (Car Owner only)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tokens returned"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/admin/mfa/verify": {
+      "post": {
+        "operationId": "AuthController_verifyAdminMfa",
+        "summary": "Verify Admin MFA code following login challenge",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Admin tokens returned with mfa_verified=true"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "summary": "Rotate Refresh Token and issue new token pair",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "New access and refresh tokens returned"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "summary": "Logout and revoke active session",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Session revoked"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/master-data/brands": {
+      "get": {
+        "operationId": "MasterDataController_getBrands",
+        "summary": "List all active vehicle brands",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of brands returned"
+          }
+        },
+        "tags": [
+          "Master Data & Taxonomy"
+        ]
+      }
+    },
+    "/api/v1/master-data/brands/{brandId}/models": {
+      "get": {
+        "operationId": "MasterDataController_getModels",
+        "summary": "List models for a specific brand",
+        "parameters": [
+          {
+            "name": "brandId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of models returned"
+          }
+        },
+        "tags": [
+          "Master Data & Taxonomy"
+        ]
+      }
+    },
+    "/api/v1/services/categories": {
+      "get": {
+        "operationId": "MasterDataController_getServiceCategories",
+        "summary": "List central service categories with active services",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of categories returned"
+          }
+        },
+        "tags": [
+          "Master Data & Taxonomy"
+        ]
+      }
+    },
+    "/api/v1/services": {
+      "get": {
+        "operationId": "MasterDataController_getServices",
+        "summary": "List all active canonical services",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of services returned"
+          }
+        },
+        "tags": [
+          "Master Data & Taxonomy"
+        ]
+      }
+    },
+    "/api/v1/services/{serviceId}": {
+      "get": {
+        "operationId": "MasterDataController_getServiceById",
+        "summary": "Get details of a specific canonical service",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service details returned"
+          }
+        },
+        "tags": [
+          "Master Data & Taxonomy"
+        ]
+      }
+    },
+    "/api/v1/health/live": {
+      "get": {
+        "operationId": "HealthController_getLiveness",
+        "summary": "Liveness probe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health & Readiness"
+        ]
+      }
+    },
+    "/api/v1/health/ready": {
+      "get": {
+        "operationId": "HealthController_getReadiness",
+        "summary": "Readiness probe checking database connectivity",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health & Readiness"
+        ]
+      }
+    },
+    "/api/v1/admin/workshops": {
+      "get": {
+        "operationId": "AdminController_listWorkshops",
+        "summary": "List workshops for verification queue or management",
+        "parameters": [
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}": {
+      "get": {
+        "operationId": "AdminController_getWorkshop",
+        "summary": "Get complete workshop details",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/approve": {
+      "post": {
+        "operationId": "AdminController_approveWorkshop",
+        "summary": "Approve workshop (Pending Verification -> Active)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/reject": {
+      "post": {
+        "operationId": "AdminController_rejectWorkshop",
+        "summary": "Reject workshop verification application",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/suspend": {
+      "post": {
+        "operationId": "AdminController_suspendWorkshop",
+        "summary": "Suspend active workshop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/reactivate": {
+      "post": {
+        "operationId": "AdminController_reactivateWorkshop",
+        "summary": "Reactivate suspended or inactive workshop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/deactivate": {
+      "post": {
+        "operationId": "AdminController_deactivateWorkshop",
+        "summary": "Deactivate workshop (Active/Suspended -> Inactive)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/marketplace-participation": {
+      "patch": {
+        "operationId": "AdminController_setMarketplaceParticipation",
+        "summary": "Toggle workshop marketplace participation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/modules": {
+      "get": {
+        "operationId": "AdminController_listModules",
+        "summary": "List all platform modules",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/entitlements": {
+      "get": {
+        "operationId": "AdminController_getWorkshopEntitlements",
+        "summary": "Get entitlements for a specific workshop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/entitlements/{moduleCode}/enable": {
+      "post": {
+        "operationId": "AdminController_enableModule",
+        "summary": "Enable module for a workshop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "moduleCode",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/workshops/{id}/entitlements/{moduleCode}/disable": {
+      "post": {
+        "operationId": "AdminController_disableModule",
+        "summary": "Disable module for a workshop",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "moduleCode",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/services": {
+      "post": {
+        "operationId": "AdminController_createService",
+        "summary": "Create new canonical service in taxonomy",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/services/{id}": {
+      "patch": {
+        "operationId": "AdminController_updateService",
+        "summary": "Update canonical service details or status",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/vehicle-brands": {
+      "post": {
+        "operationId": "AdminController_createBrand",
+        "summary": "Create new vehicle brand",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/vehicle-brands/{brandId}/models": {
+      "post": {
+        "operationId": "AdminController_createModel",
+        "summary": "Add model to brand",
+        "parameters": [
+          {
+            "name": "brandId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Admin Dashboard Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/me": {
+      "get": {
+        "operationId": "WorkshopController_getMyWorkshop",
+        "summary": "Get current workshop profile and details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "WorkshopController_updateMyWorkshop",
+        "summary": "Update workshop profile and primary location",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/me/hours": {
+      "put": {
+        "operationId": "WorkshopController_updateWorkingHours",
+        "summary": "Configure operating hours",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/me/brands": {
+      "put": {
+        "operationId": "WorkshopController_updateSupportedBrands",
+        "summary": "Configure supported vehicle brands",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/me/services": {
+      "get": {
+        "operationId": "WorkshopController_getWorkshopServices",
+        "summary": "List workshop service configurations alongside central taxonomy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/me/services/{serviceId}": {
+      "put": {
+        "operationId": "WorkshopController_updateWorkshopService",
+        "summary": "Enable/disable service and set non-binding Starting From price",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/staff": {
+      "get": {
+        "operationId": "WorkshopController_listStaff",
+        "summary": "List workshop staff members",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/staff/invitations": {
+      "post": {
+        "operationId": "WorkshopController_inviteStaff",
+        "summary": "Invite or add a staff member with a fixed role",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/staff/{membershipId}/role": {
+      "patch": {
+        "operationId": "WorkshopController_updateStaffRole",
+        "summary": "Change fixed role of a staff member",
+        "parameters": [
+          {
+            "name": "membershipId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/staff/{membershipId}/disable": {
+      "post": {
+        "operationId": "WorkshopController_disableStaff",
+        "summary": "Disable staff member (immediately revokes active sessions)",
+        "parameters": [
+          {
+            "name": "membershipId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/staff/{membershipId}/enable": {
+      "post": {
+        "operationId": "WorkshopController_enableStaff",
+        "summary": "Re-enable disabled staff member",
+        "parameters": [
+          {
+            "name": "membershipId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workshop/customers": {
+      "get": {
+        "operationId": "WorkshopController_listCustomers",
+        "summary": "List recent customers and their vehicles in this workshop",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Workshop OS Core Operations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles": {
+      "get": {
+        "operationId": "VehiclesController_listVehicles",
+        "summary": "List vehicles in user garage (active or archived)",
+        "parameters": [
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "VehiclesController_createVehicle",
+        "summary": "Add a new vehicle to the garage",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles/{id}": {
+      "get": {
+        "operationId": "VehiclesController_getVehicle",
+        "summary": "Get vehicle profile details",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "VehiclesController_updateVehicle",
+        "summary": "Update vehicle details",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles/{id}/archive": {
+      "post": {
+        "operationId": "VehiclesController_archiveVehicle",
+        "summary": "Archive vehicle (hides from active garage, preserves history)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles/{id}/unarchive": {
+      "post": {
+        "operationId": "VehiclesController_unarchiveVehicle",
+        "summary": "Unarchive vehicle",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles/{id}/history": {
+      "get": {
+        "operationId": "VehiclesController_getHistory",
+        "summary": "Get maintenance history for vehicle",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/vehicles/{id}/reminders": {
+      "get": {
+        "operationId": "VehiclesController_getReminders",
+        "summary": "Get vehicle maintenance & registration reminders",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Car Owner Garage & Vehicles"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "operationId": "UsersController_getProfile",
+        "summary": "Get current user profile and memberships",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User Profile"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_updateProfile",
+        "summary": "Update profile (e.g. name, language)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User Profile"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Miftah 360 API",
+    "description": "Production-grade Phase 1 REST API for Miftah 360 Automotive Ecosystem (Dubai & Sharjah)",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {}
+  }
+}

@@ -1,0 +1,2024 @@
+Miftah 360 User App PRD V1.1
+
+متطلبات تطبيق مالك السيارة في ‪Phase 1‬
+
+الإصدار ‪V1.1‬ | ‪5‬ أكتوبر ‪2026‬ | مرجع تابع لـ ‪Project Bible V1.1‬ | المالك ‪Product‬ | التنفيذ ‪UX/UI‬ و ‪Mobile‬ و ‪Backend‬ و ‪AI‬ و ‪QA‬.
+
+مراجعة ‪V1.1‬ للـ ‪User App PRD V1‬ الحالي. المصدر الأساسي باقٍ، ويضاف قرار ‪Modular Workshop OS‬ للمواضع المؤثرة فقط؛ لا تغيير للشاشات غير المتأثرة ولا عرض لتفاصيل ‪SaaS‬ في التطبيق. تغطي السلوك والمعلومات والحقول والقواعد والحالات والقبول، ولا تحدد شكل الواجهة أو تكتب كوداً. المقصود بالتطبيق ‪iOS‬ و ‪Android‬، ويبدأ التشغيل في دبي والشارقة. المطلوب تنفيذ كل شاشة أدناه مع المتطلبات العامة؛ التفاصيل المقترحة تحت ‪Assumptions‬ ليست اعتماداً نهائياً.
+
+مراجعة ‪Product V1.1   5‬ أكتوبر ‪2026‬
+
+
+
+فهرس الأقسام
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+‪1‬ المرجعية والنطاق
+
+‪2‬ متطلبات عامة ملزمة لكل شاشة
+
+‪3‬ بيانات المستخدم والكيانات
+
+4 Authentication and Onboarding
+
+5 Home and My Garage
+
+6 Miftah AI
+
+7 Service Discovery and Matching
+
+8 Bookings Quotes Jobs and Invoices
+
+9 Reviews Notifications Profile and Support
+
+‪10 Lifecycle‬ المستخدم وعقود قراراته
+
+11 Notification and Analytics Contract
+
+12 Open Questions Assumptions and Dependencies
+
+13 Acceptance Gate and Handoff
+
+14 Workshop OS Integration Impact
+
+مخططات المنتج  ‪Product diagrams‬
+
+
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+مراجعة ‪Product‬ بتاريخ ‪5‬ أكتوبر ‪2026‬. تبقى معرفات الشاشات والحالات و ‪Assumptions‬ السابقة؛ يظهر كل تعديل متأثر في موضعه وتفصيل القرار في ‪Project Bible Section 25‬ و ‪ADR OS 001‬. المصدر ‪Sxx‬ لم يغيّر؛ مصدر الإضافة المعتمد ‪MD01‬ إلى ‪MD12‬.
+
+Change ID
+
+الأجزاء
+
+الفرق عن ‪V1‬
+
+التتبع
+
+CH-U1
+
+‪G13‬ و ‪U18‬ إلى ‪U25‬ و ‪Section 14‬
+
+‪Eligibility‬ و ‪Capabilities‬ من ‪Backend‬ لكل ‪discovery‬ أو ‪request‬ جديد
+
+MD03 MD09 MD11
+
+CH-U2
+
+‪U11‬ و ‪U27‬ إلى ‪U31‬ و ‪Section 14‬
+
+حفظ وصول المستخدم لتاريخ خدماته وموافقاته وتقييماته عند انسحاب الورشة
+
+‪MD07‬ و ‪A17 A19‬
+
+CH-U3
+
+‪Dependencies‬ و ‪Acceptance‬ والمخططات
+
+تحديث ‪prerequisites‬ و ‪negative paths‬ فقط؛ لا شاشات ‪Module store‬
+
+MD05 MD08 MD11
+
+
+
+‪1‬ المرجعية والنطاق
+
+المصدر ‪S07‬ إلى ‪S23‬ و ‪S52‬ إلى ‪S54‬ و ‪S59‬ إلى ‪S61‬ و ‪S65‬ إلى ‪S72‬، مع ‪Modules‬ الإلزامية في التكليف. المستخدم مجاني. لا ‪Payment gateway‬ أو ‪Wallet‬ أو ‪Loyalty‬ أو بيع تأمين أو ‪Marketplace‬ قطع أو ‪Video‬ أو ‪Quote chat‬ في ‪V1.1‬. يدعم ‪Garage‬ سيارات متعددة، و ‪History‬ و ‪Reminders‬ و ‪AI‬ و ‪Discovery‬ و ‪Requests‬ و ‪Bookings‬ و ‪Quotes‬ و ‪Jobs‬ و ‪Invoices‬ و ‪Reviews‬ و ‪Support‬.
+
+كل ‪Screen ID‬ بصيغة ‪Uxx‬ هو مرجع للتصميم والتطوير و ‪QA‬. لكل شاشة ‪Purpose‬ و ‪Role‬ و ‪Entry‬ و ‪Data/Fields‬ و ‪Actions/Navigation‬ و ‪States‬ و ‪Permissions/Business Rules‬ و ‪Notifications‬ و ‪Acceptance Criteria‬. تنطبق ‪G01‬ إلى ‪G12‬ على جميع الشاشات دون الحاجة إلى تكرار مواصفاتها كاملة.
+
+‪2‬ متطلبات عامة ملزمة لكل شاشة
+
+‪G01 Localization‬: كل ‪Label‬ و ‪Validation‬ و ‪Error‬ و ‪Empty‬ و ‪Status‬ و ‪Notification‬ ومحتوى ثابت له ‪AR/EN‬. العربية ‪RTL‬ والإنجليزية ‪LTR‬، مع عرض ‪VIN/Plate/Phone/IDs‬ والبريد وفق اتجاه النص الصحيح داخل السياق. محتوى المستخدم لا يترجم سراً ولا يعكس الأرقام. ‪AED‬ والتواريخ والأوقات موحدة؛ ‪Asia/Dubai‬ للعرض والموعد حتى لو الجهاز بتوقيت آخر. تبديل اللغة يحافظ على النموذج والوجهة.
+
+‪G02 Loading‬: يظهر تحميل الأولي والجزئي ووقت الإجراء، ويمنع ‪Submit‬ مكرراً. لا تعرض بيانات قديمة كأنها محدثة أثناء إعادة التحميل. ‪Pagination‬ تحفظ ‪Filters‬ والموضع. كل ‪Mutation‬ يملك مفتاح عدم تكرار ونسخة ‪Entity‬ عند الحاجة.
+
+‪G03 Errors: Offline‬ يحفظ ‪Draft‬ المحلي غير الحساس، ويتيح ‪Retry‬؛ ‪Timeout‬ لا يعني نجاحاً أو رفضاً بل يستعلم عن النتيجة أولاً. ‪Session expired‬ يعيد ‪Login‬ ثم الوجهة المصرح بها. ‪Forbidden‬ يمنع كشف البيانات ويعرض العودة؛ ‪Not found/deleted‬ يزيل ‪Deep link‬ غير الصالح. ‪Version conflict‬ يعرض أحدث حالة ويطلب قراراً جديداً؛ لا يعيد الموافقة تلقائياً. أخطاء الحقول بجانبها ومع ملخص واضح.
+
+‪G04 Permissions: Backend‬ يتحقق من ‪Owner‬ لكل ‪Vehicle/Request/Booking/Quote/Job/Invoice/Reminder/Conversation/Review. Location‬ و ‪Photo library/Camera‬ اختيارية على مستوى الجهاز؛ رفضها يبقي إدخال ‪Location‬ يدوياً و ‪Request‬ نصي ممكناً. ‪Permissions‬ لا تطلب قبل شرح الحاجة. ‪Push permission‬ بعد سياق مناسب؛ رفض ‪Push‬ لا يمنع ‪In-app notifications‬.
+
+‪G05 Data minimization‬: لا رفع ‪Registration/Insurance documents‬ أو بطاقة هوية. ‪Documents‬ في ‪Vehicle metadata‬ فقط. ‪Images‬ خاصة بروابط قصيرة الصلاحية؛ لا تسرب ‪Plate‬ أو ‪VIN‬ في ‪Analytics‬ أو ‪Push‬. لا إرسال محادثة ‪AI‬ كاملة للورشة؛ ‪Shared issue summary‬ و ‪Risk/Service‬ فقط مع موافقة السياق.
+
+‪G06 Accessibility: Labels‬ مفهومة لقارئ الشاشة، ‪Focus‬ منطقي في ‪RTL/LTR‬، تكبير النص لا يخفي ‪CTA‬، ولا يعتمد ‪Status‬ على اللون وحده. مساحات الضغط والتباين يحددها ‪Design system‬ لاحقاً وتختبر على الأجهزة الفعلية؛ الوثيقة لا تنتج ‪UI Design‬.
+
+‪G07 Navigation: Deep link‬ يفحص ‪Login‬ و ‪Ownership‬ ثم يفتح ‪Entity‬ الصحيحة. ‪Back‬ من نموذج معدل ينبه لفقد ‪Draft‬؛ ‪Back‬ لا يرسل ولا يلغي عملية. نجاح ‪Submit‬ يعيد معرفاً ثابتاً ثم يعرض ‪Detail‬. لا تبدل السيارة المختارة داخل رحلة مفتوحة دون تأكيد وإعادة ‪Classification/Matching‬.
+
+‪G08 Audit‬: تسجيل ‪Approval/Rejection‬ و ‪Cancellation‬ و ‪Delete request‬ مع ‪Actor‬ و ‪Version‬ و ‪Timestamp. Analytics‬ تسجل ‪IDs‬ وأسماء الأحداث دون وصف المشكلة أو الصور أو نص ‪AI. Notification event‬ لا يصدر إلا بعد ‪Commit‬، ومحاولات التسليم لا تكرر العملية الأصلية.
+
+‪G09 Money‬: حساب ‪Quote‬ و ‪Invoice‬ من ‪Backend‬؛ الواجهة تعرض ‪Quantity‬ و ‪Unit price‬ و ‪Labor/Parts‬ و ‪Discount‬ و ‪VAT/Subtotal/Total. AED‬ دقتان عشريتان. لا ‪CTA Pay‬ داخل التطبيق؛ ‪Paid Outside Miftah‬ معلومات سجلتها الورشة ويمكن الاعتراض عبر ‪Support‬.
+
+‪G10 Reminders/Notifications: In-app notification feed‬ هو السجل؛ ‪Push‬ قناة تنبيه. ‪App foreground‬ يعيد قراءة الحالة عند حدث جديد أو فتح شاشة ‪Detail‬. لا ضرورة لدعم ‪Realtime socket‬ محدد؛ آلية تحديث يختارها الفريق مع متطلب ‪Freshness‬ بعد الإجراء.
+
+‪G11‬ مقترحات أداء ‪A13‬: نتائج شاشة عادية ‪P95‬ خلال ‪3‬ ثوانٍ و ‪Acknowledgement‬ إجراء خلال ثانيتين في بيئة اختبار متفق عليها؛ ‪AI‬ يعطي ‪Loading‬ مستمراً وخيار ‪Manual‬ عند فشل/تجاوز ‪30‬ ثانية. هذه ‪Budgets‬ للمراجعة التقنية، وليست ‪SLA‬ أو وعداً تجارياً.
+
+‪G12‬ حالات شاشة غير قابلة للتطبيق: إذا لا توجد حقول ‪editable‬ تعرض الشاشة ‪Data‬ فقط وتذكر ذلك؛ إذا لا يوجد ‪Notification‬ خاص فلا ترسل إشعاراً لمجرد فتح الشاشة. بقية ‪Empty/Loading/Error‬ تطبق ‪G02/G03‬ مع حالات الشاشة الخاصة.
+
+‪G13 Workshop eligibility‬: كل اكتشاف أوترشيح أوإنشاء طلب يعتمد ‪Marketplace Eligibility‬ و ‪required capabilities‬ من ‪Backend‬. التطبيق لا يقرأ ‪enabled_modules‬ ولا ‪Subscription‬ أو ‪Bundle‬ ولا ‪Module names‬. رسالة فقدان الأهلية العامة: «الورشة غير متاحة حالياً لهذه الخدمة» أو«‪This workshop is currently unavailable for this service‬». إكمال الرحلة القائمة والقراءة التاريخية يطبقان ‪Section 14‬ و ‪A17 A19‬، ولا يعتمد التطبيق ‪Guard‬ خاصاً يخترعه محلياً.
+
+‪3‬ بيانات المستخدم والكيانات
+
+‪User: id/name/phone verified/email optional/language/status/consent versions. Vehicle: owner_id/brand_id/model_id/year/trim optional/mileage/fuel_type/transmission/plate optional/VIN optional/emirate/registration_expiry/insurance_expiry/photo/notes. Mileage‬ بالكيلومتر ومصدره وتاريخ تحديثه؛ تغيير قراءة خاطئة إجراء موثق لا يلغي سجل سابق.
+
+‪ServiceRequest: vehicle/owner/workshop/category/service_ids/description/images/location/preferred time/AI summary/risk/status. Booking: request/workshop/vehicle/appointment/status/version. Quote: booking/job/family/revision/items/discount/tax/total/expires_at/status. Job: booking/complaint/inspection/technician/services/status/mileage. Invoice: job/number/immutable totals/lifecycle/payment status. MaintenanceRecord: vehicle/job/invoice/services/date/mileage/provenance. Reminder‬ و ‪Review‬ و ‪Notification‬ و ‪SupportCase‬ و ‪AIConversation‬ كيانات منفصلة.
+
+‪Assumption Field limits: Name 2–100‬، ‪Description 10–2000‬، ‪Notes 0–2000‬، ‪Review comment 0–1000‬، ‪Vehicle nickname 0–60‬ إن استخدم كعرض فقط. حدود محتوى وتوقيت مقترحة ‪A13‬ يجب تثبيتها مركزياً. حقول الأرقام لا تقبل سالبة أو ‪NaN‬؛ ‪Dates‬ تحفظ تاريخاً أو ‪Timestamp‬ حسب طبيعتها ولا تخلطهما.
+
+4 Authentication and Onboarding
+
+بدء التطبيق والتحقق من الجلسة
+
+U01 Splash and Session Resolution
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تحديد ‪Language‬ وحالة الجلسة لكل زائر عند فتح التطبيق أو العودة من ‪Deep link‬.
+
+المعلومات المعروضة  ‪Data‬
+
+إعداد اللغة وإصدار التطبيق والجلسة وآخر سيارة مختارة؛ لا حقول إدخال.
+
+الإجراءات والتنقل  ‪Actions/Navigation‬
+
+‪Session‬ صالح يفتح ‪Home‬ أو الوجهة؛ غير صالح يفتح ‪Language/Login‬؛ مستخدم غير مكتمل ‪Profile‬ يفتح ‪U06‬. لا طلب ‪Location‬ عند ‪Splash‬.
+
+حالات الشاشة  ‪States‬
+
+تحميل الجلسة؛ ‪Offline‬ يعرض ‪Retry‬ واستعمال بيانات قراءة مخزنة إن وجدت دون تعديل؛ لا جلسة ليست خطأ بل مسار التسجيل. خطأ إعداد يمنع الدخول مع ‪Support info‬ غير حساس.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا يعرض بيانات ‪Cached‬ بعد ‪Logout‬ أو تبديل الحساب.
+
+الإشعارات  ‪Notifications‬
+
+لا حدث جديد؛ ‪Deep link‬ من ‪Notification‬ ينتظر ‪Auth‬.
+
+معايير القبول  ‪AC‬
+
+‪U01.1‬  جلسة صالحة تفتح الكيان المصرح به؛
+
+‪U01.2‬  جلسة منتهية لا تكشف اسم/سيارة؛
+
+‪U01.3‬  إعادة الفتح لا تعيد ‪Onboarding‬ المكتمل.
+
+اختيار اللغة
+
+U02 Choose Language
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+اختيار العربية أو ‪English‬ قبل التسجيل ومن ‪Settings‬.
+
+المعلومات والحقول  ‪Data/Fields‬
+
+‪language enum ar/en‬ والاختيار الحالي.
+
+الأزرار والإجراءات  ‪CTA‬
+
+العربية، ‪English‬، ‪Continue. Action‬ يحفظ محلياً ولـ ‪User‬ عند ‪Login‬ ثم يعود إلى الوجهة؛ لا فقد ‪Draft‬.
+
+حالات الشاشة  ‪States‬
+
+لا اختيار يظهر الخيار الافتراضي لغة الجهاز المدعومة أو ‪English A13‬؛ ‪Loading‬ حفظ إعداد الحساب؛ ‪Error‬ حفظ ‪Remote‬ يبقي المحلي ويتيح ‪Retry‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+متاحة للزائر؛ أسماء ‪Workshop/User‬ الأصلية لا تتغير.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User.language/DevicePreference.
+
+معايير القبول  ‪AC‬
+
+‪U02.1‬  اتجاه كل الشاشة يتغير؛
+
+‪U02.2‬  قبول ‪Quote‬ لا يتكرر بتبديل اللغة؛
+
+‪U02.3‬  تبقى لغة الواجهة بعد إعادة التشغيل.
+
+التعريف بالتطبيق
+
+U03 Intro Onboarding
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+شرح ‪Garage‬ و ‪AI‬ وطلبات الخدمة للزائر لأول مرة من ‪U02‬.
+
+المعلومات المعروضة  ‪Data‬
+
+محتوى ‪AR/EN‬ مع بيان أن ‪AI‬ مساعدة غير تشخيص قطعي.
+
+الحقول  ‪Fields‬
+
+لا حقول شخصية.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Next/Skip/Get Started‬؛ النهاية إلى ‪U04‬.
+
+حالات الشاشة  ‪States‬
+
+محتوى محلي بديل إذا تعذر تحميله؛ لا صور خارجية إلزامية؛ ‪Loading‬ محدود.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Skip‬ لا يمنح ‪Consent‬؛ لا يجبر ‪Location‬ أو ‪Push‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+ContentVersion/DevicePreference.
+
+معايير القبول  ‪AC‬
+
+‪U03.1  Skip‬ يعمل؛
+
+‪U03.2  Completion‬ محفوظ؛
+
+‪U03.3‬  لا ادعاء يقين طبي/ميكانيكي في النص.
+
+الدخول والتسجيل برقم الهاتف
+
+U04 Login and Signup Phone
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+دخول/تسجيل عبر ‪Phone+OTP‬ حسب المصدر و ‪A01‬.
+
+المعلومات والحقول  ‪Data/Fields‬
+
+‪country code‬ الافتراضي +‪971‬ ورقم هاتف ‪normalized‬؛ ‪Terms/Privacy links‬.
+
+الأزرار والإجراءات  ‪CTA‬
+
+‪Send OTP‬؛ الهاتف المعروف يكمل ‪Login‬ والجديد يتجه بعد التحقق إلى ‪U06. Support‬ يفتح ‪U35‬ بوضع زائر دون بيانات خاصة.
+
+قواعد التحقق  ‪Validation‬
+
+صيغة هاتف صحيحة ‪E164‬، لا يفترض أن كل الأرقام ‪10‬ خانات؛ دعم البلدان غير +‪971‬ قرار ‪OTP Provider‬ مفتوح. ‪Rate limits‬ مركزية ورسالة موحدة لا تكشف وجود الحساب.
+
+حالات الشاشة  ‪States‬
+
+حقل فارغ؛ ‪sending‬؛ ‪offline/provider unavailable/retry after displayed‬؛ ‪blocked account‬ يعطي ‪Support‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا ‪Password‬ أو ‪Forgot Password‬ في ‪User App‬؛ الموافقة على سياسات التسجيل في ‪U06‬.
+
+الإشعارات  ‪Notifications‬
+
+‪SMS OTP‬ فقط، لا ‪Push‬ تسجيل حساب قبل اكتماله.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+OTPChallenge/User/AuthSession.
+
+معايير القبول  ‪AC‬
+
+‪U04.1‬  لا ينشأ ‪User‬ فعّال من رقم غير متحقق؛
+
+‪U04.2‬  التكرار خلال ‪Cooldown‬ لا يرسل رسائل عدة؛
+
+‪U04.3‬  الهاتف المعطل لا يحصل على جلسة فعالة.
+
+التحقق من رمز الهاتف
+
+U05 OTP Verification
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إثبات الهاتف من ‪U04‬.
+
+الحقول  ‪Fields‬
+
+‪OTP string‬ مع الهاتف ‪masked‬ و ‪challenge_id‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Verify/Resend/Edit number‬. نجاح إلى ‪Home‬ أو ‪U06‬؛ تغيير الرقم يلغي ‪Challenge‬ السابق. ‪Paste‬ و ‪Auto-fill‬ إن سمح الجهاز.
+
+قواعد التحقق والعمل  ‪Validation/Rules‬
+
+اقتراح ‪A13 OTP‬ ست خانات وصلاحية ‪5‬ دقائق و ‪Resend‬ بعد ‪60‬ ثانية ومحاولات محدودة يثبتها ‪Security‬؛ لا تخزين الكود في ‪Logs‬.
+
+حالات الشاشة  ‪States‬
+
+انتظار/تحقق، ‪invalid/expired/too many attempts‬، ‪Provider failure‬ لا يجدد عداداً وهمياً.
+
+الصلاحيات  ‪Permissions‬
+
+لا قراءة ‪SMS‬ واسعة مطلوبة.
+
+الإشعارات  ‪Notifications‬
+
+إرسال ‪OTP‬ جديد يوقف صلاحية السابق.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+OTPChallenge/AuthSession.
+
+معايير القبول  ‪AC‬
+
+‪U05.1‬  الكود لا يعاد استعماله؛
+
+‪U05.2  Expired‬ يظهر ‪Resend‬؛
+
+‪U05.3‬  نجاح ‪Retry‬ لا ينشئ حسابين.
+
+إكمال الملف والموافقات
+
+U06 Complete Profile and Consent
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إكمال حساب جديد من ‪OTP‬.
+
+الحقول  ‪Fields‬
+
+‪Name required‬، ‪Email optional‬، ‪Language‬، ‪Consent Terms/Privacy version required‬؛ ‪Marketing consent‬ اختياري منفصل وغير مختار تلقائياً إذا استعمل. ‪Location‬ اختيارية ولا تستبدل ‪Consent‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Create Account/Open policies‬؛ نجاح يحفظ ‪User‬ ثم ‪U08 Add Vehicle‬ أو ‪Home‬ مع ‪CTA‬ الإضافة.
+
+قواعد التحقق  ‪Validation‬
+
+‪Name 2–100‬، ‪Email‬ صالح إن دخل، لا ‪Submit‬ بدون الموافقات المطلوبة.
+
+حالات الشاشة  ‪States‬
+
+‪form/saving‬، ‪consent version changed‬ يعرض الجديد لإعادة الموافقة، ‪failure‬ يحفظ الاسم لا ‪OTP‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا عمر/هوية/وثائق حساسة.
+
+الإشعارات  ‪Notifications‬
+
+‪Welcome in-app‬ اختياري؛ لا ‪Marketing‬ بلا موافقة.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User/ConsentRecord.
+
+معايير القبول  ‪AC‬
+
+‪U06.1‬  سجل ‪Consent‬ يحفظ ‪Version‬ والوقت؛
+
+‪U06.2  email‬ غائب لا يمنع الحساب؛
+
+‪U06.3‬  حفظ مكرر يعيد نفس ‪User‬.
+
+5 Home and My Garage
+
+الرئيسية
+
+U07 Home
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+نظرة المستخدم الحالي من ‪Login‬ والتنقل الرئيسي.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Current vehicle card‬ و ‪Mileage‬ و ‪Registration/Insurance countdown‬ و ‪Oil reminder‬ و ‪Ask AI‬ و ‪Nearby Services‬ وآخر ‪Booking‬ نشط.
+
+الحقول  ‪Fields‬
+
+‪Vehicle selector‬؛ لا تعديل بيانات السيارة هنا.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Add Vehicle→U09، Garage→U08، Ask AI→U15، Services→U17، Reminder→U14، Booking→U25.
+
+حالات الشاشة  ‪States‬
+
+لا سيارات يعرض ‪Add Vehicle‬ ولا ينشئ ‪Reminder‬؛ لا ‪Expiry‬ يعرض ‪Add date‬ لا صفر يوم؛ ‪Nearby unavailable‬ يعرض ‪Manual city‬؛ ‪Loading sections‬ مستقل؛ ‪Offline‬ يوسم آخر تحديث.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+السيارة المختارة مملوكة؛ اختيار أخرى يغير جميع البطاقات؛ ‪Remaining mileage‬ من آخر قراءة لا تخمين قيادة.
+
+الإشعارات  ‪Notifications‬
+
+‪Badge feed‬ فقط.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User/Vehicle/Reminder/Booking/Workshop.
+
+معايير القبول  ‪AC‬
+
+‪U07.1‬  مالك سيارتين لا يرى مواعيد إحداهما في بطاقة الأخرى؛
+
+‪U07.2‬  تاريخ منتهٍ يظهر ‪Expired‬؛
+
+‪U07.3  AI‬ غير متاح لا يعطل ‪Services‬.
+
+مرآب سياراتي
+
+U08 My Garage
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+عرض سيارات الحساب من ‪Home/Profile‬.
+
+المعلومات المعروضة  ‪Data‬
+
+Cards Brand/Model/Year/Photo/Mileage، Current vehicle marker.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Add Vehicle→U09‬، ‪Open card→U10‬، ‪Set current‬ يحفظ اختيار العرض. ‪No required fields‬.
+
+حالات الشاشة  ‪States‬
+
+‪Empty‬ مع شرح الإضافة، ‪list loading/pagination‬، ‪Error retry‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا ‪Shared garage‬ أو ‪Fleet‬ في ‪V1.1‬؛ لا حذف بمجرد ‪swipe‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/UserPreference.
+
+معايير القبول  ‪AC‬
+
+‪U08.1‬  كل سيارة مستقلة؛
+
+‪U08.2  Current vehicle‬ محفوظ للحساب؛
+
+‪U08.3‬  حذف سيارة مختارة يجعل ‪Home‬ يطلب اختياراً صالحاً.
+
+إضافة السيارة وتعديلها
+
+U09 Add and Edit Vehicle
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إنشاء/تعديل سيارة من ‪Garage‬ أو ‪U10‬.
+
+الحقول  ‪Fields‬
+
+‪Brand/Model/Year/Mileage required A06‬؛ ‪Trim/Fuel type/Transmission/VIN/Plate/Emirate/Registration expiry/Insurance expiry/Photo/Notes optional. Selectors‬ من ‪Vehicle Master‬، ‪Model‬ تابع ‪Brand‬، ‪Year‬ مسموح لنموذج إن توفر وإلا نطاق ‪Admin‬؛ ‪Fuel/Transmission‬ يدعمان ‪Unknown‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Save/Cancel/Add photo‬؛ ‪Save‬ ينقل ‪U10‬.
+
+قواعد التحقق  ‪Validation‬
+
+تغيير ‪Brand‬ يفرغ ‪Model/Trim‬ بعد تأكيد، ‪Mileage‬ عدد صحيح ≥‪0‬؛ ‪Edit‬ لا ينقص قراءة سابقة دون طلب تصحيح موثق؛ ‪VIN‬ إن أدخل يتحقق شكلياً ولا يدعي ‪Decode‬؛ ‪Plate‬ لا تفترض قالب دبي على كل الإمارات؛ ‪Expiry‬ الماضية مسموحة وتظهر منتهية؛ ‪Photo‬ وفق ‪U22‬.
+
+حالات الشاشة  ‪States‬
+
+‪master list empty→Support‬ وعدم اختراع ‪Model‬؛ ‪loading dependent selector‬؛ ‪conflict→refresh‬؛ ‪duplicate‬ احتمال ‪Plate/VIN‬ ينبه ولا يمنع بلا سياسة مؤكدة.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Owner‬ فقط؛ ‪VIN optional‬ لا يمنع ‪Match‬.
+
+الإشعارات  ‪Notifications‬
+
+تحديث ‪Expiry‬ يعيد جدولة ‪Reminder‬ ولا يرسل إعلاناً.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/VehicleMaster/MileageReading/Reminder.
+
+معايير القبول  ‪AC‬
+
+‪U09.1  Model‬ خاطئ لـ ‪Brand‬ مرفوض في ‪Backend‬؛
+
+‪U09.2  Retry‬ لا يضيف نسختين؛
+
+‪U09.3  Expiry‬ فارغة لا تتحول لتاريخ اليوم.
+
+ملف السيارة
+
+U10 Vehicle Profile Overview
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تفاصيل السيارة من ‪Garage/Home/Booking‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪make/model/year/trim/mileage/expiries‬، ‪Tabs Overview/Maintenance/Documents/Expenses/Bookings. Documents‬ يعرض ‪metadata‬ فقط؛ ‪Expenses‬ مجموع ‪Invoices‬ المرتبطة لا محاسبة كاملة.
+
+الحقول  ‪Fields‬
+
+لا إدخال إلا ‪Edit‬ أو ‪Update mileage action‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Edit→U09، History→U11، Documents→U12، Expenses→U13، Bookings→U24، Request→U21، Delete vehicle.
+
+حالات الشاشة  ‪States‬
+
+‪no history/no expenses‬ واضحة؛ ‪loading‬؛ ‪archived/not owned‬ لا بيانات.
+
+قواعد العمل  ‪Rules‬
+
+‪Delete‬ عبارة عن ‪Archive‬ إذا لديها سجل/خدمة، ولا يمحو فواتير؛ منع ‪Archive‬ أثناء طلب/‪Job‬ نشط مع ‪Support‬؛ آلية ‪Account deletion‬ منفصلة. ‪Update mileage‬ لا يمحو القديم.
+
+الإشعارات  ‪Notifications‬
+
+لا إشعار لمجرد العرض؛ مواعيد ‪Reminders‬ تعاد عند قراءة جديدة.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/Booking/Invoice/History.
+
+معايير القبول  ‪AC‬
+
+‪U10.1  Tabs‬ تتبع السيارة نفسها؛
+
+‪U10.2  Archive‬ لا يحذف فاتورة؛
+
+‪U10.3  Request‬ يمرر ‪Vehicle ID‬ فقط لرحلة جديدة.
+
+سجل الصيانة وتفاصيل الخدمة
+
+U11 Maintenance History and Record Details
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Timeline‬ خدمة السيارة من ‪U10‬ ومن ‪Invoice‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪date/services/workshop/mileage/amount/invoice‬، ‪Provenance‬ «‪From completed Miftah job‬» أو «‪Owner entered‬».
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Open record→detail‬، ‪Invoice→U30‬، ‪Add past service→form A14. Fields manual: service/date/mileage/workshop text/cost optional/notes‬؛ لا ‪Upload‬ مستند حساس.
+
+قواعد التحقق  ‪Validation‬
+
+تاريخ الخدمة لا مستقبل؛ ‪Mileage‬ ≥‪0‬ مع سياق الزمن؛ لا يغير ‪reading‬ الحالي تلقائياً إن قديم؛ ‪Manual amount‬ اختياري ‪AED‬≥‪0. Actions save‬ يعود ‪Timeline‬؛ تعديل/حذف فقط ‪Manual record‬.
+
+حالات الشاشة  ‪States‬
+
+‪empty/skeleton/error‬؛ ‪deleted invoice link→Support‬ لا سقوط السجل.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+سجل ‪Auto‬ لا يعدل بواسطة المالك؛ الورشة ترى سجلها فقط.
+
+الإشعارات  ‪Notifications‬
+
+خدمة ‪Auto‬ تظهر بعد ‪Complete‬؛ إدخال يدوي لا يولد ‪Review‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+MaintenanceRecord/Job/Invoice/MileageReading.
+
+معايير القبول  ‪AC‬
+
+‪U11.1  Job‬ الواحد يكتب ‪record‬ واحداً؛
+
+‪U11.2  Manual‬ يوسم بوضوح؛
+
+‪U11.3  Invoice/Currency‬ تطابق الأصل.
+
+‪V1.1 MD07‬ و ‪A19‬: يبقى ‪Auto History‬ و ‪Invoice linkage‬ متاحاً لصاحب السيارة بعد ‪Disable‬ أوانسحاب الورشة، وفق ‪Retention‬.
+
+معايير القبول  ‪AC‬
+
+‪U11.4‬  تعطيل ‪Pack‬ لا يخفي خدمة مكتملة أوينشئ سجلاً بديلاً.
+
+بيانات التسجيل والتأمين
+
+U12 Vehicle Documents Metadata
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+مواعيد التسجيل والتأمين من ‪Documents Tab‬.
+
+الحقول  ‪Fields‬
+
+‪registration_expiry‬ و ‪insurance_expiry‬؛ لا ‪file input‬.
+
+المعلومات المعروضة  ‪Data‬
+
+آخر تحديث وأيام متبقية.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Edit dates/Save/Create reminder→U14، Policy info.
+
+قواعد التحقق  ‪Validation‬
+
+تاريخ صحيح؛ الماضي صالح ويعطي ‪Expired‬.
+
+حالات الشاشة  ‪States‬
+
+غير مدخل يطلب ‪Add date‬، ‪loading‬، ‪save conflict‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا تخزين صورة رخصة أو وثيقة تأمين؛ السجل هنا ‪Reminder metadata‬ وليس تحقق ‪RTA‬ أو بوليصة تأمين.
+
+الإشعارات  ‪Notifications‬
+
+‪expiry reminder‬ فقط وفق إعداد المستخدم.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/Reminder.
+
+معايير القبول  ‪AC‬
+
+‪U12.1‬  لا ‪CTA‬ رفع ملف؛
+
+‪U12.2‬  تعديل موعد يلغي ‪reminder‬ قديم مجدول؛
+
+‪U12.3‬  تغيير اللغة لا يغير اليوم.
+
+ملخص مصروفات السيارة
+
+U13 Vehicle Expenses Summary
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+عرض مصروف خدمة بسيط من ‪Expenses Tab‬.
+
+المعلومات المعروضة  ‪Data‬
+
+مجموع ‪Invoices Issued‬ للسيارة حسب الفترة، ‪paid/unpaid‬، ‪manual costs‬ منفصلة؛ ‪Date range filter‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Invoice→U30، History→U11. No editable money.
+
+حالات الشاشة  ‪States‬
+
+‪no invoices‬ يذكر عدم وجود خدمة مسجلة؛ ‪loading‬؛ ‪cancelled invoice‬ لا تدخل المجموع.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا ‪Budgeting/Finance/Ledger‬؛ لا يعتبر ‪Unpaid‬ خسارة أو دفعاً عبر المنصة؛ مجموع ‪Manual‬ منفصل لتجنب ازدواج ‪Auto record+Invoice‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Invoice/Job/ManualRecord.
+
+معايير القبول  ‪AC‬
+
+‪U13.1‬  الإجمالي لا يكرر ‪Invoice‬ مع ‪History‬؛
+
+‪U13.2  Cancelled‬ مستبعدة؛
+
+‪U13.3‬  الفلاتر تعيد مجموع ‪Backend‬ الصحيح.
+
+قائمة التذكيرات وإعدادها
+
+U14 Reminders List and Editor
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Oil/Tyres/Battery/Registration/Insurance/Custom‬ من ‪Home‬ أو ‪Vehicle‬.
+
+الحقول  ‪Fields‬
+
+‪Vehicle‬، ‪type‬، ‪title custom‬، ‪trigger date‬ أو ‪target mileage‬، ‪enabled‬؛ ‪Current mileage readonly‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Add/Edit/Save/Disable/Delete/Mark done‬؛ ‪Mark done‬ لا يدعي وقوع صيانة ولا يولد ‪History‬.
+
+قواعد التحقق  ‪Validation‬
+
+يجب اختيار ‪Trigger‬ واحد على الأقل؛ ‪target mileage‬≥‪0‬؛ اقتراح ‪A13‬ إذا ‪date‬ و ‪mileage‬ كلاهما فالاستحقاق عند أول شرط وتطلق مرة واحدة لكل دورة؛ تاريخ ماضٍ يظهر ‪Overdue. Save‬ يعيد ‪list‬؛ ‪oil CTA Find Service→U17‬.
+
+حالات الشاشة  ‪States‬
+
+empty؛ due/overdue/upcoming؛ loading؛ timezone/schedule errors→Retry.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Date reminders‬ يفحصها ‪Backend‬؛ ‪Mileage‬ تفحص عند تحديث ‪reading‬ لا ‪GPS‬؛ ‪Expiry-linked reminder‬ متصل بـ ‪Vehicle date‬؛ إزالة ‪Reminder‬ لا تغير تاريخ الوثيقة.
+
+الإشعارات  ‪Notifications‬
+
+اقتراح ‪A13‬ تنبيه قبل ‪7‬ أيام وفي اليوم نفسه للـ ‪Date‬، و ‪Mileage‬ عند بلوغ ‪target‬؛ التكرار قابل للضبط واعتماد ‪Product‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Reminder/Notification/MileageReading.
+
+معايير القبول  ‪AC‬
+
+‪U14.1‬  تعطيل يوقف ‪Send‬؛
+
+‪U14.2  Update mileage‬ ينتج ‪Due‬ مرة واحدة؛
+
+‪U14.3  Offline‬ لا يؤكد جدولة غير محفوظة.
+
+6 Miftah AI
+
+محادثة مساعد مفتاح
+
+U15 AI Conversation
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+فهم مشكلة السيارة من ‪Home/U10/Services‬.
+
+الحقول  ‪Fields‬
+
+‪Vehicle selector‬ قبل المحادثة، ‪text message‬؛ لا ‪Voice/Video‬ في ‪V1.1‬.
+
+المعلومات المعروضة  ‪Data‬
+
+رسائل المستخدم والمساعدة و ‪Clarifying questions‬ و ‪Risk‬ وملخص الاستدلال المحدود، آخر ‪Update‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Send/Retry/Start new/Review summary→U16/Choose service manually→U17.
+
+قواعد التحقق  ‪Validation‬
+
+نص غير فارغ وحد محتوى ‪A13‬؛ لا إرسال بلا ‪Vehicle‬ في رحلة ‪Service matching‬؛ سؤال عام يمكن إجابته دون حجز إذا لا سيارة، ثم إضافة سيارة لاستكمال الرحلة.
+
+حالات الشاشة  ‪States‬
+
+‪empty prompt‬؛ ‪typing/waiting‬؛ ‪incomplete info‬ يعرض سؤالاً؛ ‪unavailable/rate limit/timeout‬ يبقي ‪manual‬؛ ‪unsafe request‬ يعرض ‪Safety response‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Owner conversation‬؛ تقليل ‪VIN/Phone‬؛ لا نص ‪AI‬ ك ‪Quote‬ أو تشخيص يقيني؛ ‪High risk warning‬ مستمر. تغيير ‪Vehicle‬ يبدأ سياقاً جديداً ولا يخلط سيارتين.
+
+الإشعارات  ‪Notifications‬
+
+لا ‪Push‬ لكل رسالة؛ تصنيف لا ينشئ ‪Request‬ تلقائياً.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AIConversation/Message/Classification/Taxonomy.
+
+معايير القبول  ‪AC‬
+
+‪U15.1  Arabic symptom‬ ينتج ‪IDs‬ حقيقية أو ‪Uncertain‬؛
+
+‪U15.2‬  تعطل ‪AI‬ لا يمنع ‪Manual‬؛
+
+‪U15.3‬  المحادثة لا تعيد ‪Workshop ID‬ مختلقاً.
+
+مراجعة تصنيف المشكلة
+
+U16 AI Classification Review
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+مراجعة ‪Summary‬ قبل ‪Matching‬ من ‪U15‬.
+
+المعلومات المعروضة  ‪Data‬
+
+vehicle، issue summary، category/service names، risk، unknowns/questions.
+
+الحقول  ‪Fields‬
+
+المستخدم يعدل وصفه أو ‪Category‬ عبر ‪Master selector‬، ويختار مدينة/‪Location‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Confirm and Find Workshops→U23، More details→U15، Manual service→U17.
+
+قواعد التحقق  ‪Validation‬
+
+‪Category/Service Active‬ ومعتمدين؛ ‪Location‬ مؤكدة؛ تعديل ‪classification‬ يحفظ ‪provenance user_override‬ ولا يمحو ‪AI original‬.
+
+حالات الشاشة  ‪States‬
+
+‪insufficient classification→collect/manual‬؛ ‪loading match‬؛ ‪High‬ يطلب ‪acknowledgment‬ بأن التحذير شوهد دون اعتبار ذلك إقراراً قانونياً بسلامة القيادة.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+المخاطر لا تخفض تلقائياً إذا اختار المستخدم خدمة أخرى؛ التصنيف ليس إصلاحاً محسوماً؛ ‪AI‬ لا يفاضل بين الورش.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Classification/MatchingRun/DraftRequest.
+
+معايير القبول  ‪AC‬
+
+‪U16.1‬  تعديل المستخدم يسجل؛
+
+‪U16.2‬  لا ‪Match‬ بدون الخدمة والموقع المطلوبين؛
+
+‪U16.3‬  التحذير لا يعد ب ‪Roadside dispatch‬.
+
+7 Service Discovery and Matching
+
+تصنيفات الخدمات واختيار الخدمة
+
+U17 Service Categories and Service Selection
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+اختيار يدوي من ‪Home/AI/Profile‬.
+
+المعلومات المعروضة  ‪Data‬
+
+ست ‪Categories canonical‬ وخدماتها، ‪shortcuts Oil/Battery/General Maintenance‬، وصف ‪AR/EN‬.
+
+الحقول  ‪Fields‬
+
+search/service selection/vehicle.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Select service→U18‬ أو ‪Find workshops→U23‬، ‪Ask AI→U15‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪service Active‬؛ ‪service_id‬ لا ‪free text‬؛ ‪multiple services‬ إن طلبها المستخدم كلها تتطلب ‪Workshop‬ مؤهلة لها، وإلا يختار طلباً مستقلاً.
+
+حالات الشاشة  ‪States‬
+
+category empty، loading، archived service→choose active.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪symptom text‬ يبقى ‪Description‬؛ ‪categories aliases‬ لا تكرر ‪service IDs‬؛ ‪Car Care‬ تشمل ‪Ceramic/PPF/Tint‬ من المصدر.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Category/Service/Vehicle.
+
+معايير القبول  ‪AC‬
+
+‪U17.1  Oil‬ يحيل إلى ‪Maintenance/Oil‬؛
+
+‪U17.2  Category disabled‬ لا تظهر؛
+
+‪U17.3‬  اختيار ‪manual‬ لا يتطلب ‪AI‬.
+
+اكتشاف الورش على القائمة والخريطة
+
+U18 Workshop Discovery List and Map
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+اكتشاف الورش من ‪Services/Home/Find results‬.
+
+المعلومات المعروضة  ‪Data‬
+
+name/rating/count/distance/brands/services/Verified/working hours، list/map synchronized.
+
+الحقول  ‪Fields‬
+
+‪Location‬ عبر ‪permission‬ أو ‪manual city/map pin‬؛ ‪optional service/vehicle filter‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Card→U20‬، ‪Filters→U19‬، ‪Directions‬ يفتح مزود ‪Maps‬، ‪map/list toggle‬.
+
+حالات الشاشة  ‪States‬
+
+‪empty‬ مؤهل→‪change filters/location‬؛ ‪location denied→manual‬؛ ‪map unavailable→list‬؛ ‪loading/error‬؛ ‪distance unknown‬ يعرض ‪Unknown‬ لا ‪0km‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Marketplace Eligible‬ مع ‪Pack‬ كاملة والقدرات المطلوبة، ‪Active verified‬ في ‪Dubai/Sharjah‬؛ ‪Open now‬ ليس حجزاً مؤكداً؛ ‪no Sponsored‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/WorkshopService/BrandSupport/WorkingHours/GeoDistance.
+
+معايير القبول  ‪AC‬
+
+‪U18.1‬  تغيير ‪Location‬ يحدّث النتائج؛
+
+‪U18.2‬  ورشة معلقة لا تظهر؛
+
+‪U18.3  list‬ يعمل عند فشل الخريطة.
+
+‪V1.1 MD09: no-module‬ و ‪Core-only‬ أو ‪Pack‬ ناقصة لا تدخل ‪list/map‬ الجديدة. ‪Backend‬ ينقّي ‪payload‬؛ لا ‪badges SaaS‬.
+
+معايير القبول  ‪AC‬
+
+‪U18.4  Active verified‬ بلا ‪Pack‬ كاملة مستبعدة؛
+
+‪U18.5  Manual discovery‬ تطبق أهلية ‪Matching‬ نفسها.
+
+فلاتر البحث عن الورش
+
+U19 Workshop Filters
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تضييق ‪Discovery‬ من ‪U18/U23‬.
+
+الحقول  ‪Fields‬
+
+‪category/service‬، ‪brand‬ من ‪vehicle‬ أو اختيار واضح، ‪distance radius‬، ‪minimum rating‬، ‪Open now‬، ‪preferred date/time‬ إذا مرر من الطلب.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Apply/Reset/Cancel‬؛ ‪Apply‬ إلى ‪results‬ مع ‪chips/count‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪radius‬ ضمن ‪Config‬، ‪Rating‬ بين ‪1–5‬ أو ‪Any‬، تاريخ/وقت مستقبلي؛ اختيار ‪Brand‬ مخالف ‪Vehicle‬ يتطلب تنبيه ولا يغير بيانات السيارة.
+
+حالات الشاشة  ‪States‬
+
+‪zero preview‬ يتيح ‪Reset‬؛ ‪applying‬؛ ‪fetch error‬ يبقي ‪Filters‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+المستخدم فقط يوسع ‪Radius‬؛ لا يتجاوز ‪Match hard filters‬، ‪Rating no-data‬ لا يعامل صفرًا إلا سياسة ‪filter‬ معلنة.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+DiscoveryQuery/MatchingInput.
+
+معايير القبول  ‪AC‬
+
+‪U19.1  Reset‬ يعيد الافتراضات المعلنة؛
+
+‪U19.2  Cancel‬ لا يغير ‪applied filters‬؛
+
+‪U19.3  Open now‬ يستخدم توقيت الورشة.
+
+‪V1.1 MD11‬: لا ‪Filter‬ حسب ‪Inventory‬ أو ‪POS‬ أو ‪SaaS Module‬؛ ‪Reset‬ أوتوسيع ‪Radius‬ لا يتجاوز ‪Eligibility‬.
+
+معايير القبول  ‪AC‬
+
+‪U19.4‬  تغيير الفلاتر لا يعيد ورشة غير مؤهلة.
+
+ملف الورشة
+
+U20 Workshop Profile
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تقييم ورشة من ‪List/Map/Matching/Booking‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪logo/cover/photos/description/services/brands/hours/location/contact/reviews/rating count/verification label‬، ‪Price from optional‬ مع وصف استرشادي.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Request service→U21، Book appointment→U24 editor، Directions، Contact، Reviews→section/U31.
+
+قواعد التحقق  ‪Validation‬
+
+لا ‪input‬ إلا ‪selection/CTA‬؛ ‪Contact‬ لا ينشئ ‪Booking‬.
+
+حالات الشاشة  ‪States‬
+
+‪no reviews‬ أو ‪no photos‬ لا صور مختلقة؛ ‪loading‬؛ ‪suspended after viewed‬ يعرض ‪unavailable‬ للطلب ويبقي بيانات خدمة قائمة لصاحبها.
+
+قواعد العمل  ‪Rules‬
+
+‪Book appointment‬ يمر بنفس ‪Request‬ و ‪Marketplace Eligibility‬ و ‪required capabilities‬، لا مسار ‪bypass‬؛ ‪Reviews‬ منشورة فقط؛ ‪Verified‬ ليس ضماناً.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/PublicProfile/Review/Services.
+
+معايير القبول  ‪AC‬
+
+‪U20.1  Booking‬ يحتاج خدمة وسيارة؛
+
+‪U20.2‬  غير ‪Active‬ لا ‪CTA‬ طلب جديد؛
+
+‪U20.3  From price‬ لا يعرض كإجمالي ملزم.
+
+‪V1.1 MD09 MD11‬: إذا تغيّرت الأهلية أثناء القراءة يزال ‪CTA‬ الطلب الجديد وتبقى روابط خدمة العميل السابقة؛ لا يذكر سبب ‪SaaS‬ أواسم ‪Module‬.
+
+معايير القبول  ‪AC‬
+
+‪U20.4  Profile‬ قديم لا يفتح مسار حجز يتجاوز ‪Backend‬؛
+
+‪U20.5‬  اسم ‪Pack‬ أو ‪Subscription‬ لا يصل إلى النص العام.
+
+إنشاء طلب الخدمة وإرساله
+
+U21 Service Request Form and Submission
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إرسال شكوى لورشة واحدة من ‪U20/U23/Booking‬.
+
+الحقول  ‪Fields‬
+
+‪Vehicle/Workshop/Category/Service IDs required‬، ‪Description10–2000‬، ‪Images optional‬، ‪Location confirmed‬، ‪preferred date/time‬ أو اختيار طلب موعد من ‪Workshop‬، ‪Notes optional‬؛ ‪AI summary/risk readonly‬ مع ‪Edit‬ العودة ‪U16‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Add images→U22، Review/Submit، Back.
+
+قواعد التحقق  ‪Validation‬
+
+‪Owner Vehicle‬، ‪Marketplace Eligibility‬ و ‪required capabilities‬ الحالية و ‪Active workshop/services/brand‬ عند ‪Submit‬، وقت مستقبلي ضمن ساعات العمل إذا محدد، ‪valid location‬ في سوق الإطلاق، ‪Consent sharing summary context‬؛ لا تخفيض ‪High risk‬.
+
+الإجراءات والتنقل  ‪Actions‬
+
+‪Submit‬ يعيد ‪Request ID‬ و ‪Booking Pending‬ إن اختيار وقت؛ إلى ‪U25‬ أو ‪U24 pending selection. Assumption A03‬ يسمح طلباً دون وقت، تعرض الورشة ‪Propose time‬ قبل ‪Confirmation‬.
+
+حالات الشاشة  ‪States‬
+
+missing fields، submitting، stale availability→pick time، workshop suspended→matching، timeout→resolve by idempotency key.
+
+الصلاحيات  ‪Permissions‬
+
+إنشاء ‪Owner‬ فقط؛ لا ‪broadcast‬.
+
+الإشعارات  ‪Notifications‬
+
+‪Workshop incoming request‬ بعد ‪Commit‬؛ ‪User acknowledgment in-app‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Request/Attachment/Booking/ClassificationSnapshot/MatchRun.
+
+معايير القبول  ‪AC‬
+
+‪U21.1  Send‬ مرتين ينتج ‪Request‬ واحداً؛
+
+‪U21.2  Selected workshop‬ غير مؤهلة يرفضها ‪Backend‬؛
+
+‪U21.3‬  عدم اختيار وقت لا يوهم ‪Confirmed‬.
+
+‪V1.1 MD09‬: عند تغيّر أهلية الورشة قبل ‪Submit‬ يرجع ‪Backend unavailable‬ دون ‪Request‬ أو ‪Booking‬ جديد. يبقى ‪draft‬ لاختيار ورشة مؤهلة من ‪U23‬؛ لا يرسل لورشة أخرى تلقائياً.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+‪internal eligibility decision reference‬ فقط في ‪Backend‬.
+
+معايير القبول  ‪AC‬
+
+‪U21.4  withdrawal‬ بين الاختيار والإرسال لا ينشئ طلباً؛
+
+‪U21.5  retry‬ لطلب ‪committed‬ يعيد الأصل حتى لو توقف ‪intake‬ لاحقاً.
+
+صور طلب الخدمة
+
+U22 Request Images
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إرفاق صور المشكلة من ‪U21‬.
+
+الحقول  ‪Fields‬
+
+‪Camera/library images‬ و ‪optional caption‬؛ اقتراح ‪A13‬ حتى ‪5‬ صور ‪JPEG/PNG/HEIC‬ بعد التحويل، ‪10MB‬ للملف، مع تأكيد ‪Limits‬ قبل التنفيذ.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Choose/Take/Remove/Retry/Done‬ يعود ‪U21‬.
+
+قواعد التحقق  ‪Validation‬
+
+النوع والحجم والعدد على ‪Client‬ و ‪Backend‬، فحص ملف وعدم الثقة بالامتداد، إزالة ‪Metadata Location‬ غير اللازمة؛ لا ‪Video‬.
+
+حالات الشاشة  ‪States‬
+
+‪empty gallery/upload progress/partial failure‬، ‪permission denied→settings‬ أو ‪continue text‬، ‪upload expired→retry‬؛ لا ‪Submit‬ بمرفق يعتقد أنه رفع ولم يرفع.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+ملفات ‪private‬ للمالك و ‪Workshop‬ المختارة و ‪Admin authorized‬؛ ‪Remove‬ قبل إرسال يمحو ‪Draft attachment‬ وفق ‪cleanup‬؛ لا يعرض صور مستخدم آخر.
+
+الإشعارات  ‪Notifications‬
+
+لا إشعار منفصل للصورة.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Attachment/UploadSession/Request.
+
+معايير القبول  ‪AC‬
+
+‪U22.1  denied camera‬ لا يمنع ‪Request‬؛
+
+‪U22.2  Failure‬ لا يظهر كصورة مكتملة؛
+
+‪U22.3  URL‬ منتهٍ يتجدد وفق ‪Owner check‬.
+
+نتائج مطابقة الورش
+
+U23 Workshop Matching Results
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+عرض ترشيحات محرك المطابقة بعد ‪U16/U17‬ أو تغيير ‪filters‬.
+
+المعلومات المعروضة  ‪Data‬
+
+حتى ‪3‬ أولية ثم نتائج إضافية، ‪reasons‬ مثل ‪Service/Brand/location‬، ‪Distance/availability/rating/response info if available‬، ‪Match run timestamp‬؛ لا «‪92‬% دقة» مصطنعة.
+
+الحقول  ‪Fields‬
+
+confirmed service/vehicle/location/time/filters.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Select→U20/U21، change time/radius→U19، edit problem→U16، retry.
+
+حالات الشاشة  ‪States‬
+
+‪no candidates→widen explicitly‬ أو ‪Support‬؛ ‪incomplete input→editor‬؛ ‪loading‬؛ ‪matching failure→manual discovery‬ مع نفس ‪eligibility‬؛ ‪stale list‬ يعاد تحققها عند ‪Submit‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪AI‬ يخرج ‪Classification‬ فقط؛ ‪no paid placement‬؛ ‪inactive/unsupported‬ وغير ‪Marketplace Eligible‬ أوالقدرات الناقصة خارج النتائج؛ ‪no auto sending‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+MatchingRun/RankingVersion/WorkshopSnapshot.
+
+معايير القبول  ‪AC‬
+
+‪U23.1  Brand unsupported‬ لا يدخل النتائج؛
+
+‪U23.2  Reason‬ مبني على بيانات فعلية؛
+
+‪U23.3  run‬ مع نفس ‪inputs/version‬ وبيانات ثابتة يعيد ترتيباً ثابتاً.
+
+‪V1.1 MD03 MD11: Engine‬ يجمع ‪Service/Brand/Distance/Rating/Availability/Response Rate‬ بعد ‪hard gate‬ للـ ‪Pack‬ والقدرات. ‪No results‬ لا يبرر تخفيف ‪gate‬.
+
+معايير القبول  ‪AC‬
+
+‪U23.4  Core-only‬ و ‪Pack‬ ناقصة مستبعدتان؛
+
+‪U23.5‬  سبب استبعاد ‪SaaS‬ داخلي يظهر في ‪Admin‬ فقط؛
+
+‪U23.6  ranking‬ و ‪manual fallback‬ يلتزمان نفس ‪gate‬.
+
+8 Bookings Quotes Jobs and Invoices
+
+الحجوزات واختيار الموعد
+
+U24 Bookings List and Appointment Editor
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+عرض مواعيد الحساب أو سيارة من ‪Home/U10/Profile‬، وإنشاء اختيار وقت من ‪U20/U21‬.
+
+المعلومات المعروضة  ‪Data‬
+
+Workshop/Vehicle/Service/time/status؛ tabs active/history. Fields editor: vehicle/workshop/service/date/time/notes.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Request appointment‬ يرسل ‪U21‬ بنفس العقد، ‪Open→U25‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪date/time‬ مستقبلية وساعات العمل، ‪no double-submit‬؛ ‪slot‬ لا يعد ‪Guaranteed‬ حتى ‪Confirmation‬.
+
+حالات الشاشة  ‪States‬
+
+‪no bookings‬، ‪calendar slot unavailable‬، ‪loading‬، ‪conflict‬ اقتراح وقت آخر.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Booking‬ واحد لكل ‪Request‬؛ ‪List‬ لا يكشف غير ‪Owner‬؛ اختيار ‪Workshop‬ من جديد ينشئ رحلة طلب جديدة لا يبدل ورشة ‪Job‬ قائم.
+
+الإشعارات  ‪Notifications‬
+
+request/confirmation/proposal/cancellation.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Booking/Request/Availability.
+
+معايير القبول  ‪AC‬
+
+‪U24.1  Book CTA‬ لا ينشئ مساراً دون ‪Request‬؛
+
+‪U24.2  Confirmed time‬ يطابق ‪server‬؛
+
+‪U24.3  Vehicle filter‬ يعزل المواعيد.
+
+‪V1.1 MD09‬: اختيار وقت جديد لطلب جديد يحتاج أهلية حالية؛ تأكيد أو ‪reschedule‬ لطلب قائم قبل وقف ‪intake‬ يستخدم ‪continuation policy A17‬ مع الحزمة ‪Enabled‬ و ‪state guards‬.
+
+معايير القبول  ‪AC‬
+
+‪U24.4  direct booking‬ لا يتجاوز شرط الحزمة؛
+
+‪U24.5‬  سحب المشاركة لا يغيّر ‪confirmed appointment‬ صامتاً.
+
+حالة الحجز وتفاصيل الطلب
+
+U25 Booking Status and Request Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+متابعة ‪Request/Booking‬ من ‪U21/List/Notification‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪requested and proposed/confirmed times‬، ‪Timeline‬ للحالات، ‪issue summary/risk/photos‬، ‪Workshop contact‬، ‪vehicle‬، ‪rejection/cancel reason‬، ‪Quote/Job/Invoice links‬.
+
+الحقول  ‪Fields‬
+
+اختيار ‪Accept proposed time‬ أو ‪Reject proposed time‬ مع ‪reason optional‬، ‪Cancel reason required A10‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Accept time→Confirmed‬ بعد ‪eligibility/capacity‬، ‪Decline time‬ يبقي الطلب غير مؤكد ويبلغ الورشة، ‪Cancel‬ قبل الوصول→‪Cancelled‬؛ بعده ‪Request support→U35‬، ‪Quote→U27‬، ‪Job→U29‬، ‪Invoice→U30‬.
+
+حالات الشاشة  ‪States‬
+
+‪pending‬ بلا موعد يعرض ‪Awaiting workshop‬؛ ‪proposal expired→refresh‬؛ ‪rejected/expired/no_show‬ تفاصيل إغلاق؛ ‪loading/error/stale version‬.
+
+قواعد العمل  ‪Rules‬
+
+‪User‬ لا يغير ‪Vehicle Arrived‬ أو ‪Inspection‬ أو ‪Job completion‬؛ ‪Accepted‬ انتقال داخلي وليس السعر ‪Approved‬.
+
+الإشعارات  ‪Notifications‬
+
+حالات ‪changed/time proposal‬ و ‪Appointment tomorrow‬ وفق ‪Config‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Request/Booking/StateTransition.
+
+معايير القبول  ‪AC‬
+
+‪U25.1  time change‬ لا يعتمد بلا ‪user action‬؛
+
+‪U25.2  Cancellation‬ لا يعمل بعد ‪Arrived‬؛
+
+‪U25.3  Deep link‬ قديم يظهر ‪latest state‬.
+
+‪V1.1 A17 A19‬: ورشة أوقفت ‪intake‬ يمكن أن تواصل نفس ‪Request committed‬ ما دامت ‪Pack Enabled‬ والصلاحيات وحالة الورشة تسمح؛ ‪Full freeze‬ يوجه ‪Support‬ دون ‪proxy approval‬.
+
+معايير القبول  ‪AC‬
+
+‪U25.4‬  تبقى ‪Timeline‬ قائمة بلا ‪statuses SaaS‬؛
+
+‪U25.5‬  المستخدم يرى تعليمات خدمة مفهومة عند التعثر لا تفاصيل ‪Modules‬.
+
+قائمة عروض الأسعار
+
+U26 Quotes List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+عرض عروض أسعار المستخدم من ‪Bookings/Profile/Notification‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪workshop/vehicle/quote family/revision/total/expires/status‬؛ ‪current‬ و ‪history‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Open→U27‬؛ لا ‪Approve‬ من ‪list‬ دون قراءة النسخة.
+
+حالات الشاشة  ‪States‬
+
+‪no quotes/awaiting inspection‬؛ ‪loading‬؛ ‪stale link‬ يعيد ‪current revision‬.
+
+قواعد العمل  ‪Rules‬
+
+‪Draft‬ غير مرئي؛ ‪Sent/Accepted/Rejected/Expired/Superseded‬ واضحة؛ ‪Count‬ للعائلة لا كل ‪revision‬ حين تعرض ‪summary‬.
+
+الإشعارات  ‪Notifications‬
+
+‪Quote received‬ عند ‪Sent‬ فقط، لا ‪Draft‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Quote/QuoteFamily/Booking.
+
+معايير القبول  ‪AC‬
+
+‪U26.1‬  لا ‪Draft quote‬ يظهر؛
+
+‪U26.2  Accepted version‬ محفوظة؛
+
+‪U26.3  Expired‬ لا ‪CTA‬ قبول.
+
+تفاصيل عرض السعر
+
+U27 Quote Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+قراءة عرض محدد من ‪U26/U25‬.
+
+المعلومات المعروضة  ‪Data‬
+
+quote number/revision/workshop/customer/vehicle/inspection shared summary/parts+services+labor quantities/unit prices/discount/subtotal/VAT/total/expiry/terms/status؛ no internal inspection notes.
+
+الحقول  ‪Fields‬
+
+لا تعديل مبالغ.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Approve→U28، Reject→U28، Back→origin، Support→U35.
+
+حالات الشاشة  ‪States‬
+
+‪Sent valid‬ يتيح القرار؛ ‪old revision‬ يعرض ‪Superseded‬ ورابط ‪Current‬؛ ‪expiry shows Expired‬؛ ‪loading totals‬، ‪error‬ يمنع قبول رقم غير معروف.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Owner decision‬ على ‪active Sent version‬ فقط؛ التكاليف لا تعاد حسابها على الهاتف؛ آخر ‪Quote approved‬ يحتفظ ‪Snapshot‬.
+
+الإشعارات  ‪Notifications‬
+
+لا شيء عند العرض، يمكن ‪event quote_viewed‬ بدون وصف.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Quote/LineItem/ApprovalSnapshot.
+
+معايير القبول  ‪AC‬
+
+‪U27.1  sum‬ يطابق ‪Backend‬ إلى ‪0.01AED‬؛
+
+‪U27.2‬  لا ‪Approval‬ إذا ‪revised‬ أثناء القراءة؛
+
+‪U27.3‬  كل بند واضح الكمية والسعر والخصم والضريبة.
+
+تأكيد قبول عرض السعر أو رفضه
+
+U28 Quote Approval and Rejection Confirmation
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+قرار ملزم على نسخة ‪Quote‬ من ‪U27‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪revision/total/vehicle/workshop‬ والقرار؛ ‪Fields reject reason‬ اختياري ‪bounded‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Confirm approval‬ أو ‪Confirm rejection‬ و ‪Back‬؛ نجاح إلى ‪U29/U25‬؛ ‪Reject‬ يرجع ‪Journey‬ إلى ‪Inspection awaiting revised quote‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪Quote Sent‬ وغير منتهٍ و ‪revision current‬ و ‪Owner‬؛ ‪approval‬ يعيد استعلام ‪latest‬ قبل ‪Commit‬؛ ‪no password‬ جديد مطلوب لمجرد القرار لكن ‪Auth‬ صالح.
+
+حالات الشاشة  ‪States‬
+
+‪submitting‬، ‪already accepted‬ يعرض ‪successful previous decision‬؛ ‪superseded/expired‬ لا يقبل؛ ‪timeout‬ يستعلم ‪outcome‬.
+
+قواعد العمل  ‪Rules‬
+
+‪Atomic approval‬ يقفل النسخة ويجعل ‪Job Confirmed‬ أو يستأنف ‪In Progress‬ السابق وفق ‪pause‬؛ لا يغير ‪payment‬.
+
+الإشعارات  ‪Notifications‬
+
+Workshop quote accepted/rejected، User confirmation.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+QuoteDecision/Job/Booking/AuditEvent.
+
+معايير القبول  ‪AC‬
+
+‪U28.1  retry‬ لا يخلق موافقتين؛
+
+‪U28.2‬  رفض لا يبدأ ‪Job‬؛
+
+‪U28.3‬  أي زيادة سعر تتطلب ‪revision‬ وقبولاً جديداً.
+
+تفاصيل العمل وتقدمه
+
+U29 Job Details and Progress
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+متابعة التنفيذ من ‪Booking/Quote/Notification‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Workshop/Vehicle/Complaint/shared inspection/services/status/approved quote/current total/start/completion timestamps‬؛ لا ‪Staff private notes‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Quote→U27‬، ‪Contact workshop‬، ‪Support→U35‬، ‪Invoice→U30‬ عند ‪Complete‬، ‪Review→U31‬.
+
+حالات الشاشة  ‪States‬
+
+‪Inspection‬ قبل اعتماد؛ ‪Awaiting approval‬؛ ‪Confirmed‬؛ ‪In progress‬؛ ‪Awaiting revised approval paused‬؛ ‪Completed‬؛ ‪Cancelled‬ قبل تنفيذ؛ ‪loading/error. No editable job fields‬ للعميل.
+
+قواعد العمل  ‪Rules‬
+
+العميل لا يضغط ‪Complete‬؛ ‪Invoice‬ غير جاهز بسبب فشل ‪transaction‬ لا يعرض ‪Completed‬؛ ‪payment‬ ليس ‪state‬ للعمل.
+
+الإشعارات  ‪Notifications‬
+
+start/completion/invoice ready.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/Booking/InspectionShared/Quote/Invoice.
+
+معايير القبول  ‪AC‬
+
+‪U29.1‬  لا ‪internal notes‬ للعميل؛
+
+‪U29.2  Complete‬ يملك ‪Invoice‬ و ‪History IDs‬؛
+
+‪U29.3  pending reapproval‬ لا يظهر «تمت الموافقة» للنسخة الجديدة.
+
+الفواتير وتفاصيلها
+
+U30 Invoice List and Invoice Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+مستندات الخدمات من ‪Profile/Job/History/Notification‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪list number/workshop/date/total/payment‬؛ ‪detail issuer/customer/vehicle/items/subtotal/discount/VAT/total/invoice lifecycle/payment status/outside settlement flag‬؛ ‪TRN‬ إذا ‪Finance setup‬.
+
+الحقول  ‪Fields‬
+
+‪Date filter‬ فقط.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪View/Download PDF/History→U11/Report issue→U35‬؛ لا ‪Pay‬.
+
+حالات الشاشة  ‪States‬
+
+‪no invoices‬، ‪generating PDF/loading‬؛ ‪unavailable download→retry‬ مع بقاء ‪detail‬؛ ‪Cancelled‬ يظهر سبب ويستبعد من ‪totals‬؛ ‪payment disputed‬ يعرض ‪Support case‬ دون الادعاء ‪refund‬.
+
+قواعد العمل  ‪Rules‬
+
+‪User readonly‬؛ ‪PDF access private‬؛ ‪complete total‬ مطابق آخر ‪Quote accepted‬؛ «‪Paid Outside‬» معلومة وليست إيصال ‪Payment processor‬.
+
+الإشعارات  ‪Notifications‬
+
+‪Invoice ready‬ بعد ‪Commit‬، ‪updated payment status‬ إن اختير ك ‪Transactional event‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Invoice/InvoiceLine/PaymentRecord/Job/History.
+
+معايير القبول  ‪AC‬
+
+‪U30.1  Deep link‬ غير ‪Owner‬ مرفوض؛
+
+‪U30.2  PDF AR/EN/RTL/LTR‬ مقروء بنفس ‪data‬؛
+
+‪U30.3‬  إعادة ‪Download‬ لا تصدر فاتورة جديدة.
+
+‪V1.1 MD07‬ و ‪A19‬: قراءة الفاتورة و ‪PDF‬ المصرح لا تتطلب أن تظل الورشة ‪Marketplace Eligible‬.
+
+معايير القبول  ‪AC‬
+
+‪U30.4  Disable Pack‬ يحفظ نفس ‪Invoice ID/number/amount‬ و ‪Owner access‬؛
+
+‪U30.5‬  لا ظهور ل ‪Checkout Module‬ أوالسعر التجاري للورشة.
+
+9 Reviews Notifications Profile and Support
+
+إرسال التقييم وتقييماتي
+
+U31 Review Submission and My Reviews
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تقييم ‪Job‬ مكتمل من ‪Notification/U29/My reviews‬.
+
+الحقول  ‪Fields‬
+
+‪Rating integer1–5 required‬ و ‪Comment0–1000 optional‬؛ ‪Job/Workshop immutable‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Submit/View review‬؛ تعديل ‪review‬ بعد نشره سؤال سياسة مفتوح، ‪V1.1‬ لا ‪Edit UI A13‬.
+
+المعلومات المعروضة  ‪Data‬
+
+user-owned reviews/status/workshop reply.
+
+حالات الشاشة  ‪States‬
+
+‪no completed job→not eligible‬، ‪no reviews→empty‬؛ ‪submitting‬؛ ‪duplicate returns existing‬؛ ‪hidden review‬ يعرض ‪moderation reason‬ المقبول للمستخدم دون كشف تقارير الآخرين.
+
+قواعد العمل  ‪Rules‬
+
+واحد لكل ‪Job‬، لا ‪Manual history review‬، لا ‪Staff‬ يحذف ‪rating‬؛ ‪published reviews‬ تدخل ‪average‬.
+
+الإشعارات  ‪Notifications‬
+
+‪User invitation‬ بعد ‪Completed‬ مرة واحدة؛ ‪Workshop review received‬ بعد ‪Publish‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Review/ReviewModeration/Job.
+
+معايير القبول  ‪AC‬
+
+‪U31.1‬  غير صاحب ‪Job‬ أو غير ‪Completed‬ مرفوض؛
+
+‪U31.2  duplicate‬ لا يضاعف ‪count‬؛
+
+‪U31.3  rating1‬ أو ‪5‬ صالح و ‪0/6‬ مرفوض.
+
+‪V1.1 A19‬: صاحب ‪Job‬ مكتمل يبقى مؤهلاً للتقييم بعد انسحاب الورشة؛ لا ‪Review‬ بمجرد ‪Core-only workspace‬.
+
+معايير القبول  ‪AC‬
+
+‪U31.4  eligibility‬ من ‪Completed Job‬ و ‪Ownership‬ لا من الاشتراك الحالي؛ ‪Workshop reply‬ جديد يحترم ‪Enabled integration‬ في ‪OS‬.
+
+صندوق الإشعارات
+
+U32 Notifications Inbox and Preferences Link
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+تنبيهات حساب المستخدم من ‪Home/Profile/Push‬.
+
+المعلومات المعروضة  ‪Data‬
+
+type/title/body/time/read/entity link؛ Fields filter unread/all.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open entity/Mark read/Mark all read/Preferences→U34.
+
+حالات الشاشة  ‪States‬
+
+‪empty‬، ‪loading/pagination‬، ‪entity archived→context/support‬؛ ‪offline‬ عرض ‪cache‬ موسوم؛ ‪permission push denied‬ لا يخفي ‪inbox‬.
+
+قواعد العمل  ‪Rules‬
+
+‪ownership‬ عند الفتح؛ ‪delivery failed‬ لا يفقد ‪in-app record‬؛ ‪duplicate event‬ واحد؛ محتوى ‪Push‬ محدود بلا ‪Plate/VIN/issue sensitive‬.
+
+الإشعارات  ‪Notifications‬
+
+request response/time/quote/booking tomorrow/job complete/invoice/reminder/review request.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Notification/DeliveryAttempt/Preference.
+
+معايير القبول  ‪AC‬
+
+‪U32.1  read badge‬ مطابق؛
+
+U32.2  click quote opens current state؛
+
+‪U32.3‬  لا رسائل ورشة لحساب آخر.
+
+الملف الشخصي وتعديل الحساب
+
+U33 Profile and Account Edit
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+بيانات حساب المستخدم والتنقل من ‪menu‬.
+
+المعلومات والحقول  ‪Data/Fields‬
+
+Name editable، Email optional، Phone verified readonly؛ Language، account status، links Garage/Bookings/Quotes/Invoices/My reviews/Settings/Support.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Save‬، ‪Verify contact change‬ حيث يلزم، ‪Logout→U04‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪name/email‬ وفق ‪U06‬؛ تغيير الهاتف في ‪V1.1‬ عبر ‪re-verification‬ موثق أو ‪Support‬ إذا ‪Provider‬ غير جاهز، ولا تعاد نسبة السجلات لحساب جديد.
+
+حالات الشاشة  ‪States‬
+
+‪saving/error/conflict‬؛ ‪no email‬ فارغ صالح.
+
+قواعد العمل  ‪Rules‬
+
+‪Profile‬ لا يغير ‪owner IDs‬؛ ‪Logout clears private cache/session‬؛ لا ‪Workshop role‬ في ‪User App‬.
+
+الإشعارات  ‪Notifications‬
+
+‪security contact changed‬ فقط عند التنفيذ.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User/AuthSession/ContactVerification.
+
+معايير القبول  ‪AC‬
+
+‪U33.1  Name‬ يظهر محدثاً في ‪account‬ مع ‪snapshots‬ المالية القديمة محفوظة؛
+
+‪U33.2  Logout‬ يمحو ‪cache‬؛
+
+‪U33.3  Phone change‬ لا ينفذ بلا ‪verification‬.
+
+الإعدادات والخصوصية وحذف الحساب
+
+U34 Settings Privacy and Account Deletion
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+لغة وتنبيهات وسياسات وحذف الحساب من ‪Profile‬.
+
+الحقول  ‪Fields‬
+
+‪language/Push preferences/reminder preferences‬، ‪deletion reason optional‬؛ ‪Display Consent versions‬ و ‪Terms/Privacy/About‬ وروابط ‪Help‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/Open OS notification settings/Open policies/Request account deletion/Logout.
+
+قواعد التحقق  ‪Validation‬
+
+‪double confirmation deletion‬، صلاحية ‪Session‬ وإعادة تحقق وفق ‪Security‬؛ لا حذف بلا ‪Request audit‬.
+
+حالات الشاشة  ‪States‬
+
+‪preference sync failure‬ يوضح المحلي؛ ‪deletion blocked by active service→Support‬؛ ‪request pending/completed‬ مع ‪scope‬ واضح.
+
+قواعد العمل  ‪Rules‬
+
+الحذف يتضمن إزالة/إخفاء البيانات الشخصية وفق ‪retention policy‬ المعتمدة، لا يمحو ‪Invoice‬ مالي قانوني تلقائياً؛ ‪export‬ لاحقاً لا ‪CTA‬ وهمي.
+
+الإشعارات  ‪Notifications‬
+
+‪deletion received/completed‬ عبر قناة آمنة متاحة؛ ‪marketing‬ منفصل عن ‪transactional‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Preference/Consent/DeletionRequest/RetentionPolicy.
+
+معايير القبول  ‪AC‬
+
+‪U34.1‬  تبديل اللغة يحفظ؛
+
+‪U34.2‬  لا ‪delete‬ قائم بدون ‪recheck‬؛
+
+‪U34.3‬  المستخدم يرى نتيجة الطلب لا نجاحاً زائفاً قبل معالجة الحفظ.
+
+الدعم وإنشاء الحالات ومتابعتها
+
+U35 Support Contact Case Creation and Case Status
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+دعم عام أو خلاف رحلة من كل ‪Detail/Profile‬، وزائر ‪U04‬.
+
+الحقول  ‪Fields‬
+
+‪topic‬ و ‪description required‬، ‪linked Request/Booking/Quote/Job/Invoice optional‬، ‪contact for guest‬، ‪images‬ وفق ‪U22‬ عند الحاجة؛ ‪no financial card details‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Submit case/View cases/Open configured contact channel‬؛ ‪channel WhatsApp‬ أو ‪Ticket‬ حسب ‪Operations‬ لا ‪URL‬ مفترض.
+
+حالات الشاشة  ‪States‬
+
+‪no cases‬، ‪Submitted/In Review/Awaiting User/Resolved/Closed‬، ‪loading‬؛ ‪channel unavailable‬ يبقي ‪ticket route‬؛ ‪submit timeout‬ يستعلم ‪outcome‬.
+
+قواعد العمل  ‪Rules‬
+
+‪A15‬ دعم بسيط وليس ‪chat realtime‬ أو ‪refunds‬؛ فقط ‪Cases‬ حسابه؛ زائر يحصل ‪Case reference‬ آمن لا ‪search‬ كشف بيانات؛ ‪dispute‬ لا يبدل سعر أو حالة ‪Job‬ تلقائياً.
+
+الإشعارات  ‪Notifications‬
+
+‪case acknowledgment/status/response‬؛ ‪reply input‬ فقط عند ‪Awaiting user‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+SupportCase/CaseUpdate/Attachment/EntityLink.
+
+معايير القبول  ‪AC‬
+
+‪U35.1  case invoice‬ يحفظ ‪linkage‬؛
+
+‪U35.2‬  طرف آخر لا يطلع على ‪case‬؛
+
+‪U35.3  resolved‬ يتطلب نتيجة وصفية لا تعديل مالي صامت.
+
+‪10 Lifecycle‬ المستخدم وعقود قراراته
+
+الكيان
+
+الحالات المرئية
+
+فعل المستخدم المسموح
+
+Service Request
+
+Submitted Time Proposed Accepted Rejected Expired Cancelled Completed
+
+إرسال ومراجعة وقت وإلغاء قبل الوصول
+
+Booking
+
+Pending Time Proposed Accepted Confirmed Vehicle Arrived Inspection Quote Sent Quote Approved In Progress Completed Cancelled No Show
+
+طلب وتأكيد وقت مقترح وإلغاء مبكر فقط
+
+Quote
+
+Sent Accepted Rejected Expired Superseded
+
+قبول/رفض أحدث ‪Sent‬ غير منتهٍ؛ ‪Draft‬ مخفي
+
+Job
+
+Inspection Awaiting Approval Confirmed In Progress Completed Cancelled
+
+قراءة ودعم وقرار ‪Quote‬؛ لا تغيير التنفيذ
+
+Invoice
+
+‪Issued Cancelled‬ مع ‪Paid‬ أو ‪Unpaid‬
+
+قراءة/تحميل/اعتراض؛ لا ‪Online payment‬
+
+Review
+
+Published Hidden
+
+‪Submit‬ بعد ‪Complete‬ فقط
+
+
+
+المرجع الكامل للانتقالات ومسبباتها في ‪Workshop OS PRD Section 3‬؛ ‪Cross-Product Logic‬ في ‪Admin PRD Sections 12‬ إلى ‪15. Job Awaiting Approval‬ قد يعني ‪Quote‬ أولى أو ‪Revision‬ إضافية أثناء التنفيذ؛ إذا سبق ‪Start‬ يوسم «العمل موقوف بانتظار الموافقة» ولا يمحو ‪Started at. Booking‬ يرجع ‪Inspection‬ بعد رفض ‪Quote‬ أولى؛ عند رفض زيادة بعد ‪Start‬ يبقى ‪Awaiting Approval‬ مع ‪Support‬ حتى اعتماد نطاق نهائي، ولا يتابع أعمالاً غير مصرح بها.
+
+11 Notification and Analytics Contract
+
+الحدث
+
+الوجهة للمستخدم
+
+شرط الإرسال
+
+request_submitted
+
+Request detail
+
+‪Commit‬ مرة واحدة
+
+workshop_responded
+
+Booking/request detail
+
+‪Accept Reject‬ أو ‪Time proposal‬ مع ‪version‬
+
+booking_confirmed
+
+Booking detail
+
+الوقت مثبت؛ لا إشعار ‪Accepted‬ وسيط مكرر
+
+appointment_reminder
+
+Booking detail
+
+‪Confirmed‬ قبل الموعد وفق ‪Config‬ ولم يلغ
+
+quote_sent
+
+Quote detail
+
+أحدث ‪Sent‬ فقط، مع ‪total‬ غير حساس
+
+quote_decided
+
+Job/Booking detail
+
+نتيجة قبول/رفض مثبتة
+
+‪job_completed‬ و ‪invoice_ready‬
+
+Job/Invoice
+
+‪completion committed‬؛ يمكن تجميعهما دون فقد ‪linkage‬
+
+vehicle_reminder_due
+
+Reminder/Vehicle
+
+‪Date/Mileage condition‬ وتفضيل ‪enabled‬
+
+review_invitation
+
+Review form
+
+‪Job Completed‬ وليس لديه ‪Review‬
+
+support_updated
+
+Case detail
+
+‪owner of case‬ فقط
+
+
+
+‪Events‬ القياس: ‪registration_completed‬ و ‪vehicle_added‬ و ‪ai_started‬ و ‪classification_confirmed‬ و ‪workshop_viewed‬ و ‪matching_completed‬ و ‪service_request_created‬ و ‪booking_confirmed‬ و ‪quote_sent‬ و ‪quote_accepted‬ و ‪job_completed‬ و ‪invoice_issued‬ و ‪history_record_created‬ و ‪review_submitted‬. بعض ‪Events‬ مصدرها ‪Backend‬ لا ‪Client‬؛ تستخدم ‪event_id‬ و ‪entity_id‬ و ‪user_id pseudonymous‬ و ‪city/language/version/time‬ بدون نصوص حساسة. ‪Quote viewed‬ لا يساوي ‪Accepted‬.
+
+12 Open Questions Assumptions and Dependencies
+
+القرار
+
+المرجع
+
+‪Owner‬ والأثر
+
+‪OTP Provider‬ والدول و ‪Cool-down/attempt limits‬
+
+A01 A13
+
+‪Security‬؛ يحسم قبل ‪Auth QA‬
+
+‪Mileage required‬ وتصحيح قراءة/‪Archive‬
+
+A06 A14
+
+‪Product‬؛ يحسم قبل ‪Garage UX‬
+
+‪Reminder timing‬ و ‪manual history‬ و ‪Review edit‬
+
+A13 A14
+
+‪Product‬؛ قبول ‪Pilot‬
+
+matching Radius/cold start/weights/availability
+
+A08
+
+‪Product/Operations‬؛ لا % مصطنعة
+
+‪no-time request‬ ومدة ‪expiry/time proposals‬
+
+A03 A04 A10
+
+‪Operations‬؛ تؤثر ‪Booking states‬
+
+الصور ‪formats/size/count‬ و ‪AI image analysis‬
+
+‪A13‬ و ‪Open‬
+
+‪Backend/AI‬؛ صور الورشة مؤكدة والتفسير غير محسوم
+
+‪Privacy retention/account deletion‬ و ‪VAT/PDF‬
+
+A09
+
+‪Legal/Finance/Security‬ قبل ‪Public release‬
+
+‪Support channel‬ و ‪SLA‬ وإلغاء بعد بدء العمل
+
+A10 A15
+
+‪Operations‬؛ لا وعد ‪Refund‬ تلقائي
+
+
+
+‪Dependencies‬: بيانات ‪Master AR/EN‬، ورش ‪Pilot Marketplace Eligible‬ مع ‪Core‬ و ‪Pack‬ كاملة و ‪Capabilities‬ صالحة وحالة ‪Active‬ ومواقعها وساعاتها وخدماتها وبرانداتها، ‪OTP‬، ‪Maps‬، ‪Push‬، ‪AI taxonomy contract‬، ‪Invoice formatter‬، ‪Support operation‬. لا يحل ‪Frontend‬ نقص ‪Taxonomy‬ بنصوص حرة، ولا يختلق ‪Mobile prices‬ أو حالات.
+
+13 Acceptance Gate and Handoff
+
+‪UX‬ يصمم ‪U01‬ إلى ‪U35‬ مع كل المسارات والحالات والنصوص ‪AR/EN‬؛ ‪Mobile‬ يطبق ‪navigation/permissions/forms/cache/deep links‬؛ ‪Backend‬ يفرض ‪owner isolation/state/version/idempotency‬؛ ‪AI‬ يطبق تصنيفاً آمناً ‪Structured‬؛ ‪QA‬ يحول ‪Uxx.n‬ إلى حالات اختبار. معيار التسليم ليس شكل الشاشة بل تحقق البيانات والقرار ونتيجته عبر النظام.
+
+سيناريو القبول الرئيسي: حساب جديد→سيارة→‪AI AC summary→3‬ أو أقل ورش مؤهلة فعلية→‪Request‬→اقتراح وقت وموافقة→‪Arrived/Inspection→Quote→Approve→Job→Invoice→History→Review‬. السيناريو البديل اليدوي دون ‪AI‬ يجب أن يصل إلى النتيجة نفسها. حالات إلزامية: ‪no vehicle/no matches‬، ‪denied location/camera/push‬، ‪offline submit‬، ‪outdated Quote‬، ‪two approval attempts‬، ‪suspended workshop‬، ‪rejected quote‬، ‪cancellation before arrival‬، ‪failed completion retry‬، ‪Paid Outside‬، ‪ownership attack‬، ‪RTL/LTR‬.
+
+تغطية التكليف: ‪Authentication U01/U04/U05/U06‬؛ ‪Language U02‬؛ ‪Onboarding U03/U06‬؛ ‪Home U07‬؛ ‪Garage U08‬؛ ‪Add vehicle U09‬؛ ‪Profile U10‬؛ ‪History U11‬؛ ‪Reminders U14‬؛ ‪AI U15/U16‬؛ ‪Categories U17‬؛ ‪Discovery U18‬؛ ‪Filters U19‬؛ ‪Workshop Profile U20‬؛ ‪Request U21‬؛ ‪Images U22‬؛ ‪Matching U23‬؛ ‪Booking U24‬؛ ‪Status U25‬؛ ‪Quotes U26/U27‬؛ ‪Decisions U28‬؛ ‪Jobs U29‬؛ ‪Invoices U30‬؛ ‪Reviews U31‬؛ ‪Notifications U32‬؛ ‪Profile U33‬؛ ‪Settings U34‬؛ ‪Support U35. Documents/Expenses U12/U13‬ من المصدر ‪S09‬ وليس توسعاً محاسبياً.
+
+14 Workshop OS Integration Impact
+
+‪14.1‬ حدود التطبيق والقدرات المطلوبة
+
+‪MD11‬ يلزم التطبيق بعرض خدمة متاحة لدى ورشة قادرة على إنهائها، ويترك ‪Module Catalog‬ و ‪enabled_modules‬ و ‪Subscription‬ و ‪Bundle‬ و ‪lifecycle‬ للـ ‪Backend‬ و ‪OS‬ و ‪Admin‬. لا شاشة جديدة ولا ‪Sidebar SaaS‬ ولا ‪Inventory/Warranty CTA‬ للمالك في ‪Phase 1‬. تبقى ‪U01‬ إلى ‪U35‬ ومعايير القبول الأصلية، ويضاف ما ذكر في المواضع المتأثرة فقط.
+
+الرحلة الحالية تطلب ‪Request‬ و ‪Booking‬ و ‪Inspection‬ و ‪Quote‬ و ‪Approval‬ و ‪Job‬ و ‪Invoice‬ و ‪Vehicle History‬ و ‪Review‬، مع ‪Calendar‬ و ‪Job Cards‬ و ‪integration dependencies‬ كاملة. ‪Backend‬ يحدد ‪required capabilities‬ من عقد الرحلة المعتمد، وليس من رأي ‪AI‬ أو ‪score‬ ورشة. ‪supports_booking‬ وحدها لا تكفي. ‪Core-only workshop‬ أو ‪Pack‬ غير كاملة لا تظهر كخيار طبيعي حتى لو كانت أعلى ‪Rating‬ وأقرب ‪Distance‬.
+
+‪14.2‬ أثر تغيير الأهلية أثناء الرحلة
+
+السياق
+
+سلوك ‪Backend‬
+
+سلوك ‪App‬ ومعيار القبول
+
+‪Browse‬ أو ‪Match‬ جديد
+
+‪eligible candidates‬ فقط؛ ‪hard guards‬ قبل ‪score‬
+
+‪U18/U23‬ لا ‪SaaS terms‬ ولاصفر ‪distance‬ مختلق
+
+‪Workshop‬ فقدت الأهلية بعد العرض وقبل ‪Submit‬
+
+يرفض إنشاء جديد ويعيد ‪unavailable‬
+
+‪U21‬ يحفظ ‪Draft‬ ويتيح العودة لنتائج حديثة؛ لا تحويل تلقائي
+
+‪Request committed‬ قبل وقف ‪intake‬
+
+وفق ‪A17 Pack‬ تبقى ‪Enabled‬؛ ‪existing-flow guards‬ و ‪RBAC‬ وحالة الورشة
+
+‪U25‬ يستمر في نفس المعرف والموعد؛ لا إعادة طلب من الصفر
+
+Full Security Freeze
+
+يمنع ‪mutations‬ ويوجه ‪supervised Support‬
+
+‪U35‬، لا موافقة نيابة عن العميل ولا ‪success‬ وهمي
+
+‪Pack Disabled‬ بعد إغلاق الالتزامات
+
+لا ‪requests‬ جديدة؛ القراءة التاريخية محفوظة ‪A19‬
+
+‪U11/U27/U30‬ تفتح سجل العميل نفسه؛ لا حذف ‪Invoice‬ أو ‪Quote snapshot‬
+
+‪Job completed‬ قبل الانسحاب ولا ‪Review‬ بعد
+
+‪Review eligibility‬ مرتبطة ‪Job‬ و ‪Owner‬
+
+‪U31‬ يسمح بالتقييم طبقاً للقواعد الأصلية، دون إعادة إشراك الورشة
+
+
+
+‪A17‬ تفرق ‪new-intake eligibility‬ عن ‪continuation‬ لطلب ‪committed‬. لا تخفف ‪Service/Brand‬ أو ‪Security‬ أو ‪Capacity‬ أو ‪price/state guards‬ الخاصة بالرحلة؛ الاستثناء المقصود فقط هو مشاركة ‪Marketplace‬ الجديدة ‪Off‬ بينما ‪Pack‬ ما زالت ‪Enabled‬ لإغلاق نفس الالتزامات. إذا تعذر الاستمرار، لا ينقل ‪Backend‬ ورشة ‪Job‬ إلى أخرى ولا يلغي تلقائياً؛ ‪Support‬ يعالج الحالة وفق ‪A10‬.
+
+‪14.3 Dependencies‬ والقبول والتتبع
+
+تحتاج ‪Mobile‬ و ‪UX‬ إلى عقد ‪user-facing availability/error‬ و ‪readiness‬ من ‪Backend‬ دون تفاصيل ‪Modules. Backend‬ و ‪Matching‬ يحتاجان ‪dependency manifest‬ و ‪capability projection‬ و ‪eligibility version‬ مع ‪invalidation‬ عند ‪Admin change. AI‬ يبقى ‪taxonomy classification‬، ولا يقرأ ‪subscription‬ ليختار الورشة. أداء وقيم الأوزان و ‪retention‬ تبقى ‪Open Questions A08 A09 A13‬؛ ‪OSM 03‬ و ‪OSM 05‬ تخص البنية الجديدة.
+
+‪QA‬ يضيف إلى حالات ‪Section13: Pack‬ ناقصة مع ‪Active verified‬؛ ‪Core-only‬ الأعلى ‪Rating‬؛ ‪eligibility‬ تغيرت قبل إرسال؛ ‪subscription expired‬ دون ‪disable‬؛ ‪direct booking bypass‬؛ ‪module name leak‬ في ‪Error/Push‬؛ ‪intake Off‬ وطلب قائم يكتمل؛ ‪Disabled Pack‬ مع ‪Invoice/History/Review readable‬ لصاحبها فقط. ‪Test data‬ تحترم أن ‪Optional Apps‬ غير منفذة ولا تنشئ ‪Feature UI‬ مصطنعة لإثبات ‪gate‬.
+
+‪Source Traceability: U18‬ إلى ‪U25‬ تواصل ‪S12‬ إلى ‪S19‬ و ‪S53‬ مع ‪MD03 MD09 MD11‬؛ ‪U11/U27/U30/U31‬ تواصل ‪S10‬ و ‪S20‬ إلى ‪S23‬ و ‪S61‬ مع ‪MD07‬ و ‪A19‬؛ الحالات المرجعية ‪Workshop OS Section3‬ والملاحق ‪3.8‬ و ‪3.9‬؛ مصدر القواعد الجديدة ‪Bible Section25‬ و ‪ADR OS 001. Assumptions A01‬ إلى ‪A15‬ و ‪Open Questions‬ السابقة محفوظة؛ ‪A11 revision‬ تخص ‪Backend commercial logic‬ ولا تؤدي لشاشة مالية جديدة في ‪App‬.
+
+
+
+مخططات المنتج
+
+Product diagrams
+
+‪U_D01‬  مخطط الرحلة والعلاقات
+
+
+
+‪U04‬ إلى ‪U25‬ و‪MD09‬ و‪MD11. Backend‬ يطبق المشاركة و‪Full Pack‬ والقدرات قبل الترتيب، ويعيد التحقق عند إرسال الطلب. ‪AI‬ يصنف فقط؛ لا أسماء ‪Modules‬ في التطبيق. قبول وقت مقترح يحتاج قرار المستخدم.
+
+
+
+‪U_D02‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪U27‬ إلى ‪U31‬. قبول نسخة محددة يسمح بالتنفيذ. الفاتورة وسجل الصيانة يثبتان مع إكمال العمل؛ الدفع خارج المنصة حالة مستقلة.
+
+
+
+‪U_D03‬  مخطط الرحلة والعلاقات
+
+
+
+خريطة تنظيمية للمتطلبات وليست تصميم واجهة أو قائمة تنقل معتمدة. المعرفات ‪U01‬ إلى ‪U35‬ هي المرجع التفصيلي.
+

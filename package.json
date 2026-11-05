@@ -1,0 +1,23 @@
+{
+  "name": "miftah-360",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Miftah 360 Phase 1 Monorepo - Automotive Workshop OS, Marketplace & Mobile Ecosystem",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tests/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "embedded-postgres": "^18.6.0-beta.19",
+    "esbuild": "^0.28.2",
+    "mammoth": "^1.13.0",
+    "prettier": "^3.3.3"
+  }
+}

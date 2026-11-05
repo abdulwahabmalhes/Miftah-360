@@ -1,0 +1,2812 @@
+Miftah 360 Admin Dashboard PRD V1.1
+
+متطلبات إدارة المنصة والمنطق المشترك بين المنتجات في ‪Phase 1‬
+
+الإصدار ‪V1.1‬ | ‪5‬ أكتوبر ‪2026‬ | تابع لـ ‪Project Bible V1.1‬ | الجمهور ‪Product‬ و ‪Operations‬ و ‪UX/UI‬ و ‪Backend‬ و ‪Frontend‬ و ‪Mobile‬ و ‪AI‬ و ‪QA‬.
+
+مراجعة ‪V1.1‬ للـ ‪Admin Dashboard PRD V1‬ الحالي، تضيف ‪Workshop Modules Management‬ و ‪Entitlements‬ و ‪Eligibility‬ وفق قرار ‪MD01‬ إلى ‪MD12‬ مع حفظ منطق التشغيل الحالي. تدير ‪Marketplace‬ و ‪Master data‬ والتحقق والدعم والمراقبة، ولا تمنح الإدارة حق الموافقة على ‪Quote‬ نيابة عن المستخدم. تتضمن في نهايتها ‪Cross-Product Logic‬ و ‪End-to-End Flow‬ الرسميين. ليست تصميماً أو كوداً أو ‪Schema‬ نهائية؛ المدن ‪Dubai/Sharjah‬ واللغتان ‪AR/EN‬، وكل تفاصيل جديدة مؤثرة موسومة ‪Axx‬.
+
+مراجعة ‪Product V1.1   5‬ أكتوبر ‪2026‬
+
+
+
+فهرس الأقسام
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+1 Scope and Authority
+
+2 General Requirements and Admin Roles
+
+3 Authentication and Admin Governance
+
+4 Platform Overview Users and Vehicles
+
+5 Workshops Verification and Master Data
+
+6 Operational Monitoring Requests to Invoices
+
+7 Reviews Subscriptions Notifications and Content
+
+8 AI Matching and Analytics
+
+9 Support Suspensions Audit and Settings
+
+10 Backend Ownership and Screen Coverage
+
+11 Assumptions Open Questions and Release Gates
+
+12 Cross Product Logic
+
+‪13 End to End Flow‬ الرسمي
+
+14 Error and Alternative End to End Paths
+
+15 Delivery Acceptance and Decision Backlog
+
+16 Workshop Modules Management
+
+17 Cross PRD Consistency Review and Acceptance
+
+مخططات المنتج  ‪Product diagrams‬
+
+
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+مراجعة ‪Product‬ بتاريخ ‪5‬ أكتوبر ‪2026‬. تبقى معرفات الشاشات والحالات و ‪Assumptions‬ السابقة؛ يظهر كل تعديل متأثر في موضعه وتفصيل القرار في ‪Project Bible Section 25‬ و ‪ADR OS 001‬. المصدر ‪Sxx‬ لم يغيّر؛ مصدر الإضافة المعتمد ‪MD01‬ إلى ‪MD12‬.
+
+Change ID
+
+الأجزاء
+
+الفرق عن ‪V1‬
+
+التتبع
+
+CH-A1
+
+‪A31‬ إلى ‪A35‬ و ‪Section 16‬
+
+إدارة ‪catalog‬ و ‪tenant modules‬ والتفعيل والتعطيل و ‪bundles/eligibility‬ و ‪audit‬
+
+MD05 MD06 MD07 MD08 MD09
+
+CH-A2
+
+A03 A07 A08 A17 A18 A19 A28 A30
+
+‪Modules Manage grant‬ منفصل؛ ‪verification/subscription/eligibility‬ حالات مستقلة
+
+MD02 MD06 MD08
+
+CH-A3
+
+‪A04 A24‬ و ‪Sections 12‬ و ‪13‬ و ‪17‬
+
+‪capabilities‬ و ‪dependency gates‬ وحماية الرحلة القائمة والـ ‪historical read‬
+
+‪MD03 MD09 MD11‬ و ‪A17 A19‬
+
+CH-A4
+
+‪Sections 11‬ و ‪15‬ والتتبع والمخططات
+
+‪A11‬ محدثة، لا ‪pricing‬ أو ‪billing engine‬ أوتطوير ‪Optional Apps‬
+
+MD04 MD10 MD12
+
+
+
+1 Scope and Authority
+
+المصدر ‪S39‬ إلى ‪S51‬ و ‪S03‬ و ‪S06‬ و ‪S16‬ و ‪S17‬ و ‪S52‬ إلى ‪S54‬ و ‪S59‬ إلى ‪S61‬ و ‪S70‬ إلى ‪S72‬. وظائف ‪Content‬ البسيطة و ‪Quotes/Jobs/Invoices‬ و ‪AI/Matching/Support/Audit‬ مفصلة استجابة للتكليف دون بناء أدوات مالية أو ‪CMS‬ أو تدريب ‪AI‬ متقدم. ‪Admin monitor/control‬ لا يحل محل تصرف العميل أو عمل الورشة. ‪Backend‬ يفرض نفس الحالة والصلاحية على جميع الواجهات.
+
+‪V1.1‬ يشمل إدارة يدوية لـ ‪Module Entitlements‬ و ‪Bundles‬ التشغيلية و ‪Marketplace Eligibility‬ ولاشتراكات الورش وتحققها، ومراجعة ‪Reviews‬ والدعم وتعليق ‪Intake‬. لا ‪Auto billing‬ أو ‪commissions/settlement‬ أو ‪Sponsored ranking‬ أو ‪RTA‬ أو ‪Full parts catalog‬ أو مخزون محاسبي أو ‪Wallet‬ أو ‪Refund processor‬. البيانات التشغيلية ليست سبباً تلقائياً للسماح بالاطلاع على النص الكامل لمحادثات ‪AI‬.
+
+2 General Requirements and Admin Roles
+
+‪AG01‬ كل شاشة وتقرير ونموذج و ‪Error‬ و ‪Content‬ و ‪Notification‬ يدعم ‪AR/EN‬ و ‪RTL/LTR‬؛ التواريخ ‪Calendar day‬ لتواريخ الانتهاء و ‪Timestamp‬ للموافقات؛ عرض ‪Asia/Dubai‬ و ‪AED‬. الأسماء و ‪IDs‬ والمحتوى الأصلي لا يترجم أو يعكس سراً.
+
+‪AG02 Loading‬ أولي/جزئي/إجراء، ‪Empty‬ واضح و ‪Filters‬ محفوظة، ‪server pagination. Offline‬ يمنع ‪mutations‬ ويعرض ‪last refreshed‬؛ ‪Error‬ يحدد ‪Retry/Correction/Support‬؛ ‪Conflict‬ يجلب النسخة الحالية؛ ‪Session expired→A01‬ ثم العودة الآمنة. ‪Forbidden/Not found‬ لا يكشف حسابات أو ‪Tokens. Back‬ لا ينفذ ‪action‬ ضمنياً.
+
+‪AG03 RBAC server-side‬، صلاحيات ‪read/write/sensitive‬ مستقلة. ‪Actor Admin‬ لا يصبح ‪Customer‬ أو ‪Workshop actor‬ بالتنكر. كل ‪mutation‬ حساس يستلزم ‪reason‬ و ‪Entity version‬ و ‪Audit‬؛ ‪confirmation‬ للمساس بالوصول أو المال؛ ‪bulk destructive actions‬ خارج ‪V1.1‬.
+
+‪AG04 Search/results‬ تعرض الحد اللازم: ‪masking Phone/VIN/Plate‬ ما لم ‪Permission‬ والسبب التشغيلي، ‪sensitive AI content accessed with explicit permission‬ وعملية مسجلة. لا أسرار و ‪OTP‬ و ‪refresh tokens‬ في أي ‪Log. CSV export‬ شامل لبيانات شخصية ليس في ‪MVP. Public workshops data‬ مختلفة عن ‪owner/license details‬.
+
+‪AG05 Live aggregate‬ مصدره ‪Events committed‬، لا ‪Client analytics‬ فقط. ‪Filters scope/date/city‬ بالـ ‪Backend. GMV/service collections/platform revenue‬ مستقلة. لا نسخ فواتير أو ‪Quotes‬ قابلة للتحرير في ‪Admin‬؛ المالية تستخدم أصل ‪entity snapshots‬.
+
+‪AG06 Notification‬ بعد ‪Commit‬ ومن ‪Outbox dedup‬، ‪In-app‬ لكل منتج وقنوات إضافية حسب موافقته. ‪Suspend‬ قد يفشل ‪Push‬ لكن حالة الحساب تتغير وتوقف جلساته حسب ‪scope‬؛ لا يعتبر نجاح الإشعار شرطاً لتنفيذ حماية الوصول.
+
+‪AG07‬ لا حذف ‪hard delete‬ لكيان ‪referenced‬ في رحلة مكتملة. ‪Master data inactive‬ يختفي من الاختيارات الجديدة ويحفظ ‪snapshots‬ القديمة. ‪Consent/retention/deletion‬ حسب سياسة معتمدة قبل الإطلاق. إجراءات ‪support resolutions‬ موثقة وغير مالية تلقائياً.
+
+‪AG08‬ مقترحات ‪field limits A13: title2–150‬، ‪description‬≤‪2000‬، ‪reason5–500‬؛ ‪Body content limits‬ يثبتها ‪Product‬؛ ‪password policy‬ و ‪MFA‬ و ‪session timeout Security decisions‬. لا تقبل ‪Submit‬ ناقصاً ثم يفترض ‪reviewer‬ نية المستخدم.
+
+‪AG09‬ التنقل: ‪Create‬ يفتح ‪Detail‬ الجديد؛ ‪Save/Approve/Reject/Suspend/Restore/Resolve‬ يبقى ‪Detail‬ محدثاً ويعكس قائمة ‪Queue‬ عند العودة. ‪Archive‬ يعود للقائمة الحالية. ‪Failed‬ أو ‪Conflict‬ يبقي الصفحة بلا تغيير موهوم ويعرض ‪Latest version‬؛ ‪navigation to related entity‬ يتحقق من ‪Permission‬. لا يؤدي ‪Back‬ إلى تنفيذ أو إلغاء قرار. الحقول ‪read-only‬ تتحقق من ‪Entity ID‬ ووجود الكيان وصلاحية القراءة دون ‪Validation‬ إدخال غير موجود.
+
+Permission Group
+
+Super Admin
+
+Operations Admin
+
+Support Admin
+
+Admin identities/role assignment/security settings
+
+كامل
+
+لا
+
+لا
+
+Master services/vehicle data/content
+
+كامل
+
+تعديل
+
+قراءة حسب الحاجة
+
+Verification/workshop profile changes/suspension intake
+
+كامل
+
+كامل مع ‪reason‬
+
+طلب مراجعة فقط
+
+User account block
+
+كامل
+
+كامل مع ‪reason‬
+
+طلب مراجعة
+
+Requests/bookings/quotes/jobs/invoices monitoring
+
+كامل
+
+قراءة
+
+قراءة حالة مرتبطة ‪Case‬
+
+المالية والمستندات
+
+بإذن ‪Finance‬ منفصل
+
+‪subscription assignment‬ فقط إذا مُنح
+
+لا
+
+ملخصات ‪AI‬ وأسباب ‪Matching‬
+
+كامل مع إذن ‪AI‬
+
+قراءة التشغيل
+
+‪summary‬ مرتبط ‪Case‬ فقط
+
+نص ‪AI‬ والسجلات الحساسة
+
+permission AI Sensitive explicit
+
+لا افتراضياً
+
+لا
+
+‪Cases‬ و ‪Reviews‬
+
+كامل
+
+كامل
+
+‪cases‬ و ‪moderation‬ المصرح
+
+Audit logs
+
+كامل
+
+audit operational subset
+
+‪own case actions‬ فقط
+
+
+
+‪A12‬ ثلاثة أدوار ثابتة مع ‪Permission Finance/AI Sensitive‬ إضافي لمستخدم ‪Admin‬ مصرح؛ لا ‪Custom role builder. Super Admin‬ لا يمنح نفسه ‪Approval‬ العميل. أي حساب إداري ينشأ مسبقاً من مسؤول مخول، وليس ‪Public registration‬. مراجعة ‪MFA‬ شرط ‪Security‬ قبل ‪Public launch‬؛ ‪Auth baseline‬ بريد وكلمة مرور ‪A01‬.
+
+‪AG10 Module administration: Enabled/Disabled mutations‬ تحتاج ‪Workshop Modules Manage grant‬ و ‪latest entitlement version‬ و ‪reason‬ و ‪preview impact‬ و ‪dependency/core/pack guards‬. لا يكفي ‪Finance grant‬ أو ‪Verification permission. Historical monitoring‬ و ‪Support independent‬ من ‪enabled_modules‬ الخاصة بالورشة، ضمن ‪authorized case/finance scope‬؛ ‪Admin‬ ليس ‪Workshop actor‬.
+
+‪Permission‬ إضافي
+
+Super Admin
+
+Operations Admin
+
+Support Admin
+
+‪Modules read‬ و ‪eligibility diagnostics‬
+
+حسب نطاق الإدارة
+
+قراءة تشغيلية
+
+‪Summary‬ لحالة مرتبطة ‪Case‬ فقط
+
+Workshop Modules Manage
+
+مسؤول مخول؛ كل إجراء ‪Audit‬
+
+فقط ‪grant‬ صريح من ‪Super Admin‬
+
+لا
+
+Module grant permission administration
+
+‪Super Admin‬ فقط
+
+لا
+
+لا
+
+
+
+‪Modules Manage grant‬ لا يسمح بنشر ‪Module code‬ أوتعطيل ‪Core‬ أوفرض ‪Eligibility‬ أو ‪proxy Quote approval‬. يبقى ‪A12‬ ثلاثة أدوار ثابتة؛ ‪grant‬ المضاف لا ينشئ ‪Custom role builder‬.
+
+3 Authentication and Admin Governance
+
+دخول الإدارة والجلسة الآمنة
+
+A01 Admin Login and Secure Session
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+دخول حساب إداري مسبق من ‪URL dashboard/deep link‬.
+
+الحقول  ‪Fields‬
+
+‪email/password‬ و ‪MFA challenge‬ إذا سياسة ‪Security‬ المعتمدة تفرضه؛ لا ‪Sign up‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Login/Forgot password→A02‬. نجاح إلى ‪A04‬ أو ‪allowed landing‬.
+
+قواعد التحقق  ‪Validation‬
+
+contact verified/active/admin membership، generic failure/rate limiting؛ password hashed/secure session.
+
+حالات الشاشة  ‪States‬
+
+‪logged out/loading‬، ‪account disabled‬، ‪password expired/security step required‬ إذا ‪config‬، ‪offline retry‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪RBAC‬ و ‪session revocation‬ من ‪Backend‬؛ ‪no share workshop session‬.
+
+الإشعارات  ‪Notifications‬
+
+‪security recovery‬ فقط؛ ‪anomalies according policy‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AdminIdentity/AdminRole/AuthSession.
+
+معايير القبول  ‪AC‬
+
+‪A01.1  user‬ عادي لا يدخل كأدمن؛
+
+A01.2  disabled admin session fails؛
+
+‪A01.3  Deep link restricted‬ يبقى ‪Forbidden‬ بعد ‪Login‬.
+
+استعادة الدخول وملف الإداري
+
+A02 Recovery and Admin Account Profile
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+استعادة دخول من ‪A01‬ أو ‪own profile‬.
+
+الحقول  ‪Fields‬
+
+email recovery، one-use token/code، new password/confirm؛ own name/language/contact.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Send recovery/Set password/Save profile/Logout.
+
+قواعد التحقق  ‪Validation‬
+
+‪token expiry/attempts/security policy‬، لا تغيير ‪Role‬ هنا، ‪contact change verified‬.
+
+حالات الشاشة  ‪States‬
+
+wait/invalid/expired/provider failure، save conflict.
+
+قواعد العمل  ‪Rules‬
+
+‪security changes revoke sessions‬ حسب ‪policy‬؛ ‪old credentials‬ لا تظهر.
+
+الإشعارات  ‪Notifications‬
+
+‪recovery/password/contact updated‬ عبر ‪contact verified‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AdminIdentity/Challenge/Session/Preference.
+
+معايير القبول  ‪AC‬
+
+‪A02.1  token‬ لا يعاد استعماله؛
+
+‪A02.2  profile save‬ لا يغير ‪permissions‬؛
+
+A02.3  logout clears sensitive cache.
+
+حسابات الإدارة والأدوار والصلاحيات
+
+A03 Admin Accounts Roles and Permissions
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Super Admin‬ من ‪Settings‬.
+
+المعلومات المعروضة  ‪Data‬
+
+admin name/email/role/permission grants/status/last login؛ no password.
+
+الحقول  ‪Fields‬
+
+create identity/contact/role، Finance/AI Sensitive/Workshop Modules Manage grants reason؛ disable reason.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Invite provisioned account/Assign role/Disable/Revoke session/View audit.
+
+قواعد التحقق  ‪Validation‬
+
+‪active Super Admin‬ لا يعطل آخر ‪Super Admin‬ أو نفسه بلا بديل؛ ‪grants within allowed bundles‬؛ ‪invite token expiry‬.
+
+حالات الشاشة  ‪States‬
+
+no additional admins، invited/active/disabled، sending/conflict.
+
+قواعد العمل  ‪Rules‬
+
+least privilege، reason mandatory for sensitive grants؛ no product customer ownership changes.
+
+الإشعارات  ‪Notifications‬
+
+‪invite/role/access update‬ للمعني؛ ‪Audit to admin log‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AdminRole/PermissionGrant/Invitation/Audit.
+
+معايير القبول  ‪AC‬
+
+A03.1  Operations cannot grant roles؛
+
+A03.2  sensitive grant logged؛
+
+A03.3  revoke removes privilege immediately.
+
+4 Platform Overview Users and Vehicles
+
+مؤشرات لوحة التحكم
+
+A04 Dashboard KPIs
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super Admin after Login.
+
+المعلومات المعروضة  ‪Data‬
+
+Users/Active users/Vehicles/Workshops/Verified active/Marketplace Eligible separately/Requests/Bookings/Completed jobs/GMV/Platform revenue recorded/Average rating؛ city/date filters.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Drill into same filtered list، Analytics→A25.
+
+قواعد التحقق  ‪Validation‬
+
+date valid، metrics formula from Project Bible Section18؛ counts exclude test accounts.
+
+حالات الشاشة  ‪States‬
+
+no activity vs unavailable data، loading individual cards، delayed data label.
+
+الصلاحيات  ‪Permissions‬
+
+financial platform revenue only grant؛ support sees case relevant summary not full board.
+
+الإشعارات  ‪Notifications‬
+
+operational badges only.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Aggregates/Event/Invoice/SubscriptionLedger.
+
+معايير القبول  ‪AC‬
+
+‪A04.1  GMV‬ لا يساوي ‪platform revenue‬؛
+
+A04.2  cards/list reconcile؛
+
+A04.3  verified count Active approved not Pending.
+
+‪V1.1 MD09: counts Verified Active‬ و ‪Marketplace Eligible‬ مختلفة؛ ‪Core-only‬ ضمن ‪Workshops count‬ دون تضخيم ‪Marketplace supply‬.
+
+معايير القبول  ‪AC‬
+
+‪A04.4  Active‬ بلا ‪Pack‬ لا يدخل ‪Eligible count‬.
+
+المستخدمون وملفاتهم
+
+A05 Users List and User Profile
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Operations/Super‬ أو ‪Support‬ محدود من ‪case‬.
+
+المعلومات المعروضة  ‪Data‬
+
+name/masked phone/email/language/location/account status/registered/last active، Vehicles/Requests/Bookings/Invoices counts؛ details links authorized.
+
+الحقول  ‪Fields‬
+
+search/status/date، block/unblock reason.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+View linked entities/Block/Unblock/Support case/Audit.
+
+قواعد التحقق  ‪Validation‬
+
+Block reason required، latest version، prevent self Admin misuse؛ account deletion separate A27.
+
+حالات الشاشة  ‪States‬
+
+empty/filter no match، loading، blocked/deletion pending، conflict.
+
+قواعد العمل  ‪Rules‬
+
+‪User status Active/Suspended/Deletion Requested/Anonymized‬؛ ‪unblock‬ لا يعيد محادثات محذوفة؛ ‪full block stops sessions/new actions and routes active cases to Support without rewriting quotes‬.
+
+الإشعارات  ‪Notifications‬
+
+account access change via appropriate contact; no sensitive text.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User/AccountRestriction/Vehicle/Support/Audit.
+
+معايير القبول  ‪AC‬
+
+A05.1  block stops new Request؛
+
+A05.2  active Job preserved؛
+
+A05.3  support only scoped fields.
+
+السيارات وتفاصيلها
+
+A06 Vehicles List and Vehicle Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Operations‬ أو ‪case-scoped Support‬ من ‪Menu/User/Booking‬.
+
+المعلومات المعروضة  ‪Data‬
+
+owner/brand/model/year/mileage/optional masked VIN/plate/expiry/history provenance/jobs/invoices؛ filters brand/model/year/city.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open owner/job/history/Report data issue/Audit.
+
+الحقول  ‪Fields‬
+
+no ownership transfer or financial edit؛ corrected master reference only through reviewed data issue.
+
+حالات الشاشة  ‪States‬
+
+no records، archived displayed، loading/history failure.
+
+قواعد العمل  ‪Rules‬
+
+‪owner history visible only approved operational need‬؛ ‪sensitive reads logged‬; ‪admin‬ لا يغير ‪mileage historical without correction record/customer context‬.
+
+الإشعارات  ‪Notifications‬
+
+user notified if material correction after approved support flow.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/MileageReading/History/Invoice.
+
+معايير القبول  ‪AC‬
+
+A06.1  manual vs auto history distinct؛
+
+A06.2  archived does not remove financial link؛
+
+A06.3  no arbitrary transfer vehicle between users.
+
+5 Workshops Verification and Master Data
+
+الورش وملفاتها
+
+A07 Workshops List and Workshop Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from overview/menu/case.
+
+المعلومات المعروضة  ‪Data‬
+
+‪name/owner/contact/status/verified_at/city/location/services/brands/hours/rating/subscription/requests/jobs‬، ‪enabled modules summary‬ و ‪capability readiness‬ و ‪Marketplace participation/eligibility‬ مع ‪as-of version. Fields filters status/verified/city/service/brand‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open verification→A08/Edit approved public fields via logged change/Intake suspension→A28/View commercial→A19/Modules→A32/Eligibility→A34/Audit.
+
+قواعد التحقق  ‪Validation‬
+
+editing material fields requires revised verification snapshot؛ no overwrite issuer on old invoice.
+
+حالات الشاشة  ‪States‬
+
+no workshops/pending queue/loading/changed after snapshot/conflict.
+
+قواعد العمل  ‪Rules‬
+
+Approved label=Active، subscription separate؛ rejection/suspension not delete؛ restricted staff full freeze if scope security.
+
+الإشعارات  ‪Notifications‬
+
+decisions/profile changes to Owner.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/ProfileChange/Verification/Restriction/Subscription.
+
+معايير القبول  ‪AC‬
+
+A07.1  Suspended removed from matching new runs؛
+
+A07.2  existing services accessible per scope؛
+
+A07.3  commercial state doesn't silently approve workshop.
+
+‪V1.1 MD06 MD09: module changes‬ فقط ‪A32/A33‬؛ ‪workshop edit‬ لا يختصر الحزمة أويفرض ‪capability flag‬.
+
+معايير القبول  ‪AC‬
+
+‪A07.4  Active subscription‬ لا تعني ‪Eligible‬؛
+
+‪A07.5  Pack Enabled‬ لا تعتمد ‪Pending verification‬.
+
+مراجعة التحقق من الورش
+
+A08 Workshop Verification Queue and Review
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Pending queue.
+
+المعلومات المعروضة  ‪Data‬
+
+submitted version/legal/trade/contact/address/map/photos/services/brands/hours/previous changes/requested evidence؛ licence data only if policy confirmed.
+
+الحقول  ‪Fields‬
+
+checklist review/decision reason/required changes fields.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Approve/Reject/Request changes/View material change/reopen rejected.
+
+قواعد التحقق  ‪Validation‬
+
+required profile fields complete،market city،valid services/brands/location، reviewer authorization، current snapshot not overwritten mid-review؛ reason Reject/Changes mandatory.
+
+حالات الشاشة  ‪States‬
+
+empty queue/loading،insufficient evidence→Changes requested، concurrent reviewer→Conflict؛ images unavailable blocks relevant check not invented approval.
+
+قواعد العمل  ‪Rules‬
+
+Verified means policy review no government endorsement؛ material edit approvals preserve old published snapshot until commit.
+
+الإشعارات  ‪Notifications‬
+
+‪owner decision‬؛ ‪verification updated on Active‬؛ ‪Matching‬ يتحدث وفق ‪eligibility‬ كاملة لا ‪Active‬ وحدها.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+VerificationCase/Decision/Workshop/ApprovedProfile.
+
+معايير القبول  ‪AC‬
+
+A08.1  Pending cannot receive intake؛
+
+A08.2  approve outdated version fails؛
+
+A08.3  requested changes linked fields clear.
+
+‪V1.1 MD09: Verification decision‬ يحفظ ‪status‬ فقط؛ تعرض ‪readiness blockers‬ منفصلة، و ‪Module activation‬ ليس ضمنياً.
+
+معايير القبول  ‪AC‬
+
+‪A08.4  Approve‬ لا يتجاوز ‪missing Pack‬؛
+
+‪A08.5‬  عدم التحقق يمنع ظهور ‪tenant‬ حتى مع كل ‪grants‬.
+
+الخدمات والتصنيفات
+
+A09 Services and Categories
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Master data.
+
+المعلومات المعروضة  ‪Data‬
+
+six Categories/canonical services/aliases/AR/EN/name/icon/order/Active/count associations.
+
+الحقول  ‪Fields‬
+
+name_ar/name_en required، parent/category/service type، icon asset/key optional، sort order، active؛ aliases Oil/Battery entries link canonical ID.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Create/Edit/Activate/Deactivate/View affected workshops؛ no hard delete referenced service.
+
+قواعد التحقق  ‪Validation‬
+
+bilingual names،valid hierarchy/no cycle،duplicate IDs/aliases conflict،Taxonomy revision increments.
+
+حالات الشاشة  ‪States‬
+
+empty/incomplete translations/loading/save conflict؛ referenced deactivate warning.
+
+قواعد العمل  ‪Rules‬
+
+deactivate blocks new selection/matching but historical invoices retain service snapshot؛ AI receives current version؛ no duplicated Battery IDs.
+
+الإشعارات  ‪Notifications‬
+
+workshop operational change notice if affects enabled services؛ audit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Category/Service/Alias/TaxonomyVersion.
+
+معايير القبول  ‪AC‬
+
+A09.1  AR/EN both available؛
+
+A09.2  inactive AI output rejected for new request؛
+
+A09.3  existing quote lines retained.
+
+العلامات والموديلات والسنوات
+
+A10 Vehicle Brands Models Years and Types
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Master data.
+
+المعلومات المعروضة  ‪Data‬
+
+Brand→Model→allowed years/Trim optional/types/status.
+
+الحقول  ‪Fields‬
+
+bilingual display names/brand_id/model_id/year range/vehicle type/active؛ no external VIN auto enrichment.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Create/Edit/Deactivate/Inspect references.
+
+قواعد التحقق  ‪Validation‬
+
+model belongs brand، year integer ranges logical؛ duplicate normalized names within brand warn/reject actual duplicate؛ no orphan model؛ master source/license procurement open.
+
+حالات الشاشة  ‪States‬
+
+no models under brand/loading/error/legacy record present.
+
+قواعد العمل  ‪Rules‬
+
+changing brand label preserves IDs/history؛ inactive models remain visible in existing Vehicle but not new selection؛ no mass import pipeline necessary.
+
+الإشعارات  ‪Notifications‬
+
+internal audit only؛ no all-user push for name edit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Brand/Model/YearOption/VehicleType/Vehicle.
+
+معايير القبول  ‪AC‬
+
+A10.1  Model wrong brand backend rejects؛
+
+A10.2  deactivate preserves Garage historical display؛
+
+A10.3  year data doesn't invent unsupported trims.
+
+6 Operational Monitoring Requests to Invoices
+
+طلبات الخدمة ومراقبتها
+
+A11 Service Requests List and Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/authorized Support from Menu/User/Workshop/Case.
+
+المعلومات المعروضة  ‪Data‬
+
+request/vehicle/service/problem shared/AI classification/match run/eligible candidate reasons/selected workshop/status/time responses/images authorized.
+
+الحقول  ‪Fields‬
+
+filters city/category/status/source manual/AI/date، staff internal case note.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open booking/Matching→A24/AI→A23 with permission/Create case.
+
+حالات الشاشة  ‪States‬
+
+none/loading/matching run unavailable shows no fabricated data، request expired/rejected reasons.
+
+قواعد العمل  ‪Rules‬
+
+read monitoring; admin cannot choose workshop on user behalf or approve quote؛ matched candidates ≠ receiving workshops؛ one selected recipient A03.
+
+الإشعارات  ‪Notifications‬
+
+no action to user on mere view؛ case updates only.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Request/Classification/MatchRun/Attachment/Booking.
+
+معايير القبول  ‪AC‬
+
+A11.1  selected distinct from recommended؛
+
+A11.2  full AI needs explicit permission؛
+
+A11.3  stale run state timestamp shown.
+
+الحجوزات وتفاصيلها
+
+A12 Bookings List and Booking Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Support from Requests/Users/Menu.
+
+المعلومات المعروضة  ‪Data‬
+
+User/Workshop/Vehicle/request/agreed and proposed times/all journey states/state history/quote/job/invoice links.
+
+الحقول  ‪Fields‬
+
+date/state/city/tenant filter؛ support note.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open entities/Create dispute/Authorized cancellation request via A26 not blind override.
+
+قواعد التحقق  ‪Validation‬
+
+any permitted intervention state guards same Workshop OS PRD Section3؛ no moving to Confirmed without actual agreed time/customer action evidence.
+
+حالات الشاشة  ‪States‬
+
+empty/loading/proposal outstanding/no_show/cancelled؛ inconsistent projection flag→investigation.
+
+قواعد العمل  ‪Rules‬
+
+admin cannot claim vehicle arrived from nothing؛ user/workshop-origin transitions provenance preserved.
+
+الإشعارات  ‪Notifications‬
+
+actual authorized state intervention—not view—alerts participants.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Booking/Proposal/Transition/Case.
+
+معايير القبول  ‪AC‬
+
+A12.1  completed linked Job/Invoice/History؛
+
+A12.2  No Show no Review eligibility؛
+
+A12.3  no manual skip Inspection/Approval.
+
+عروض الأسعار وأدلة الموافقة
+
+A13 Quotes Monitoring and Approval Evidence
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/case-scoped Support from Job/Request/Menu.
+
+المعلومات المعروضة  ‪Data‬
+
+family/revisions/item snapshots/totals/status/expiry/decision actor/time/approved revision/delta from earlier; sensitive price read permission applicable. Fields filters status/date/tenant؛ no line item editing.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open job/Review audit/Create support.
+
+حالات الشاشة  ‪States‬
+
+no quote yet/loading/expired/superseded/accepted snapshots preserved.
+
+قواعد العمل  ‪Rules‬
+
+Admin cannot Approve/Reject as customer or edit Accepted؛ draft visibility operational permission only؛ no Invoice based Draft.
+
+الإشعارات  ‪Notifications‬
+
+none on view.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Quote/LineItem/Decision/Audit.
+
+معايير القبول  ‪AC‬
+
+A13.1  customer evidence available؛
+
+A13.2  stale Quote cannot re-enabled silently؛
+
+A13.3  total matches eventual issued Invoice for final accepted scope.
+
+مراقبة الأعمال
+
+A14 Jobs Monitoring
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Support from Booking/Workshop/Menu.
+
+المعلومات المعروضة  ‪Data‬
+
+complaint/shared inspection/authorized scope/assigned technician/status/start/pause/completion/mileage/quote/invoice/history؛ internal workshop notes only if case need and grant. Fields filters workshop/status/service/date؛ reason on investigation.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Create case/View invoice/View linkage consistency؛ no unguarded Complete.
+
+حالات الشاشة  ‪States‬
+
+awaiting approval/pause flags/loading/partial data failure/consistency warning.
+
+قواعد العمل  ‪Rules‬
+
+admin correction via authorized support procedure maintains financial evidence and original event؛ no job auto complete for metrics.
+
+الإشعارات  ‪Notifications‬
+
+participants only when action changes case/status.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/Inspection/Assignment/Quote/Invoice/History.
+
+معايير القبول  ‪AC‬
+
+A14.1  paused revision can't Complete؛
+
+A14.2  completed missing invoice flagged as incident، not patched with made-up quote؛
+
+A14.3  technician staff data not public.
+
+الفواتير والتفاصيل المالية
+
+A15 Invoices List and Financial Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations read limited، Finance-enabled Super Admin for intervention، Support case-scoped.
+
+المعلومات المعروضة  ‪Data‬
+
+number/issuer snapshot/customer vehicle/lines/tax/totals/lifecycle/payment/outside channel/job/accepted quote/PDF/history/financial audit.
+
+الحقول  ‪Fields‬
+
+date/tenant/lifecycle/payment filters؛ cancellation request reason with finance evidence.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+View/Download private PDF/Review financial case/Cancel issued document only if Finance policy and grant.
+
+قواعد التحقق  ‪Validation‬
+
+no editing issued amounts، current version، legal cancellation policy configured، confirmation؛ changing payment via correction record retains evidence.
+
+حالات الشاشة  ‪States‬
+
+empty/loading/PDF fail، cancellation unsupported→manual Finance support not hidden delete.
+
+قواعد العمل  ‪Rules‬
+
+cancelled invoice keeps number/history؛ no Refund gateway؛ collections from manual records not bank verification.
+
+الإشعارات  ‪Notifications‬
+
+owner/user authorized financial correction with clear reason.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Invoice/PaymentRecord/FinancialAction/Audit.
+
+معايير القبول  ‪AC‬
+
+A15.1  invoice read tenant authorized؛
+
+A15.2  any cancel stops GMV counting but not maintenance history؛
+
+A15.3  final amounts source accepted full-scope Quote.
+
+7 Reviews Subscriptions Notifications and Content
+
+مراجعة التقييمات
+
+A16 Reviews Moderation Queue and Review Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Support authorized from review menu/report.
+
+المعلومات المعروضة  ‪Data‬
+
+rating/comment/job eligibility/workshop reply/reports/moderation history/publication status.
+
+الحقول  ‪Fields‬
+
+decision reason/category، optional permitted public explanation.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Hide/Restore/Keep published/Hide reply/Resolve report.
+
+قواعد التحقق  ‪Validation‬
+
+verified Completed Job association/Owner identity، mandatory reason for hiding/restoring، no score edit.
+
+حالات الشاشة  ‪States‬
+
+empty reports/loading/already hidden/conflict.
+
+قواعد العمل  ‪Rules‬
+
+Delete source concept implemented Soft hide for evidence/privacy؛ abuse report doesn't auto suppress until policy review؛ aggregate recalculated published-only.
+
+الإشعارات  ‪Notifications‬
+
+reviewer/user/workshop notice as policy without exposing reporter identity.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Review/Reply/Report/ModerationAction.
+
+معايير القبول  ‪AC‬
+
+A16.1  hide removes contribution once؛
+
+A16.2  restore returns contribution once؛
+
+‪A16.3  Admin‬ لا يغير ‪1star‬ إلى ‪5‬.
+
+كتالوج خطط الاشتراك
+
+A17 Plans Catalog
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Super‬ أو ‪Operations granted from Subscriptions‬.
+
+المعلومات المعروضة  ‪Data‬
+
+plan name AR/EN/description/status/trial policy label/manual price only if agreed/effective dates.
+
+الحقول  ‪Fields‬
+
+‪name/descriptions/price AED optional/duration days optional/active‬؛ ‪no automated checkout‬؛ ‪manual module grants‬ منفصلة عبر ‪A31‬ إلى ‪A35‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Create Pilot plan/Edit/Inactive.
+
+قواعد التحقق  ‪Validation‬
+
+no negative price/duration، explicit unknown fields permitted if not selling؛ referenced plan cannot hard delete.
+
+حالات الشاشة  ‪States‬
+
+no plans→manual Pilot setup/loading/price unapproved indicated.
+
+قواعد العمل  ‪Rules‬
+
+‪Starter/Pro/Business examples not final‬؛ ‪A11‬ محدثة؛ ‪Pilot manual commercial plan‬، و ‪Core/Pack grants‬ من ‪A32‬ لا من ‪plan label‬؛ ‪no commission/billing processor‬.
+
+الإشعارات  ‪Notifications‬
+
+no broadcast when draft plan edit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Plan/CommercialConfig/Audit.
+
+معايير القبول  ‪AC‬
+
+‪A17.1  unpriced Plan‬ لا يظهر كتحصيل مالي؛
+
+A17.2  plan deactivation preserves assigned snapshots؛
+
+A17.3  no billing run.
+
+‪V1.1 MD06: Plan‬ قد يحمل مرجع ‪recommended bundle/manual grant source‬ عند اعتماده، دون تلقائية. صيغة ‪plan/entitlement relationships‬ في ‪Section16‬ منطق ‪Product‬ فقط.
+
+معايير القبول  ‪AC‬
+
+‪A17.4  edit plan‬ لا يغيّر ‪grants‬ قائمة؛
+
+‪A17.5  unimplemented Module‬ لا يصبح ‪available‬ لأنه في ‪plan description‬.
+
+تعيين اشتراك الورشة
+
+A18 Workshop Subscription Assignment
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+commercial-granted Admin from Workshop/Subscription list.
+
+الحقول  ‪Fields‬
+
+workshop/plan/status Trial/Active/Expired/Cancelled، trial start/end، active period start/end optional، reason/manual assignment reference.
+
+المعلومات المعروضة  ‪Data‬
+
+assignment history/effective plan/subscription state.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Assign/Edit dates/Activate/Expire/Cancel with confirmation.
+
+قواعد التحقق  ‪Validation‬
+
+start≤end، one current assignment per workshop، version guard، no auto charge؛ expired period cannot be labelled active without new approved interval.
+
+حالات الشاشة  ‪States‬
+
+none assigned/loading/expired overlaps conflict.
+
+قواعد العمل  ‪Rules‬
+
+‪does not verify Workshop‬؛ ‪no silent disabling unfinished services‬؛ ‪intake suspension separate A28‬؛ ‪eligibility‬ و ‪Module Entitlements‬ من ‪A32/A34‬، لا ‪Automatic grant/expire‬.
+
+الإشعارات  ‪Notifications‬
+
+Owner plan/trial end/expiry per Config.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Subscription/AssignmentHistory/Plan.
+
+معايير القبول  ‪AC‬
+
+A18.1  duplicate assign no two currents؛
+
+A18.2  Active subscription Pending workshop remains not published؛
+
+A18.3  expiry keeps history/Invoices.
+
+‪V1.1 MD06 MD08‬: يمكن فتح ‪module preview‬ مرتبط ب ‪Subscription‬ من ‪A32‬، لكنه قرار منفصل ب ‪confirmation/Audit‬.
+
+معايير القبول  ‪AC‬
+
+‪A18.4  Trial→Expired‬ لا يحذف أويعطل ‪Modules‬؛
+
+‪A18.5  Module grant alone‬ لا يسجل ‪revenue‬.
+
+سجل إيرادات المنصة اليدوي
+
+A19 Manual Platform Revenue Records
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Finance-enabled Admin from Subscription detail.
+
+المعلومات المعروضة  ‪Data‬
+
+platform subscription charges/recorded amount/period/payment recorded/reference/adjustments؛ not GMV.
+
+الحقول  ‪Fields‬
+
+amount AED/period/charge or correction/reference/payment status/reason؛ no card data.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Record agreed charge/Record received settlement/Correct with reason/View audit.
+
+قواعد التحقق  ‪Validation‬
+
+commercial agreement exists،amount≥0،period linked assignment، duplicate reference guard، received≠just assigned.
+
+حالات الشاشة  ‪States‬
+
+no financial record→revenue unrecorded، saving/conflict.
+
+قواعد العمل  ‪Rules‬
+
+‪minimal manual subscription ledger for reporting A11‬؛ ليس ‪ERP accounting‬ أو ‪bank reconciliation‬؛ ‪revenue recognition policy Finance required, displayed‬ «‪Recorded platform revenue‬» ‪not audited accounting claim‬.
+
+الإشعارات  ‪Notifications‬
+
+owner confirmation if actual agreed charge record؛ no automated collection.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+SubscriptionLedgerEntry/Settlement/Audit.
+
+معايير القبول  ‪AC‬
+
+‪A19.1  workshop GMV‬ لا يدخل ‪ledger‬؛
+
+‪A19.2  assignment‬ وحده لا يزيد ‪revenue‬؛
+
+A19.3  correction append retains original.
+
+‪V1.1 MD10: record‬ يدوي لمبلغ تجاري متفق عليه قد يشير إلى ‪Base‬ أو ‪Add-on/Bundle implemented‬ مستقبلاً، لا ‪invoice builder‬ للـ ‪Apps‬ غير المنفذة.
+
+معايير القبول  ‪AC‬
+
+‪A19.4‬  إيراد ‪assignment‬ و ‪module enable‬ ليس تلقائياً؛ لا أسعار ‪catalog‬ مختلقة.
+
+قوالب الإشعارات ومراقبة التسليم
+
+A20 Notification Templates and Delivery Monitoring
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Notifications.
+
+المعلومات المعروضة  ‪Data‬
+
+event type/template AR/EN/allowed variables/channel/active/version/delivery counts and errors sanitized.
+
+الحقول  ‪Fields‬
+
+title/body/template variable selection/enable؛ filter failed deliveries.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Preview/Save version/Retry failed transactional delivery if entity still relevant.
+
+قواعد التحقق  ‪Validation‬
+
+required languages/placeholders valid/no Phone/VIN/full complaint in Push، entity permissions before delivery؛ no retry expired OTP or outdated proposal/quote as active.
+
+حالات الشاشة  ‪States‬
+
+no failed deliveries/loading/invalid variable/provider down.
+
+قواعد العمل  ‪Rules‬
+
+no bulk promotional campaign builder in MVP؛ retries dedup original event، no domain mutation.
+
+الإشعارات  ‪Notifications‬
+
+configured transactional only؛ prefer in-app fallback.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Template/OutboxEvent/Notification/DeliveryAttempt.
+
+معايير القبول  ‪AC‬
+
+‪A20.1  retry‬ لا يخلق ‪Request‬ أو ‪Invoice‬؛
+
+A20.2  outdated Quote retry resolves current state or suppresses؛
+
+A20.3  AR/EN preview correct.
+
+المحتوى والسياسات والدعم
+
+A21 Content FAQ Terms Privacy About and Support
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Content.
+
+المعلومات المعروضة  ‪Data‬
+
+content key/language/draft/published version/effective_at/history.
+
+الحقول  ‪Fields‬
+
+title AR/EN/body AR/EN/publish effective date؛ support contact channels validated.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save draft/Preview/Publish approved content/Archive non-policy content.
+
+قواعد التحقق  ‪Validation‬
+
+bilingual required for published pages، sanitize rich text/links، policy publish authorized legal approval reference؛ can't overwrite accepted Consent version.
+
+حالات الشاشة  ‪States‬
+
+empty/loading/draft only/untranslated→cannot publish/conflict.
+
+قواعد العمل  ‪Rules‬
+
+‪simple fixed-page editor‬، ‪no general CMS templates/site builder‬؛ ‪Terms/Privacy need review‬, لا ‪invent legal clauses‬ هنا.
+
+الإشعارات  ‪Notifications‬
+
+material consent policy update if legal requires re-consent؛ no spam for FAQ text edit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+ContentVersion/ConsentVersion/SupportContactConfig.
+
+معايير القبول  ‪AC‬
+
+A21.1  old Consent links old policy؛
+
+‪A21.2  Draft‬ لا يظهر ‪user‬؛
+
+A21.3  harmful markup not rendered.
+
+8 AI Matching and Analytics
+
+قائمة محادثات الذكاء الاصطناعي
+
+A22 AI Conversations List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations summary permission/Super authorized from AI menu/Request.
+
+المعلومات المعروضة  ‪Data‬
+
+conversation id/pseudonymous user/vehicle class/language/start/end/message count/classification/risk/status/error category؛ raw text not list payload. Fields filters language/risk/date/status/request relation.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Summary detail→A23/View linked request.
+
+حالات الشاشة  ‪States‬
+
+none yet/loading/retention expired entries metadata policy؛ no unrestricted text search.
+
+قواعد العمل  ‪Rules‬
+
+‪AI status Collecting Information/Classified/Uncertain/Failed‬ منفصل عن ‪Risk Low/Medium/High‬؛ لا ‪Approved AI‬.
+
+الإشعارات  ‪Notifications‬
+
+no user notification for admin read؛ monitoring incident if failure pattern manually flagged.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Conversation/Classification/AIProcessingMetadata.
+
+معايير القبول  ‪AC‬
+
+A22.1  unauthorized role no message text؛
+
+A22.2  risk filter not job status؛
+
+A22.3  deletion retention removes content per policy.
+
+تفاصيل المحادثة والسجلات
+
+A23 AI Conversation Detail and Logs
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+summary grant for structured result؛ AI Sensitive grant+reason for raw messages.
+
+المعلومات المعروضة  ‪Data‬
+
+requested vehicle context/minimized input،classification IDs/taxonomy version/questions/uncertainty/safety response/user override/processing model version/latency/error metadata؛ raw messages gated.
+
+الحقول  ‪Fields‬
+
+access reason/review flag internal؛ no training upload/rewrite output feature.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Show sensitive messages with audit/View request/Create quality incident/View matching.
+
+قواعد التحقق  ‪Validation‬
+
+reason mandatory for sensitive access،retention and ownership context verified،no secrets/provider token display.
+
+حالات الشاشة  ‪States‬
+
+text unavailable/removed by policy/loading/provider log unavailable؛ original classification snapshot retained to allowed extent.
+
+قواعد العمل  ‪Rules‬
+
+‪AI monitoring does not edit submitted service or send new advice to user‬؛ ‪evaluation data reused only under privacy policy‬، ‪automatic fine tuning‬ خارج ‪V1‬.
+
+الإشعارات  ‪Notifications‬
+
+internal incident only؛ no unsolicited message user.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Message/Classification/AccessAudit/AIQualityCase.
+
+معايير القبول  ‪AC‬
+
+A23.1  raw read audited even without mutation؛
+
+A23.2  model output with invalid taxonomy rejected/uncertain in live flow؛
+
+A23.3  missing logs no fabricated explanation.
+
+مراقبة مطابقة الورش
+
+A24 Workshop Matching Monitoring
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Matching/Request/AI detail.
+
+المعلومات المعروضة  ‪Data‬
+
+‪run inputs/vehicle brand/services/location precision/time/active filters/eligible and excluded reason codes/ranking components/config version/data timestamps/selected workshop‬، ‪entitlement/capability/eligibility versions‬ و ‪missing required capabilities/pack dependencies internal reasons‬؛ ‪no arbitrary AI recommendation. Fields filters city/service/version/outcome/zero results‬؛ ‪diagnostic reason‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Inspect run/Diagnostic rerun latest data/View workshop/Log quality issue.
+
+قواعد التحقق  ‪Validation‬
+
+‪diagnostic run flagged non-production‬ ولا يرسل طلباً أو يعيد توجيه المستخدم؛ ‪config changes in A29 require reviewed version/rollback‬.
+
+حالات الشاشة  ‪States‬
+
+no run for manually selected workshop→direct eligibility check log، zero candidates/loading/coordinates unavailable؛ diagnostics old vs new separate.
+
+قواعد العمل  ‪Rules‬
+
+‪current participation‬ و ‪full Pack‬ و ‪required capabilities hard filters first‬، ‪soft score only eligible‬، ‪no paid boost‬، ‪no fabricated percent‬، ‪All Brands supported explicitly‬؛ ‪known closed/full excludes‬، ‪unknown availability labeled needs confirmation‬.
+
+الإشعارات  ‪Notifications‬
+
+no user unless actual request action elsewhere.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+MatchingRun/Candidate/ReasonCode/RankingConfig/DiagnosticRun.
+
+معايير القبول  ‪AC‬
+
+A24.1  exclusion visible attributable؛
+
+A24.2  diagnostic changes no Booking؛
+
+A24.3  rerun same input/version/data deterministic.
+
+‪V1.1 MD09 MD11: internal rejection reasons‬ تميّز ‪MARKETPLACE_OFF‬ و ‪PACK_INCOMPLETE‬ و ‪REQUIRED_CAPABILITY_UNAVAILABLE‬ و ‪MODULE_NOT_IMPLEMENTED‬ بحسب السياق؛ ‪labels‬ ليست ‪technical error enum‬ نهائية.
+
+معايير القبول  ‪AC‬
+
+‪A24.4  rank boost‬ لا يعيد ‪excluded‬؛
+
+‪A24.5  Diagnostic‬ يشير لنسخ ‪entitlement/config‬ الحالية دون تعديل ‪Grant‬؛
+
+‪A24.6  App payload‬ لا يتضمن ‪module/subscription reason‬.
+
+التحليلات وتقارير التحويل
+
+A25 Analytics Funnel and Basic Reports
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from Overview/Analytics.
+
+المعلومات المعروضة  ‪Data‬
+
+Signup→Vehicle→AI/manual route→Requests→Bookings→Accepted quote→Completed jobs→Repeat، City/Language/Service/Workshop/date cohorts،response latency/retention/match yield/sample size. Fields cohort window/date/city/source.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Drill source list/View definition.
+
+قواعد التحقق  ‪Validation‬
+
+cohort start/end valid،only users with maturity window for repeat،distinct jobs/request/quote families، test/internal accounts excluded.
+
+حالات الشاشة  ‪States‬
+
+‪no sufficient cohort→insufficient sample‬ لا ‪0‬%، ‪processing/lag/error‬.
+
+قواعد العمل  ‪Rules‬
+
+‪AI-start‬ ليس ‪compulsory conversion‬ لكل مستخدم؛ ‪manual branch‬ مستقل حتى لا يحتسب نجاحه فشلاً؛ ‪downloads not success metric‬.
+
+الإشعارات  ‪Notifications‬
+
+no automatic growth campaigns.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+DomainEvents/CohortAggregate/KPIDefinition.
+
+معايير القبول  ‪AC‬
+
+‪A25.1  funnel‬ لا يرفض ‪manual journey‬؛
+
+‪A25.2  revised quotes‬ لا ‪inflate sent denominator‬؛
+
+A25.3  sums reconcile operational records.
+
+9 Support Suspensions Audit and Settings
+
+حالات الدعم والخلافات
+
+A26 Support Cases and Disputes
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Support/Operations/Super from Cases/User/Job/Invoice.
+
+المعلومات المعروضة  ‪Data‬
+
+case topic/participants/linked entities/description/attachments/status/updates/assigned admin/resolution؛ internal notes distinct.
+
+الحقول  ‪Fields‬
+
+assignee/status/request info to user/workshop/internal note/resolution reason.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Assign/Request info/Resolve/Close/Reopen/Escalate financial/security case.
+
+قواعد التحقق  ‪Validation‬
+
+party authorized،required resolution description،no automatic refund/quote approval، no case close while required intervention outcome unknown؛ action actor/logged.
+
+حالات الشاشة  ‪States‬
+
+empty/unassigned/loading/awaiting response/conflict؛ disputed charge not auto-unpaid.
+
+قواعد العمل  ‪Rules‬
+
+simple case process A15؛ participant views sanitized and internal notes excluded؛ legitimate pre-start cancellation follows common state guard، Started dispute no delete.
+
+الإشعارات  ‪Notifications‬
+
+involved user/workshop only، internal assigned staff؛ no third party sends.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+SupportCase/CaseUpdate/Participant/ActionReference.
+
+معايير القبول  ‪AC‬
+
+A26.1  resolution links actual action or explicitly no change؛
+
+A26.2  notes internal not sent؛
+
+A26.3  reopened case retains timeline.
+
+طلبات حذف الحساب والخصوصية
+
+A27 Account Deletion and Data Privacy Requests
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+authorized Operations/Super from User/Privacy queue.
+
+المعلومات المعروضة  ‪Data‬
+
+verified applicant/request status/active jobs/invoices/retention constraints/content removal scope.
+
+الحقول  ‪Fields‬
+
+review outcome/reason/retention rule reference؛ no arbitrary erase-all.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Request identity verification/Approve anonymization plan/Execute authorized deletion workflow/Inform result.
+
+قواعد التحقق  ‪Validation‬
+
+valid requester/session/reverification، unresolved active services follow policy، retention policy configured and reviewed؛ no automatic deleting fiscal evidence/backups beyond policy.
+
+حالات الشاشة  ‪States‬
+
+‪pending/needs info/blocked by active case/processing/completed/rejected with reason‬؛ ‪error partial removal→incident visible‬ لا ‪completed fake‬.
+
+قواعد العمل  ‪Rules‬
+
+account deletion source S61، export advanced later؛ data minimization not legal policy invented.
+
+الإشعارات  ‪Notifications‬
+
+applicant status/completion safe contact.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+DeletionRequest/RetentionRule/AnonymizationEvent/Audit.
+
+معايير القبول  ‪AC‬
+
+A27.1  wrong claimant cannot delete؛
+
+A27.2  invoice retained/anonymized according rule؛
+
+A27.3  sessions revoked at final access removal.
+
+التعليق وإعادة التفعيل
+
+A28 Suspensions and Reactivation
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Operations/Super from User/Workshop/Staff.
+
+الحقول  ‪Fields‬
+
+‪target/entity type/reason/category/scope Intake Only‬ أو ‪Full Security Freeze/starts_at/current active items‬؛ ‪contact instructions‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Confirm suspend/Reinstate after checks/View affected jobs/Case.
+
+قواعد التحقق  ‪Validation‬
+
+latest target version، reason required، role authorized، frozen existing financial obligations not deleted، reinstatement review checks.
+
+حالات الشاشة  ‪States‬
+
+active/suspended/pending investigation/loading/conflict.
+
+قواعد العمل  ‪Rules‬
+
+Workshop intake-only removes Discovery/Matching/new requests but existing job operations allowed to finish؛ security freeze blocks mutations/sessions and routes existing service to supervised support؛ User full block stops access/new approvals so active journey managed case not proxy approval.
+
+الإشعارات  ‪Notifications‬
+
+‪target owner/account contact‬، ‪involved active customers‬ إذا أثر مباشر؛ ‪audit no secrets‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Restriction/Workshop/User/Case/Session.
+
+معايير القبول  ‪AC‬
+
+A28.1  suspended excluded immediately at request recheck؛
+
+A28.2  existing invoice retained؛
+
+A28.3  reactivation no auto override rejected verification.
+
+‪V1.1 MD07: suspension‬ ليست ‪Disabled module‬؛ ‪re-enable module‬ لا يرفع ‪Security Freeze‬، و ‪reactivate workshop‬ لا يعيد ‪participation/grants‬ غير معتمدة.
+
+معايير القبول  ‪AC‬
+
+‪A28.4‬  كل محور ‪access‬ مستقل و ‪audit‬ محفوظ.
+
+إعدادات النظام والتشغيل
+
+A29 System Settings and Operational Configuration
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Super Admin plus allowed Operations subset.
+
+المعلومات والحقول  ‪Data/Fields‬
+
+launch city list Dubai/Sharjah fixed V1.1، supported languages، support contacts، reminder timing/request validity/quote default validity/no_show grace، Matching radius/config version، upload limits، notification toggles/tax setup reference.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save proposed config/Review+Publish config version/Rollback to prior valid version.
+
+قواعد التحقق  ‪Validation‬
+
+bounds/nonnegative intervals، dependency checks، no new market/service feature activation by unreviewed toggle، tax rules only Finance-approved، production/staging clearly separate؛ secrets managed outside product forms.
+
+حالات الشاشة  ‪States‬
+
+not configured launch blockers/loading/validation/conflict؛ failed publish keeps previous version active.
+
+قواعد العمل  ‪Rules‬
+
+Config change future operations only unless explicit scheduled-event re-evaluation؛ pending approved quote retains snapshot؛ no supplier API keys in UI.
+
+الإشعارات  ‪Notifications‬
+
+internal operations on impactful config change، no user broadcast by default.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+ConfigVersion/Approval/Audit/PolicyReference.
+
+معايير القبول  ‪AC‬
+
+A29.1  rollback auditable؛
+
+A29.2  new config no old price mutation؛
+
+A29.3  language toggle cannot disable AR/EN requirement.
+
+سجل التدقيق والوصول الحساس
+
+A30 Audit Logs and Sensitive Access Review
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Super/Operations subset/Support own actions from Audit/Entity.
+
+المعلومات المعروضة  ‪Data‬
+
+actor/role/tenant/entity/action/from-to/reason/time/correlation/event version/sensitive read access.
+
+الحقول  ‪Fields‬
+
+date/actor/entity/action/type filters؛ read-only.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open permitted entity/Inspect linked case؛ no Edit/Delete.
+
+حالات الشاشة  ‪States‬
+
+no matching records/loading/retention limits clearly stated/error.
+
+قواعد العمل  ‪Rules‬
+
+append-only source، excludes passwords/OTP/tokens and full message text؛ retains evidence per policy؛ permission read logs independent from full entity content.
+
+الإشعارات  ‪Notifications‬
+
+no browsing event except audit of sensitive-log access if required؛ incident manual escalation.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AuditEvent/AccessAudit/Correlation.
+
+معايير القبول  ‪AC‬
+
+A30.1  approval actor/time retained؛
+
+A30.2  no admin edits logs؛
+
+A30.3  every sensitive mutation has reason and linkage.
+
+‪V1.1 MD06 MD07: filters entitlement/module/bundle‬؛ ‪event‬ يحتفظ ‪Actor/Tenant/Module/from-to/reason/source/subscription or bundle reference/dependency impact/version/correlation/time‬.
+
+معايير القبول  ‪AC‬
+
+‪A30.4  module mutation‬ و ‪refusal‬ المهم قابلان للتتبع؛
+
+‪A30.5‬  لا ‪audit entry‬ يسمح بإعادة تنفيذ فعل.
+
+10 Backend Ownership and Screen Coverage
+
+Group
+
+Screen IDs
+
+Authority
+
+Access and roles
+
+A01 A02 A03
+
+Auth/Role grants only؛ no public admin signup
+
+Users vehicles workshops
+
+‪A04‬ إلى ‪A08‬
+
+moderation/verification/read scope
+
+Master data
+
+A09 A10
+
+Taxonomy/Vehicle catalogs versioned
+
+Transactions
+
+‪A11‬ إلى ‪A15‬
+
+monitor؛ approved interventions only
+
+Commercial and content
+
+‪A16‬ إلى ‪A21‬
+
+moderation/manual assignments/manual finance/content versions
+
+AI/matching/analytics
+
+‪A22‬ إلى ‪A25‬
+
+logs/diagnostics/read؛ no choosing workshop for user
+
+Governance
+
+‪A26‬ إلى ‪A30‬
+
+support/privacy/restrictions/config/audit
+
+
+
+‪Admin Authentication A01/A02‬، ‪Admin Roles A03‬، ‪Dashboard KPIs A04‬، ‪Users A05‬، ‪Vehicles A06‬، ‪Workshops A07‬، ‪Verification A08‬، ‪Services‬ & ‪Categories A09‬، ‪Brands‬ & ‪Models A10‬، ‪Requests A11‬، ‪Bookings A12‬، ‪Quotes A13‬، ‪Jobs A14‬، ‪Invoices A15‬، ‪Reviews A16‬، ‪Subscriptions A17/A18/A19‬، ‪Notifications A20‬، ‪Content A21‬، ‪AI Conversations/Logs A22/A23‬، ‪Matching A24‬، ‪Analytics A25‬، ‪Support/Disputes A26‬، ‪Suspensions A28‬، ‪Audit A30‬، ‪Settings A29. A27‬ يشغل ‪Account deletion‬ من المصدر ‪S61‬.
+
+11 Assumptions Open Questions and Release Gates
+
+المجال
+
+غير المحسوم
+
+‪Owner‬ ومعيار الحسم
+
+Admin security
+
+MFA/session policy/admin provisioning
+
+Security؛ access controls verified before launch
+
+Verification
+
+criteria/license evidence/material edits/public badge wording
+
+Operations/Legal؛ reviewer checklist approved
+
+Finance
+
+VAT applicability/TRN/tax allocation/rounding/numbering/cancellation/retention
+
+‪Finance/Legal‬؛ مانع إطلاق ‪Invoice‬ إن غير معتمد
+
+Commercial
+
+duration/prices/entitlements/financial recognition
+
+‪Commercial/Finance‬؛ ‪Pilot manual commercial plan‬ و ‪module grants‬ مستقلة ‪A11‬ المحدثة
+
+Matching
+
+weights/cold start/radius/slot availability/capacity
+
+Product/Operations؛ versioned reviewed baseline
+
+AI
+
+budget/rate limits/retention/image inference/sensitive grants
+
+Product/AI/Security؛ safe evaluation AR/EN
+
+Privacy
+
+consent policy/deletion/anonymization/backups retention
+
+Legal/Security؛ approved lifecycle not invented here
+
+Operations
+
+request expiry/quote default/time-proposal expiry/no_show grace/support SLA
+
+Product/Operations؛ Config values explicit before pilot
+
+
+
+‪A19 minimal manual subscription financial records is an Assumption A11‬ لتفسير ‪Revenue KPI‬، وليس ميزانية أو نظام محاسبة إضافياً. إذا ‪Commercial‬ لا يسجل مبالغ فعلية في ‪Pilot‬ يعرض ‪Platform Revenue‬ «‪Not recorded‬»، لا يختلق أرقاماً. ‪Privacy/Finance decisions‬ تسلم للمختصين؛ هذه الوثائق ليست رأياً قانونياً أو معيار امتثال معتمداً.
+
+12 Cross Product Logic
+
+‪12.1‬ المصدر الواحد للبيانات
+
+‪User App‬ يرسل ‪Intent‬ إلى ‪Backend‬: سجل حساباً، أضف سيارة، صنف المشكلة، احسب ‪Match‬، أرسل ‪Request‬، اقبل الوقت، وافق ‪Quote‬، اكتب ‪Review. Backend‬ يثبت ‪Identity/Ownership‬ و ‪Validation‬ و ‪Version‬ و ‪Business Rule‬ ثم ‪Commit‬؛ لا يصدر حدث نجاح قبلها. ‪Workshop OS‬ يقرأ الطلبات التي اختيرت ورشته فقط ويرد ويعمل الفحص والعرض والتنفيذ. ‪Admin Dashboard‬ يقرأ نفس ‪Entities‬ و ‪Events‬ ويفرض الحوكمة والتحقق. ‪Miftah AI‬ يستدعى خلف ‪Backend‬ بسياق مصرح ومخفف، ويرجع ‪Structured Classification‬؛ لا يمتلك صلاحية كتابة موافقة أو ‪Price/Invoice/Workshop selection‬.
+
+المسار المطلوب ‪User App → Backend → Workshop OS → Admin Dashboard → Miftah AI‬ هو سلسلة مسؤوليات ومراقبة فوق ‪Backend‬؛ ليس تمرير بيانات سري مباشر بين خمس واجهات. ‪AI‬ يستخدم قبل ‪Matching‬، ويظل تحت ‪Backend Auth‬. مراقبة ‪Admin‬ تحدث أثناء الرحلة وبعدها، وليست نقطة موافقة لازمة لكل ‪Booking‬.
+
+‪12.2‬ ملكية الكيانات والتغييرات
+
+Entity
+
+‪Originator‬ والحق في الكتابة
+
+المستهلكون والقيود
+
+Invariant
+
+User Consent
+
+User/Auth backend
+
+App؛ Admin authorized subset
+
+‪verified identity‬ و ‪policy version‬
+
+Vehicle/Mileage
+
+‪Owner‬؛ ‪Workshop new reading‬ ضمن ‪job‬
+
+App؛ local Workshop relation؛ Admin need
+
+‪owner‬ ثابت وقراءات موثقة
+
+Taxonomy/Brands/Models
+
+Admin authorized
+
+كل المنتجات و ‪AI‬
+
+‪stable IDs‬ و ‪version‬ و ‪AR/EN‬
+
+Workshop/Profile/Hours/Associations
+
+Owner submit؛ Admin approve material changes
+
+App public eligible؛ workshop؛ admin
+
+‪Active plus Marketplace Eligibility‬ قبل ‪new intake‬
+
+AIConversation/Classification
+
+User inputs؛ AI structured output through backend
+
+User؛ Admin permission؛ Workshop shared summary only
+
+AI doesn't pick workshop or approve work
+
+MatchingRun
+
+deterministic backend engine
+
+App results؛ Admin monitoring
+
+‪eligible only‬ و ‪version/time‬
+
+ServiceRequest
+
+Owner→chosen Workshop
+
+selected Workshop؛ User؛ Admin
+
+one recipient A03
+
+Booking/Proposal
+
+Workshop response؛ User accepts changed time
+
+App/Workshop/Admin
+
+one booking/request؛ current proposal version
+
+Inspection/Job
+
+Workshop authorized roles
+
+User shared progress؛ Admin scope
+
+no execution before accepted quote
+
+Quote/Lines
+
+Workshop Draft/Send؛ User decision
+
+جميع الجهات ‪authorized‬
+
+immutable Sent/Accepted snapshots
+
+Invoice/Payment
+
+system Issue at Complete؛ Workshop record external paid
+
+Owner user read؛ Workshop؛ Admin Finance
+
+invoice amounts from final approved scope
+
+MaintenanceRecord
+
+system auto from completed job؛ User manual with provenance
+
+Vehicle owner؛ local workshop history
+
+one auto record/job
+
+Review/Reply
+
+User completed job؛ Workshop reply؛ Admin moderation
+
+public published subset
+
+one review/job؛ score not admin-edited
+
+Subscription
+
+Admin manual assignment/ledger
+
+Owner؛ Admin
+
+‪separate verification‬ و ‪Entitlements‬ و ‪GMV‬
+
+Module Catalog and Bundle definition
+
+reviewed product manifest؛ Admin reads/applies available definitions
+
+OS Shell؛ Admin
+
+‪Implemented distinct from Roadmap‬؛ لا ‪runtime code publishing‬
+
+Module Entitlement
+
+Admin Modules Manage grant only
+
+‪OS‬ و ‪Backend‬؛ ‪Admin‬؛ لا ‪User App SaaS payload‬
+
+Core immutable؛ pack guards؛ reason/source/audit/version
+
+Capability Profile and Eligibility
+
+Backend derives؛ Admin participation intent
+
+Matching؛ Admin؛ App eligible results only
+
+no arbitrary override of missing module
+
+Support/Restriction/Audit
+
+parties case؛ Admin actions؛ system append audit
+
+participant sanitized views
+
+no proxy quote approval or destructive financial delete
+
+
+
+‪12.3‬ العقود المنطقية دون ‪Endpoints‬ أو ‪Schema‬
+
+‪Classification request‬ يحتاج ‪conversation/vehicle/context language/description‬ و ‪current taxonomy version‬؛ ‪response classification_id/category_id/service_ids/summary/risk/questions/uncertainty/status. Unknown/invalid IDs‬ تؤدي ‪Uncertain/manual fallback‬ لا ‪imaginary service. Location‬ يؤكدها المستخدم للـ ‪Match‬؛ لا يستنتج ‪AI‬ المدينة من تخمين الاسم.
+
+‪Matching input‬ يحتاج ‪vehicle brand/model/year‬ و ‪selected service IDs‬ و ‪coordinates/city‬ و ‪preferred time‬ إن موجود و ‪filter/ranking version. Output run_id/candidate workshop IDs/reasons/distances/availability known or unconfirmed/as_of/exclusion reasons for Admin‬، ‪internal capability/entitlement/eligibility versions‬؛ ‪user gets eligible candidates only. Workshop ID‬ من ‪catalog/engine‬ لا ‪LLM. Match‬ ليس حجزاً، ويعاد ‪eligibility‬ عند ‪Submit/Confirm‬.
+
+‪Request snapshot‬ يحتاج ‪Owner/Vehicle/Workshop/Services/Problem/Images/location/AI shared summary/risk/preferred time/selected match run‬. يحفظ ‪Original classification + user overrides separately‬؛ ‪Workshop‬ لا ترى محادثة كاملة. ‪Direct booking‬ يشغل نفس ‪Request contract‬ ثم ‪proposed/agreed appointment‬، وليس كياناً مالياً منفصلاً.
+
+‪Quote decision‬ يحتاج ‪quote_id/family/revision/current Entity version/actor decision/total snapshot/decision_at. Backend‬ يراجع ‪expiry/status/owner/current revision‬ ثم يقفل ‪decision‬ ويحدّث ‪Job/Booking‬ ويطلق ‪Event‬. لا يصدق ‪Total‬ أرسله ‪Client‬ كحساب نهائي ولا ‪approval sent from Workshop role‬.
+
+‪Complete command‬ يحتاج ‪job/version/current approved full-scope quote/confirmed services/completion mileage/actor/idempotency key. Success returns stable job_id/invoice_id/invoice_number/maintenance_record_id/booking status‬. يتم ‪Commit‬ حالات ‪Job/Booking/Request‬ و ‪Invoice‬ و ‪History‬ و ‪Mileage‬ و ‪Outbox‬ كحد موثوق واحد؛ إذا فشل أي ‪mandatory write‬ لا ‪Success‬. لا يلزم أن ‪PDF‬ أو ‪Push‬ تم توليدهما داخل ‪Transaction‬؛ تأخرهما يسمح ‪Detail invoice data‬ مع «‪PDF preparing‬»، ولا يمنع صحة السجل المالي الذي ثبت.
+
+12.4 Consistency Race Conditions and Retry
+
+‪1. User‬ يوافق ‪Quote‬ بينما ‪Workshop‬ تنشر ‪Revision‬: مقارنة ‪Revision/current version‬ تمنح نجاحاً لقرار واحد على النسخة الصحيحة؛ الخاسر ‪Conflict‬ ويقرأ الأحدث. إذا ‪Accepted‬ ثبتت أولاً، ‪Revision‬ لاحقة ‪full-scope‬ لها قرار جديد ولا تغير الأصل.
+
+‪2. User‬ يقبل وقتاً وال ‪Slot‬ صار ممتلئاً: ‪capacity check‬ ذري وفق ‪config‬؛ لا ‪Confirmed‬ بلا مساحة أو سياسة ‪approved‬؛ يحتفظ الموعد السابق إن ‪reschedule‬ كان مؤكداً، أو تبقى ‪pending proposal unusable‬ حتى وقت جديد.
+
+‪3. Workshop‬ تُعلق بعد ظهورها في ‪Matching: Submit rechecks Active‬؛ ‪no new intake‬. إذا ‪request accepted‬ بدأ قبلاً فال ‪Scope intake-only‬ يسمح ‪completion‬؛ ‪security freeze escalates Support‬.
+
+‪4. Submit/Send/Approve/Complete‬ يعاد بعد ‪Timeout: key→same committed outcome‬؛ ‪key reused with different payload rejected. Client‬ يستعلم عن ‪persisted result‬ قبل إعطاء المستخدم ‪Retry‬ جديد.
+
+‪5. Complete transaction commit‬ ناجح لكن ‪Push/PDF fail: Domain remains Completed‬ مع ‪Invoice/History‬؛ ‪retry delivery/generation‬ فقط، لا ‪Invoice‬ ثانية. ‪Commit‬ فاشل يبقى ‪In Progress‬ ولم يزد ‪GMV‬.
+
+‪6. Staff Role‬ تغير أثناء نموذج مفتوح: ‪Write permission‬ يعاد فحصه؛ ‪client‬ لا يضمن ‪privilege‬ لأن زر موجود. ‪read caches cleared on session/role/tenant changes‬.
+
+‪7. Service/Brand master inactive‬ بعد ‪Quote‬: لا يستخدم لإنشاء جديد؛ ‪snapshot accepted‬ وخدمة قائمة لا تختفي ولا يتغير السعر.
+
+‪8. Review duplicate‬ أو ‪Moderation retry: unique Job/User‬ و ‪idempotent hide/restore‬ يمنع تكرار ‪Reviews‬ أو ‪average update‬.
+
+12.5 Privacy and Tenant Boundary
+
+‪App‬ يملك بياناته. ‪Workshop‬ تعرف بيانات العميل اللازمة لخدمتها وتاريخها المحلي فقط؛ لا سجل ورش أخرى ولا ‪Expiry/AI full messages‬ إن لا غرض ضروري. ‪Admin sees permitted fields‬ ومع أسباب ‪access‬ الحساسة. ‪Attachments‬ مرتبطة ‪Owner/tenant/entity‬ ويعاد ‪check‬ وقت فتحها. ‪Analytics pseudonymous events‬؛ ‪Audit metadata‬ منفصل؛ ‪AI payload minimized‬ لا ‪secrets‬ ولا ‪payment credentials. Account deletion/retention policy‬ تحدد ماذا يخفى/يمحى وماذا يحتفظ به، مع عدم كسر ‪Invoice linkage‬.
+
+12.6 Notification and Event Routing
+
+Event committed
+
+User App
+
+Workshop OS
+
+Admin Dashboard
+
+Workshop verified/status changed
+
+لا تنبيه عام؛ ‪public eligibility updated‬
+
+Owner status
+
+queue/audit/matching refresh
+
+Request submitted
+
+acknowledgment/detail
+
+selected workshop incoming
+
+request funnel/monitor
+
+Time proposed/response
+
+‪decision CTA‬ أو ‪confirmed/rejected‬
+
+incoming user response
+
+booking history
+
+Quote sent/decided
+
+current quote/action/result
+
+awaiting decision/approved/rejected
+
+monitoring/audit
+
+Job started/paused/completed
+
+progress
+
+job board/assignment
+
+operational metrics
+
+Invoice issued/history created
+
+invoice/history/review invitation
+
+finance/customer history
+
+GMV/link consistency
+
+Paid record changed
+
+informative status/support
+
+payment state
+
+collections/audit
+
+Review submitted/moderated/replied
+
+own review/workshop reply
+
+review/reply
+
+moderation/aggregate
+
+Reminder due
+
+owner only
+
+لا ‪expiry reminder‬ بيانات العميل
+
+delivery stats sanitized
+
+Case/restriction/deletion updated
+
+affected owner only
+
+affected tenant only
+
+assigned governance action
+
+
+
+‪FCM/Email/SMS‬ قنوات، لا مصادر حقيقة. يجب أن تعمل قراءة الحالة في ‪Inbox‬ عند رفض ‪Push. Notification‬ قد تجمّع «‪Job complete+Invoice ready‬» لكن ‪deep links‬ والـ ‪event_ids‬ تحفظ الفصل بين ‪Entity events‬.
+
+12.7 Module Entitlements and Capability Logic
+
+تضاف طبقة ‪Policy‬ مشتركة خلف ‪Backend‬ لكل وصول تشغيلي في ‪Workshop OS. Admin‬ يقرأ ‪Catalog‬، ويثبت ‪Grant‬ أو ‪Disable‬ يدوياً مع ‪Actor‬ و ‪Tenant‬ و ‪Module‬ و ‪Source‬ و ‪Reason‬ و ‪Version‬ و ‪Dependency impact. Backend‬ يعيد حساب ‪enabled_modules‬ و ‪Capability Profile‬ و ‪Marketplace Eligibility‬، ويبطل صلاحية ‪Navigation‬ و ‪Permission caches‬ المتأثرة، ويسجل ‪Audit‬ ويصدر ‪entitlement_changed‬ بعد ‪Commit. Workshop OS‬ يقرأ ‪Manifest‬ خاصاً بدوره؛ ‪User App‬ يتلقى نتائج مؤهلة وحالة خدمة عامة دون ‪SaaS metadata‬؛ عقد ‪AI Classification‬ يبقى كما هو.
+
+‪Subscription assignment‬ و ‪Module grant‬ قراران مستقلان. يمكن للـ ‪Grant‬ الإشارة إلى ‪Subscription‬ أو ‪Bundle‬ كمصدر، لكنه لا ينشئ ‪Financial record. Assign Plan‬ لا يشغّل ‪Enable All‬، وانتهاء ‪Trial‬ لا يشغّل ‪Disable Jobs. Product‬ و ‪Backend‬ يضبطان ‪Catalog manifest‬؛ ‪Admin‬ لا ينشر ‪Module code‬ ولا يفعّل وحدة غير منفذة. ‪Schema‬ و ‪API‬ و ‪Cache provider‬ وتصميم ‪IDs‬ تؤجل إلى ‪Database Architecture‬.
+
+التزامن: تغيير ‪Admin‬ يحتاج أحدث ‪Entitlement version‬؛ كل ‪Mutation‬ يراجع ‪Policy‬ وحالة الكيان وقت ‪Commit‬. محاولة ‪Pack Disable‬ أثناء التزام قائم ترفض. استقبال طلب جديد ومحاولة ‪Disable‬ متزامنة لا ينجحان معاً على نسخة قديمة تترك طلباً بلا ‪Pack. Retry‬ يعيد النتيجة المثبتة؛ مفتاح مكرر مع ‪Payload‬ مختلف يرفض. ‪Invoice‬ و ‪History‬ المثبتتان لا تمسان؛ ‪PDF‬ أو ‪Push retry‬ يعيد التسليم دون إصدار جديد. ‪Full Security Freeze‬ يبقى مانعاً حتى لو كانت ‪Modules Enabled‬.
+
+‪New intake Matching‬ يراجع ‪Participation‬ و ‪Full Pack‬ و ‪Required capabilities‬ والخدمة والبراند والموقع وحالة الورشة والتوفر قبل ‪Score‬ وقبل ‪Submit‬. تأكيد نفس ‪Request‬ الذي ثبت قبل وقف ‪Intake‬ يستخدم ‪A17 Continuation‬، مع ‪Pack Enabled‬ و ‪Capacity‬ و ‪State‬ و ‪Security guards‬. لا يمكن إنشاء ‪Request‬ جديد بعد ‪Participation Off‬ من ‪Direct URL‬ أو ‪Customer record‬.
+
+Committed event
+
+Workshop OS
+
+User App
+
+Admin
+
+Entitlement changed
+
+تحديث ‪Shell‬ وصلاحيات فعلية وتنبيه ‪Owner‬
+
+لا أسماء ‪Modules‬ أو ‪SaaS notification‬
+
+‪Audit‬ وحالة ‪From/To‬ ومصدر وأثر ‪Dependencies‬
+
+Participation or readiness changed
+
+ملخص أهلية وتعليمات الرحلات القائمة
+
+نتائج مؤهلة محدثة؛ إشعار خدمة فقط إذا تأثرت فعلياً
+
+‪Excluded reasons‬ و ‪Eligible count‬
+
+Pack disabled after drain
+
+إخفاء التشغيل؛ ‪Core retained records‬
+
+‪Invoice‬ و ‪History‬ و ‪Review rights‬ محفوظة ‪A19‬
+
+قراءات تاريخية ودعم بنطاق مصرح
+
+
+
+التتبع ‪MD05 MD06 MD07 MD09 MD11‬ و ‪A17 A19‬. صلاحية السعر تبقى للمستخدم؛ ‪Module grant‬ لا يتجاوز ‪User approval‬ أو ‪Verification‬ أو ‪Retained-record permissions‬.
+
+‪13 End to End Flow‬ الرسمي
+
+Step
+
+‪Actor‬ والواجهة
+
+البيانات والعملية
+
+الحالة والنتيجة واختبار القبول
+
+1 User Signup
+
+U04/U05/U06
+
+Phone OTP→Name/Consent/Language
+
+‪User Active‬؛ لا ‪session‬ بلا ‪verify‬
+
+2 Add Vehicle
+
+U09
+
+‪Brand/Model/Year/Mileage‬ و ‪optional metadata‬
+
+Vehicle owned؛ no duplicate on Retry
+
+3 Describe problem or Ask AI
+
+‪U15‬ أو ‪U17‬
+
+«المكيف بعد عشر دقايق يطلع هوا حار» أو ‪AC Inspection‬
+
+‪Conversation collecting‬ أو ‪manual selection‬
+
+4 AI Classification
+
+‪Backend AI‬ ثم ‪U16‬
+
+أسئلة عند الحاجة→‪AC/Inspection/Risk/Summary‬
+
+valid taxonomy IDs؛ Unknown fallback؛ High warning
+
+5 Workshop Matching
+
+U23/engine
+
+vehicle+service+confirmed location/time+required journey capabilities
+
+‪Marketplace participation/full Pack/eligible verified active‬؛ حتى ‪3‬ أولية مع ‪reasons‬؛ لا ‪SaaS names‬ في ‪App‬
+
+6 Service Request
+
+U21/U22
+
+choose Workshop/send summary/images/preferred time
+
+Request Submitted؛ selected recipient alone notified
+
+7 Workshop Response
+
+W11/W12
+
+Accept exact time/Reject/Propose
+
+Accept→Accepted/Confirmed؛ Proposal awaits User؛ Reject reason
+
+8 Booking
+
+U25/W14/W15
+
+User accepts proposed time or confirms intended original through workflow
+
+Booking Confirmed after time/capacity check
+
+9 Inspection
+
+W14/W19/W20
+
+Arrival→inspection notes/mileage/shared findings
+
+Booking Inspection؛ Job Inspection؛ no authorized execution
+
+10 Quote
+
+W22/W23→U27
+
+full line items/tax/total/expiry/revision Send
+
+Quote Sent؛ Booking Quote Sent؛ Job Awaiting Approval
+
+11 User Approval
+
+U28
+
+explicit current revision Accept or Reject
+
+Accept→Quote Accepted/Booking Quote Approved/Job Confirmed؛ Reject→Inspection
+
+12 Job
+
+W24→U29
+
+authorized Start/Progress
+
+Job and Booking In Progress؛ no unpaid assumption needed
+
+13 Invoice
+
+W24 completion backend→U30/W27
+
+Complete with final approved scope+mileage؛ issue invoice atomically
+
+Invoice Issued default Unpaid؛ same invoice on Retry
+
+14 Vehicle Maintenance History
+
+system→U11/W17
+
+service/date/mileage/workshop/invoice/job linked
+
+one Auto record؛ Job/Booking/Request Completed with commit
+
+15 Review
+
+U31→W28/A16
+
+Completed owner Rating1–5/comment
+
+one Review/job؛ published average and reply/moderation
+
+
+
+التسلسل المنطقي ‪Invoice→History‬ موثق في الخطوات؛ التنفيذ الذري يثبت ‪Invoice/History/Completed‬ معاً فلا يوجد نجاح جزئي مرئي. لا يحتاج ‪User‬ إلى ضغط «أضف السجل» بعد الفاتورة. ‪Paid‬ لاحق خارج النظام لا يمنع ‪History/Review‬ لخدمة مكتملة، ولا يجعل ‪Completed‬ قبل حدوث الخدمة.
+
+‪Prerequisite‬ للسيناريو: ‪Admin A08‬ اعتمد ورشة ‪Pilot‬، و ‪A32/A34‬ فعّلا ‪Core‬ وكامل ‪Pack‬ ومشاركة ‪Marketplace‬ و ‪capabilities/config‬ صالحة، ولها ‪Services/Brands/Hours/Location‬ صحيحة؛ مصطلحات ونصوص ‪AR/EN‬ ومزودو ‪Auth/AI/Maps/Push‬ جاهزون؛ ‪Finance issuance policy‬ معتمدة. ‪Admin‬ يتابع ‪A11–A15/A23/A24‬ ولا يتدخل للحصول على رضا السعر أو إصلاح العمل نيابة عن ‪Workshop‬.
+
+14 Error and Alternative End to End Paths
+
+Scenario
+
+السلوك المطلوب
+
+معيار قبول
+
+AI unavailable/uncertain
+
+‪U17 manual structured service‬ ثم ‪same matching flow‬
+
+لا توقف الحجز ولا ‪imaginary IDs‬
+
+High risk
+
+explicit safety warning/clarifying questions/planned request without safe-drive promise
+
+warning visible and no dispatch claim
+
+No eligible workshops
+
+‪change radius/time/location explicitly‬ أو ‪Support‬
+
+no hard-filter relaxation behind user
+
+Workshop rejection/request expiry
+
+reason+discover another workshop/new request
+
+no auto forwarded recipient
+
+Time proposal rejected
+
+‪original confirmed time retained‬ إن ‪reschedule‬، وإلا ‪Pending‬
+
+no consentless date change
+
+Quote rejection/expiry
+
+no Job Start؛ inspect/revised full quote
+
+no charge hidden or auto approval
+
+Scope increase after start
+
+pause/sent revision/current approval retained؛ accept to resume
+
+unapproved addition not executed/invoiced
+
+User cancel before arrival
+
+Request/Booking cancelled/audit/reminder removed
+
+no Invoice/History/Review
+
+No Show
+
+‪Booking No Show‬ و ‪Request cancelled reason‬
+
+no Job service fabricated
+
+Network retry
+
+stable persisted outcome per idempotency
+
+no duplicate Request/Booking/Invoice/History/Review
+
+Completion write failure
+
+no Completed untilInvoice+History commit
+
+backend rollback/retry checked
+
+Invoice PDF/push failure after commit
+
+invoice detail available؛ retry artifact delivery only
+
+no domain rollback or duplicate invoice
+
+Account/workshop security freeze
+
+denied mutations/support case retains evidence
+
+no bypass from old token/deep link
+
+Customer dispute after service
+
+simple support investigation/manual finance resolution
+
+no automatic refund/financial delete
+
+
+
+15 Delivery Acceptance and Decision Backlog
+
+كل فريق يستخدم ‪Bible‬ للنطاق و ‪PRD‬ واجهته للشاشات و ‪Workshop Section3‬ للحالات و ‪Admin Section12–14‬ لعقود البيانات والاختبارات عبر المنتجات. ‪UX‬ لا يحتاج اختراع شاشة أو ‪Status‬ لحل حالة ناقصة؛ يرفع ‪Open Question‬ مرتبطة ‪Axx. Backend‬ ينتج بعد اعتمادها ‪Schema‬ و ‪API docs‬ وفق المصدر ‪S64‬، و ‪Mobile/Frontend‬ يستهلكان العقد نفسه. ‪AI‬ يسلم ‪taxonomy-constrained classification and safety tests‬؛ ‪Matching‬ مستقل يسلم ‪hard filters‬ و ‪versioned ranking diagnostics‬.
+
+قبول ‪Task 2‬: كل ‪Module‬ في التكليف مغطى بمعرف شاشة؛ لكل شاشة ‪Purpose/Role/Entry/Data/Fields/CTAs/Actions/Validation/States/Permissions/Rules/Notifications/Navigation/Entities/AC‬؛ الحالات والانتقالات موحدة؛ كل ‪completed job‬ له ‪approved quote/invoice/history‬، وكل ‪review‬ يعود إليه؛ التغطية العربية/الإنجليزية تشمل التفاصيل المالية والخطأ لا الصفحة الرئيسية فقط. ‪Pilot full flow‬ و ‪negative-path tests‬ تعمل بدون تعديل يدوي للبيانات.
+
+قرارات قبل ‪UX‬ التفاصيل: ‪A01 Auth channels‬؛ ‪A02 roles‬؛ ‪A03 single recipient‬؛ ‪A04 projections/reapproval‬؛ ‪A06 vehicle required fields‬؛ ‪A07 taxonomy canonical‬؛ ‪A10 cancel/reschedule‬؛ ‪A14 manual history‬. قرارات قبل ‪Backend scheduling/matching: A08 availability/capacity/ranking/expiry config‬. قرارات قبل ‪production finance/privacy/security: A09 invoice/tax/retention‬؛ ‪A11 commercial pricing/recognition‬؛ ‪A12 sensitive access/MFA‬؛ ‪A13 limits/events/budgets‬؛ ‪A15 support channels/SLA‬. عدم حسم سعر اشتراك لا يوقف توثيق ‪Pilot‬، وعدم حسم ضريبة مستند يمنع إصدار مستند ‪Production‬ غير معتمد.
+
+المصدر الأساسي ‪Miftah 360 – Phase 1‬ بالأقسام ‪S01‬ إلى ‪S72‬ مع قرار ‪MD01‬ إلى ‪MD12‬ الحالي و ‪ADR OS 001‬. وثائق ‪V1‬ تبقى ‪baseline‬ للتتبع؛ تغييرات ‪V1.1‬ فقط ما تأثر بالقرار. أمثلة المصدر للـ ‪Match score‬ والاشتراكات والأرقام وال ‪Tech stack‬ ليست تثبيت أسعار أو أوزان أو اعتماداً قانونياً. الوثائق الأربعة ‪V1.1‬ مرجع متسق قابل للتسليم للمراجعة والتنفيذ بعد حسم ‪Assumptions‬ ذات الأثر، ولا تشمل ‪Phase 2‬ داخل ‪MVP‬.
+
+16 Workshop Modules Management
+
+16.1 Entitlements Model and Authority
+
+‪Module Catalog‬ يصف هوية الوحدة واسمها ‪AR/EN‬ وطبقتها و ‪Implementation availability‬ و ‪Dependencies‬ وإصدار التعريف. ‪Catalog‬ يتضمن ‪Core‬ وحزمة ‪Marketplace‬ المطبقتين في ‪Phase 1‬، و ‪Optional Apps‬ المقترحة بوصف ‪Roadmap‬ غير قابلة للتفعيل التشغيلي. عرض ‪Catalog‬ لا يعني أن كل ‪App‬ طوّرت أوأن ‪Admin‬ يستطيع نشر كودها.
+
+‪Workshop Tenant‬ يملك ‪Core‬ إلزامية و ‪Module Entitlements effective‬ لكل وحدة. ‪Entitlement‬ يربط ‪Workshop‬ بالـ ‪Module‬ والحالة و ‪grant source‬ و ‪reason‬ و ‪Actor‬ ووقت ونسخة التغيير؛ يمكن أن يحمل مرجع ‪Subscription‬ أو ‪Bundle application. Subscription‬ يصف اتفاقاً تجارياً وحالة ‪Trial/Active/Expired/Cancelled‬؛ لا يُستعمل كاختصار للـ ‪enabled_modules‬ ولا يكفي لإثبات تحصيل. ‪Bundle‬ مجموعة ‪modules‬ من تعريف معتمد قابل للتطبيق بعد ‪Preview‬ وفحص ‪Implementation‬ و ‪Dependencies. Capability Profile‬ و ‪Marketplace Eligibility‬ مشتقان من الحقوق والإعدادات وحالة ‪Workshop‬، ولا يمكن ‪Admin‬ كتابة ‪supports_booking true‬ لتجاوز ‪Gate‬.
+
+هذا ‪model‬ مفاهيمي. لا تقرر الوثيقة جداول أوأعمدة أو ‪foreign keys‬ أو ‪endpoint‬ أسماء نهائية؛ يتم تحديدها في ‪Database Architecture‬ وفق ‪OSM 05. Multiple grant sources‬ لوحدة واحدة يحسم تمثيلها لاحقاً؛ متطلب ‪Product‬ أن إزالة مصدر واحد لا تسحب حقاً من مصدر آخر سراً. ‪Admin Preview‬ يعرض ‪effective result‬ ويثبت القرار النهائي مع ‪source history‬. لا يبدأ ‪Billing Engine‬، ولا ‪Auto charges‬ أو ‪Store‬ أو ‪trial module expiry jobs‬ في ‪Phase 1‬.
+
+‪Core‬ لا يمكن إزالتها. ‪Workshop Modules Manage‬ سلطة تغيير، ولا تمنح ‪entitlement override‬ فوق ‪guard. Operations‬ يحتاج ‪grant‬ صريح من ‪Super Admin‬؛ ‪Support‬ يرى ‪Case summary‬ فقط ولا ‪Enable/Disable. Finance grant‬ يجيز أعمال المالية الموجودة ولا يجيز ‪Modules Manage‬ تلقائياً. ‪A03‬ يعيّن ‪grant‬ الجديد مع سبب؛ ‪A30‬ يحتفظ بالأثر.
+
+كتالوج الوحدات المتاحة والمستقبلية
+
+A31 Module Catalog
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+رؤية ‪Modules‬ المتاحة والـ ‪Roadmap‬ من ‪Admin menu‬، ‪Super Admin‬ و ‪Operations read grant‬؛ ‪Support summary‬ مرتبط ‪Case‬ فقط.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Module display name AR/EN‬ و ‪stable reference‬ و ‪layer Core/Marketplace/Optional‬ و ‪implemented availability‬ و ‪dependency definition/version‬ و ‪mandatory flag‬؛ لا أسعار غير معتمدة.
+
+الحقول  ‪Fields‬
+
+‪search/layer/implementation/status filter‬؛ لا ‪code‬ أو ‪Schema editor‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪View module definition/View enabled tenants/Open tenant→A32‬؛ ‪Enable‬ من داخل ‪tenant scope‬ عبر ‪A33‬؛ ‪Back‬ إلى ‪filtered list‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪Catalog‬ من ‪manifest‬ معتمد؛ لا خلط ‪global Available‬ مع ‪tenant Enabled‬.
+
+حالات الشاشة  ‪States‬
+
+‪empty catalog/config unavailable→Retry‬ و ‪release blocker‬؛ ‪loading/pagination‬؛ ‪Roadmap‬ واضح غير قابل للتفعيل؛ ‪deprecated definition‬ يبقى للتتبع لا حذف مرجعي.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Available‬ تعني ‪implemented‬؛ ‪Core fixed‬؛ ‪Optional‬ غير منفذة لا ‪Enable CTA‬؛ ‪no create plugin runtime‬ أو ‪upload code‬.
+
+الإشعارات  ‪Notifications‬
+
+لا ‪broadcast‬ عند ‪view‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+‪Catalog definition/Implementation availability/Dependency manifest/Module version‬ مفاهيم ‪Product‬.
+
+معايير القبول  ‪AC‬
+
+‪A31.1  Inventory‬ أو ‪Warranty Roadmap‬ لا يمكن ‪Enable‬ لها؛
+
+‪A31.2  Core‬ و ‪Pack full components‬ تظهر مع تعريفها؛
+
+‪A31.3  Catalog‬ لا يسرد تفاصيل ‪tenants‬ لدور غير مصرح؛
+
+‪A31.4  implementation label‬ لا يتغير بسبب ‪plan assignment‬؛
+
+‪A31.5‬  العربية والإنجليزية بالاتجاه الصحيح.
+
+وحدات الورشة وقدراتها التشغيلية
+
+A32 Workshop Tenant Modules and Capability Profile
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Super Admin‬ أو ‪Operations Modules Manage‬ من ‪A07/A31/A18‬؛ ‪read-only‬ لنطاق ‪read grant‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Workshop identity/verification/operating status/subscription state‬ منفصلة؛ ‪effective Enabled modules‬ و ‪Available/Disabled‬؛ ‪grant reason/source/reference/time/Actor‬؛ ‪Core fixed‬ و ‪Pack completeness‬؛ ‪current capabilities‬ و ‪readiness‬؛ ‪participation/eligibility/exclusion reasons‬؛ ‪entitlement/config version‬ و ‪history link‬.
+
+الحقول  ‪Fields‬
+
+‪filter layer/status/source‬؛ ‪reason‬ عند بدء ‪action‬ فقط؛ لا ‪capability boolean editable‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Enable/Disable→A33؛ Apply bundle/Manage participation→A34؛ Change history→A35؛ Configuration remediation→A07/A29؛ Support→A26.
+
+قواعد التحقق  ‪Validation‬
+
+‪correct tenant/latest version/read grant‬؛ ‪missing config‬ يعرض ‪blocker‬ لا ‪eligible‬ مزيف. ‪Actions success‬ يبقي ‪tenant detail‬ محدثاً؛ ‪link‬ من ‪Subscription‬ لا ينفذ ‪grant‬ تلقائياً.
+
+حالات الشاشة  ‪States‬
+
+‪new tenant Core‬ فقط أو ‪Pack pending setup‬؛ ‪loading‬؛ ‪inconsistent partial Pack‬ يظهر ‪Ineligible incident‬ مع ‪affected component‬، لا ‪normal Marketplace option‬؛ ‪version conflict‬ يطلب ‪refresh‬؛ ‪forbidden‬ يخفي ‪private setup‬؛ ‪unavailable projection‬ لا يفترض ‪Eligible‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Store self-service‬ غير موجود؛ لا ‪Admin grants‬ داخل ‪A32‬ بلا ‪preview confirmation A33‬؛ ‪no hard delete Module data‬.
+
+الإشعارات  ‪Notifications‬
+
+‪Owner‬ عند ‪actual grant‬ أو ‪participation change‬ فقط؛ ‪staff affected safe refresh‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/Subscription reference/Entitlement/Grant source/Capability Profile/Eligibility/Config/Manifest/Audit.
+
+معايير القبول  ‪AC‬
+
+‪A32.1  seeing Active subscription‬ لا يعني ‪full Pack‬؛
+
+‪A32.2  Core‬ موجودة في كل ‪Tenant‬؛
+
+‪A32.3‬  سبب ومصدر و ‪Actor‬ لكل ‪grant‬ معروف؛
+
+‪A32.4  capability mismatches‬ تمنع ‪Eligible‬؛
+
+‪A32.5  support summary‬ لا ‪exposes‬ كامل ‪payload‬ الإداري.
+
+معاينة تفعيل الوحدة أوتعطيلها
+
+A33 Enable or Disable Module Preview and Confirmation
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Admin‬ ذو ‪Workshop Modules Manage grant‬ من ‪A32‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Tenant‬ و ‪Module‬ أو ‪Pack group‬، الحالة الحالية والمطلوبة، ‪Implementation‬ و ‪Dependencies‬ و ‪Dependents‬، ‪Participation‬، ‪Active obligation IDs/statuses‬، أثر القدرات والتنقل والصلاحيات، ‪Current version‬، وبيان حفظ البيانات.
+
+الحقول  ‪Fields‬
+
+‪Enable/Disable‬ و ‪Reason required‬ وفق ‪AG08‬، و ‪Grant source Manual‬ أو ‪Subscription/Bundle reference‬ معتمدة؛ لا سعر أو ‪Card data‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Validate/Refresh preview/Confirm/Cancel‬؛ النجاح إلى ‪A32‬؛ الفشل يبقي ‪Preview‬ دون تغيير.
+
+قواعد التحقق  ‪Validation‬
+
+‪Tenant‬ و ‪Role‬ و ‪Current version‬؛ الوحدة منفذة؛ ‪Core removal‬ ممنوع؛ ‪Dependencies‬ سليمة؛ لا ‪Disable‬ كامل أوجزئي للحزمة أثناء ‪Participation On‬. بعد ‪Off‬، ‪Full Pack Disable‬ يتطلب ‪No open obligations A17‬. يعاد ‪Guard‬ عند ‪Commit‬؛ ‪Preview‬ ليس ‪Authorization‬. لا ‪Auto-disable‬ للـ ‪Dependents‬ أوإلغاء ‪Job‬ لتجاوز الفحص؛ يظهر ‪Conflict‬ وروابط ‪Resolution‬.
+
+حالات الشاشة  ‪States‬
+
+‪No selection‬؛ ‪Loading‬ للفحص؛ ‪Ready preview‬؛ ‪Blocked‬ مع أسباب و ‪Affected IDs‬ المصرح بها؛ ‪Saving‬؛ ‪Stale entitlement‬ أو ‪New obligation‬ يظهر ‪Conflict‬؛ ‪Timeout‬ يستعلم عن النتيجة المثبتة؛ ‪Already desired‬ يعيد الحالة دون ‪Duplicate change‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Admin‬ فقط؛ ‪Pack group change‬ متسق دون ‪Partial commit‬؛ ‪Core‬ و ‪Identity‬ و ‪Customers‬ و ‪Vehicles‬ لا تتعطل؛ ‪Roadmap Enable‬ مرفوض حتى عبر ‪Raw API. Disabled‬ يمنع التشغيل ويخفي ‪Sidebar‬ و ‪Effective permission options‬ مع ‪Historical read A19‬؛ لا يتجاوز ‪Enable‬ الـ ‪Freeze‬ أو ‪Verification‬ أو ‪User approval. Module Trial/Expired‬ ليست خيارات ‪Phase 1‬.
+
+الإشعارات  ‪Notifications‬
+
+‪entitlement_changed‬ بعد ‪Commit‬ للـ ‪Owner‬ والموظفين المتأثرين، وتحديث ‪Matching/Audit‬؛ لا ‪SaaS terms‬ في ‪User messages‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+‪Entitlement change/Manifest/Obligation references/Grant source/Capability projection/Audit/Outbox event‬ كمفاهيم ‪Product‬.
+
+معايير القبول  ‪AC‬
+
+‪A33.1  Core Disable‬ مرفوض؛
+
+‪A33.2  Partial pack Disable‬ أثناء المشاركة مرفوض؛
+
+‪A33.3  Job‬ أو ‪Request‬ قائم يمنع ‪Full Pack Disable‬؛
+
+‪A33.4  Disabled raw API action‬ مرفوض؛
+
+‪A33.5‬  البيانات والمعرفات محفوظة؛
+
+‪A33.6  Retry‬ لا يكرر ‪Grant‬؛
+
+‪A33.7  Concurrent intake/disable‬ لا ينتج ‪Orphan‬؛
+
+‪A33.8  Roadmap Enable‬ مرفوض؛
+
+‪A33.9  Role‬ يعاد فحصه عند ‪Commit‬.
+
+أهلية المشاركة وتطبيق الحزم
+
+A34 Marketplace Eligibility and Bundle Application
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Modules Manage Admin‬ من ‪A32‬؛ ‪Read grant‬ يعرض ‪Diagnostics‬ فقط.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Participation On/Off‬؛ ‪Eligible/Ineligible‬ مشتقة مع ‪Verification/City/Services/Brand/Config/Pack/Capability blockers‬؛ ‪Bundle definition/version‬؛ ‪Module diff‬؛ ‪Affected obligations‬؛ ‪Commercial reference optional‬.
+
+الحقول  ‪Fields‬
+
+‪Participation intent‬، ‪Available bundle‬، ‪Reason‬؛ لا ‪Eligible override‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Preview/Apply approved bundle/Stop new intake/Restore participation/View blockers/Open Support/Cancel‬؛ النجاح إلى ‪A32‬ ويحدث ‪A04‬ و ‪A24‬.
+
+‪Phase 1 operational templates‬ هي ‪Core plus Full Marketplace Pack‬ أو ‪Core-only‬ للـ ‪Nonparticipant. Mechanical/Car Care/PPF and Tint/Tyre bundles‬ مقترحة مستقبلية؛ إذا احتوت ‪Apps‬ غير منفذة لا تتاح ‪Apply‬ تشغيلياً الآن. قائمة ‪Pack‬ المختصرة ليست ‪Pack‬ صالحة للمشاركة؛ ‪Calendar‬ و ‪Inspection‬ و ‪Job Cards‬ و ‪History‬ و ‪Reviews integrations‬ إلزامية أيضاً.
+
+قواعد التحقق  ‪Validation‬
+
+‪Bundle modules‬ منفذة و ‪Dependencies‬ كاملة و ‪Core‬ موجودة؛ ‪Tenant version‬ و ‪Grant source‬ صحيحان؛ كل ‪Removal‬ يمر ‪A33. Assumption A16: Apply‬ يحافظ على ‪Unrelated grants‬ افتراضياً؛ إزالة أي ‪Grant‬ تحتاج ‪Diff‬ صريح و ‪Guards‬، ولا ‪Replace All‬ خفي. ‪Stop participation‬ لا يعطّل ‪Pack‬ أويلغي ‪Confirmed bookings‬؛ ‪Continuation A17‬ للطلب نفسه. ‪On‬ يتطلب كل ‪Readiness‬ الحالية ولا يتجاوز ‪Suspension‬ أو ‪Pending verification‬؛ ‪Subscription Expired‬ لا يعني ‪Forced Off‬.
+
+حالات الشاشة  ‪States‬
+
+‪No approved templates‬؛ ‪Loading preview‬؛ ‪Not implemented component‬ أو ‪Dependency conflict‬ يمنع ‪Apply‬؛ ‪Stale version‬ يتطلب ‪Refresh‬؛ ‪Failed commit‬ يبقي الإعداد السابق ولا ينشر ‪Eligible‬؛ ‪Already On/Off idempotent‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Admin authority‬ فقط؛ ‪Pack completeness‬ غير قابلة للتفاوض؛ لا ‪charge‬ من ‪Grant‬ أو ‪Bundle‬؛ البيانات لا تحذف.
+
+الإشعارات  ‪Notifications‬
+
+‪Owner outcome‬، والعميل فقط إذا تأثرت خدمته وبنص مفهوم؛ تفاصيل ‪Modules‬ للـ ‪OS/Admin‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Bundle definition/application/Entitlement change/Participation intent/Eligibility projection/Capability Profile/Audit.
+
+معايير القبول  ‪AC‬
+
+‪A34.1  Missing Inspection/History‬ يمنع ‪Eligible‬؛
+
+‪A34.2  Bundle‬ تحوي ‪Inventory‬ غير منفذة مرفوضة؛
+
+‪A34.3  Stop intake‬ يحفظ ‪Flow‬ القائمة و ‪Pack Enabled‬؛
+
+‪A34.4  Repeat apply‬ لا يكرر ‪Grant‬؛
+
+‪A34.5  Owner‬ لا يفعّل ‪Bundle‬؛
+
+‪A34.6  Restore‬ يفحص ‪Readiness‬ كاملة؛
+
+‪A34.7  Preview/Apply‬ لا يسجل ‪Charge‬؛
+
+‪A34.8  Bundle‬ لا تزيل ‪Core‬.
+
+سجل تغييرات الوحدات وتفاصيل التدقيق
+
+A35 Module Change History and Audit Detail
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Super/Operations‬ المصرح من ‪A32/A33/A34/A30‬؛ ‪Support own-case subset‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Tenant/Module/group/source/subscription/bundle reference/version/action/from-to/reason/Actor/time/dependency impact/eligibility before-after/correlation/result‬؛ لا أسرار أو ‪PII‬ إضافية. المبالغ التجارية من ‪A19‬ ليست نتيجة ‪Grant‬.
+
+الحقول  ‪Fields‬
+
+Tenant/module/source/actor/time/outcome filters.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪View readonly/Open Tenant/Related subscription‬ أو ‪Bundle/Linked case/Audit‬؛ لا ‪Edit/Delete/Replay‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪Scope‬ لكل ‪Role‬؛ ‪Append-only history‬؛ ‪Module Disabled‬ لا يحجب ‪Admin audit‬ المصرح؛ ‪Retention policy‬ للأثر المرجعي.
+
+حالات الشاشة  ‪States‬
+
+‪Empty‬؛ ‪Loading/pagination‬؛ ‪Removed content‬ يظهر ‪Metadata‬ المسموحة؛ ‪Error‬ لا يختلق ‪Actor‬ أو ‪Reason‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Blocked attempt‬ تسجل ‪Failed‬ وليست ‪Enabled event‬. تصحيح ‪Source‬ أو ‪Re-enable‬ إجراء جديد يمر ‪A33‬؛ لا ‪Rollback‬ غير مفحوص من صفحة ‪History‬.
+
+الإشعارات  ‪Notifications‬
+
+لا إشعار ‪View‬؛ ‪Sensitive access‬ يسجل إن طلبت السياسة.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Audit/Entitlement change reference/Bundle application/Subscription reference/Access audit.
+
+معايير القبول  ‪AC‬
+
+‪A35.1  Source/Reason/Actor‬ محفوظة بعد ‪Disable‬؛
+
+‪A35.2‬  لا ‪Admin‬ يعدل ‪Logs‬؛
+
+‪A35.3  Cross-tenant reads‬ مقيدة؛
+
+‪A35.4  Retry‬ لا يضاعف ‪Mutation count‬؛
+
+‪A35.5‬  الحالة التاريخية لا تعرض كحالة فعالة حالية.
+
+16.2 Module Lifecycle and Data Retention
+
+مرجع الحالات ‪Workshop OS Section3.8: Available→Enabled‬ و ‪Enabled→Disabled‬ و ‪Disabled→Enabled‬ للوحدات المنفذة وضمن ‪Guards‬؛ ‪Core‬ ثابتة ‪Enabled‬؛ ‪Roadmap‬ غير متاحة للتشغيل؛ ‪Module Trial/Expired‬ مستقبلية. ‪Subscription statuses‬ تبقى كما هي. ‪Participation On/Off‬ و ‪Eligibility Eligible/Ineligible‬ محوران مستقلان عن ‪Verification‬.
+
+‪Disable‬ يحفظ ‪Module data‬ و ‪Core‬ و ‪Decisions‬ و ‪Invoices‬ و ‪History‬ و ‪Reviews‬ و ‪Audit‬؛ لا ‪Hard-delete trigger. User history‬ و ‪Review rights‬ لخدمة مكتملة تبقى ‪A19‬؛ ‪Workshop mutations‬ لوحدة ‪Disabled‬ ممنوعة. ‪Admin Finance authorized‬ يستطيع مراجعة التاريخ والتصحيح وفق ‪Workflow‬ المالي القائم، لا عبر انتحال ‪Workshop actor. Historical-read routes‬ لا تعيد ‪Operational permissions‬. مدد الحفظ والنسخ والحذف ‪OSM 03‬ من ‪Legal/Security‬؛ لا أرقام ‪Retention‬ مخترعة. ‪Full Pack Disable‬ يحتاج ‪Off intake‬ وإغلاق الالتزامات ‪A17‬.
+
+16.3 Source Traceability and Open Questions
+
+‪A31‬ إلى ‪A35‬ و ‪AG10‬ إضافات ‪MD05‬ إلى ‪MD09‬ من القرار الحالي، وليست ‪Features‬ منسوبة إلى ‪Sxx‬ القديم. ‪A17/A18/A19‬ تبقى تفصيل ‪S02/S49‬ مع ‪A11 revision‬؛ ‪A24‬ و ‪12.7‬ توسع ‪S17/S47‬؛ الأمان والحفظ من ‪S59/S60/S61. A01‬ إلى ‪A30‬ وحالات ‪Entities‬ وقرار ‪Quote‬ للمستخدم محفوظة.
+
+‪OSM 01‬ للأسعار والباقات ومدة ‪Trial‬ والنموذج التجاري؛ ‪OSM 02‬ لاعتماد ‪Dependencies‬ و ‪Config‬ لكل ‪Optional App‬ عند تطويرها؛ ‪OSM 03‬ لـ ‪Retention‬ و ‪Historical access‬؛ ‪OSM 04‬ لتشغيل ‪Core-only‬ مستقلاً عن ‪Marketplace‬؛ ‪OSM 05‬ للـ ‪Schema/API. A16 Manifest‬ و ‪A17 Drain‬ و ‪A18 Migration‬ و ‪A19 Historical read‬ و ‪A20 Basic features‬ تبقى ‪Assumptions‬ بمسؤوليها في ‪Bible25.8‬. لا ‪Billing Engine‬ أو ‪Module Store‬ أوتنفيذ ‪Apps‬ المستقبلية.
+
+17 Cross PRD Consistency Review and Acceptance
+
+الموضوع
+
+النتيجة المتسقة في ‪V1.1‬
+
+References
+
+Core
+
+‪Identity/Customers/Vehicles/Services/RBAC‬ ثابتة؛ ‪Advanced CRM‬ مستقبلية
+
+Bible25؛W16/W17/W29؛A31/A33
+
+Marketplace Pack
+
+كاملة لكل مشارك، مع التكاملات؛ لا ‪Partial pack‬ خيار طبيعي
+
+W3.9/11؛U18/U21/U23؛A34
+
+Matching
+
+‪Eligibility‬ و ‪Capabilities hard gates‬ قبل ‪Service/Brand/Distance/Rating/Availability/Response Rate‬
+
+Bible16؛U23؛A24/12.7
+
+User contract
+
+لا تفاصيل ‪SaaS‬؛ العميل يملك ‪Approval‬ وسجله وتقييمه
+
+User14؛Admin12.7؛A19
+
+Admin authority
+
+‪Modules Manage grant‬ صريحة؛ ‪Owner config‬ فقط؛ ‪Finance‬ ليست ‪Grant‬ تلقائية
+
+W36/W37؛A03/AG10/A33
+
+Subscriptions
+
+حالة تجارية يدوية مستقلة عن ‪Entitlement‬ و ‪Revenue‬ و ‪Verification‬
+
+A17/A18/A19؛W33؛A11 revised
+
+Statuses
+
+‪Module lifecycle‬ مستقلة؛ ‪Entity statuses‬ الأصلية محفوظة
+
+‪W3.1‬ إلى ‪3.9‬؛‪User10‬
+
+Disable
+
+لا ‪Core removal‬ أو ‪Pack break‬؛ ‪Off intake‬ ثم ‪Drain‬ ثم ‪Manual Disable‬
+
+W11.4؛A33/A34؛A17
+
+Historical data
+
+لا ‪Delete on Disable‬؛ ‪Readonly scoped‬؛ ‪Purge policy‬ مستقلة
+
+U11/U30/U31؛W38؛A35؛A19
+
+Optional Catalog
+
+‪Architecture‬ تدعمها؛ ‪Implementation‬ مؤجلة؛ ‪Bundles/Pricing‬ مفتوحة
+
+Bible25.2/25.7؛A31/A34
+
+
+
+‪QA‬ يضيف: ‪Core-only‬ لا ‪Matching‬؛ ‪Active verified‬ مع ‪Partial Pack‬ لا ‪Eligible‬؛ ‪Unauthorized Modules Manage‬ مرفوض؛ ‪Roadmap Enable‬ مرفوض؛ ‪Core/Participating pack Disable‬ مرفوض؛ ‪Concurrent request/job/disable‬ لا ‪Partial state‬؛ ‪Off intake continuation‬ مع ‪Pack Enabled‬؛ ‪Expiry‬ لا ‪Orphan‬؛ ‪Retained PDF‬ لورشة أخرى مرفوض؛ ‪Re-enable‬ لا ‪Duplicate Invoice/History‬؛ ‪Bundle apply‬ يحترم ‪Closure‬؛ ‪Arabic RTL/English LTR‬ لكل ‪Label‬ و ‪Error‬ و ‪Reason‬. يقارن ‪Backend gate‬ و ‪Sidebar‬ و ‪Permission options‬ و ‪Audit‬ لنفس ‪Tenant/version‬ وكل ‪Role‬ قائم.
+
+راجعت الوثائق على ‪Modules‬ و ‪Golden Flow‬ و ‪Admin permissions‬ و ‪Matching‬ و ‪Subscriptions‬ و ‪Roles‬ و ‪Statuses‬. استبدل ‪Fixed Dashboard‬ و ‪A11 full access‬ بقرار موثق؛ مثال ‪PPF‬ المختصر يتطلب ‪Full Pack‬ للمشاركة؛ ‪CRM‬ الاختيارية تعني ‪Advanced CRM‬ فقط. بقيت أسعار و ‪Retention‬ و ‪Technical schema‬ مفتوحة، و ‪Drain/Historical read‬ موسومتين ‪A17/A19‬. مراجعة الوثائق ليست ادعاء اختبار نظام لم يبن بعد.
+
+
+
+مخططات المنتج
+
+Product diagrams
+
+‪A_D01‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪Cross Product Logic Section 12‬. جميع الصلاحيات والكتابات تمر عبر ‪Backend. AI‬ يصنف ولا يختار ‪Workshop ID‬؛ ‪Matching‬ يقرأ بيانات الورش الفعلية.
+
+
+
+‪A_D02‬  مخطط الرحلة والعلاقات
+
+
+
+‪A24‬ و‪Bible16‬ و‪MD09. Service/Brand/Distance/Rating/Availability/Response Rate‬ ترتب المؤهلين فقط. الدفع لا يتجاوز ‪Gate‬؛ ‪Diagnostic‬ لا يغيّر ‪Grant‬. تطبيق المستخدم لا يتلقى ‪Module‬ أو‪Subscription reasons‬.
+
+
+
+‪A_D03‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪Section 13‬. الفاتورة وسجل السيارة وحالات ‪Completed‬ تثبت معاً؛ رقم الخطوة يوضح تسلسل الرحلة وليس عمليات مالية مستقلة أو دفعاً إلكترونياً.
+
+
+
+‪A_D04‬  مخطط الرحلة والعلاقات
+
+
+
+‪A31‬ إلى‪A35‬ و‪MD05‬ إلى‪MD09. Enable‬ يشترط ‪Implementation‬ و‪Closure‬ و‪RBAC‬ وأحدث ‪Version. Disable‬ الحزمة يشترط وقف ‪intake‬ وإغلاق الالتزامات ‪A17‬. لا ‪Billing trigger‬ ولا حذف بيانات ولا إعادة تفعيل عبر ‪Workshop Owner‬.
+

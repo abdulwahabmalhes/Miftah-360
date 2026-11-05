@@ -1,0 +1,334 @@
+MIFTAH 360 — IMPLEMENTATION BLUEPRINT & BUILD PLAN V1
+
+
+
+Status: READY FOR CODING AGENT
+
+Objective: Build a working end-to-end Phase 1, not isolated screens.
+
+
+
+PRODUCTS
+
+1. User Mobile App
+
+2. Workshop OS Web
+
+3. Admin Dashboard Web
+
+4. Shared Backend/API
+
+5. PostgreSQL + storage + notifications + AI + matching
+
+
+
+M0 — ENGINEERING FOUNDATION
+
+- Repo structure
+
+- dev/staging/prod config
+
+- local DB/Redis
+
+- CI
+
+- OpenAPI
+
+- health checks
+
+- logging/correlation IDs
+
+- migrations/seeders
+
+Acceptance: all apps boot; backend connects to dependencies; no secrets committed.
+
+
+
+M1 — AUTH / USERS / TENANCY / RBAC
+
+- Car Owner email/password + phone OTP + Google
+
+- Workshop email/password + phone OTP
+
+- Admin email/password + mandatory MFA
+
+- account linking
+
+- sessions/refresh/revoke
+
+- workshop tenant isolation
+
+Acceptance: duplicate identities linked safely; disabled staff sessions revoked; tenant isolation tests pass.
+
+
+
+M2 — MASTER DATA + ADMIN FOUNDATION
+
+- Service Taxonomy
+
+- Brand/Model master data
+
+- Admin workshop list/detail
+
+- verification lifecycle
+
+- module catalog / entitlements
+
+Acceptance: Admin can approve workshop to Active; only Admin can enable Marketplace Pack.
+
+
+
+M3 — WORKSHOP CORE
+
+- workshop profile
+
+- primary location
+
+- hours
+
+- brands / All Brands
+
+- services from taxonomy
+
+- Starting From price
+
+- fixed-role staff management
+
+- basic customers/vehicles
+
+Acceptance: Owner manages staff but cannot toggle modules.
+
+
+
+M4 — USER GARAGE
+
+- add/edit/archive vehicle
+
+- vehicle profile/history/reminders baseline
+
+Acceptance: required Brand/Model/Year/Mileage; archive preserves history.
+
+
+
+M5 — AI + MANUAL SERVICE
+
+- manual taxonomy selection
+
+- AI conversation/classification
+
+- LOW/MEDIUM/HIGH risk
+
+- fallback if AI unavailable
+
+Acceptance: AI never selects workshop; no definitive diagnosis.
+
+
+
+M6 — MATCHING / DISCOVERY
+
+- derived marketplace eligibility
+
+- same-Emirate hard filter
+
+- deterministic ranking
+
+- matching logs/version
+
+- workshop profile/results
+
+Acceptance: hard filters precede score; no automatic cross-emirate fallback.
+
+
+
+M7 — SERVICE REQUEST + BOOKING
+
+- request to one selected workshop
+
+- workshop inbox
+
+- accept/reject/propose time
+
+- calendar
+
+- Time Proposed / No Show
+
+Acceptance: one target workshop; proposed time needs user acceptance; duplicates prevented.
+
+
+
+M8 — ARRIVAL / INSPECTION / QUOTE
+
+- Vehicle Arrived
+
+- inspection + findings
+
+- preliminary quote policy from taxonomy
+
+- Quote draft/items/send
+
+- user accept/reject
+
+Acceptance: Sent immutable; edits create revision; old revision cannot be accepted; totals server-side.
+
+
+
+M9 — JOB EXECUTION
+
+- Job Card before approval where needed
+
+- assign technician
+
+- Awaiting Approval
+
+- Confirmed/Authorized after accepted Quote
+
+- In Progress / Complete
+
+- notes/photos
+
+Acceptance: no paid work starts without accepted Quote; Technician has no financial control.
+
+
+
+M10 — INVOICE / PAYMENT / HISTORY
+
+On Job Complete atomically:
+
+- Job Completed
+
+- Booking Completed
+
+- ensure Invoice
+
+- ensure Payment=Unpaid
+
+- ensure Maintenance Record
+
+Acceptance: retries create no duplicates; payment separate from invoice; no gateway.
+
+
+
+M11 — REVIEWS
+
+- one review after completed Job
+
+- workshop reply
+
+- admin moderation
+
+Acceptance: incomplete Job cannot be reviewed; unique review per Job.
+
+
+
+M12 — NOTIFICATIONS / SUPPORT / REPORTS
+
+- push events
+
+- support tickets
+
+- basic Workshop/Admin KPIs
+
+Acceptance: notification failure does not rollback business state.
+
+
+
+M13 — HARDENING
+
+- OTP/login rate limit
+
+- Admin MFA
+
+- signed file URLs
+
+- MIME/size checks
+
+- PII log redaction
+
+- backup/restore
+
+- audit coverage
+
+- pagination/indexes
+
+- Arabic RTL + English LTR
+
+- AED / Asia-Dubai display
+
+
+
+M14 — STAGING E2E
+
+Mandatory flow:
+
+Signup → Vehicle → AI/manual service → Match → select one workshop → Request → Workshop response → Booking → Arrival/Inspection or allowed preliminary quote → Quote → User approval → Authorized Job → In Progress → Completed → Invoice → History → Review.
+
+
+
+CODING AGENT RULES
+
+1. Read 00_START_HERE first.
+
+2. Follow source precedence.
+
+3. Never invent alternate state names.
+
+4. Never implement frontend-only authorization.
+
+5. Use migrations, seeders, factories and tests.
+
+6. Keep OpenAPI current.
+
+7. Complete vertical slices; avoid mock-only screens.
+
+8. Do not add Phase 2 features unless required for infrastructure only.
+
+9. Flag unresolved product gaps as TODO; do not silently redefine behavior.
+
+10. Every milestone must leave a runnable build.
+
+
+
+SUGGESTED REPO
+
+/apps/mobile
+
+/apps/workshop-web
+
+/apps/admin-web
+
+/apps/api
+
+/packages/contracts
+
+/packages/config
+
+/docs
+
+
+
+SEED DATA
+
+- Dubai
+
+- Sharjah
+
+- Service Taxonomy V1
+
+- initial vehicle brands/models
+
+- Core + Marketplace Pack module catalog
+
+- admin roles
+
+No production secrets.
+
+
+
+PHASE 1 COMPLETE ONLY WHEN
+
+Golden Flow works on staging and pilot without manual DB edits.
+
+
+
+END.
+

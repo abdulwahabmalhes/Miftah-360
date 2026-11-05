@@ -1,0 +1,170 @@
+MIFTAH 360 — BUSINESS RULES V1.2
+
+PRODUCT OWNER DECISION REGISTER
+
+
+
+Status: APPROVED FOR IMPLEMENTATION
+
+Date: 30 October 2026
+
+Purpose: Supersedes conflicting assumptions/open questions in V1.1 and existing PRDs. All unchanged V1.1 rules remain valid.
+
+
+
+PO-001 Authentication
+
+Car Owner: Email+Password, Phone+OTP, Google Sign-In. Account linking prevents duplicate users. International phone architecture.
+
+Workshop Owner/Staff: Email+Password, Phone+OTP, no Google.
+
+Miftah Admin: Email+Password + mandatory MFA/OTP; no Google; no phone-only login.
+
+
+
+PO-002 Vehicle required fields
+
+Required: Brand, Model, Year, Mileage.
+
+Optional: Trim, Fuel Type, Transmission, VIN, Plate Number, Emirate, Registration Expiry, Insurance Expiry, Photo, Notes.
+
+
+
+PO-003 Service Request recipient
+
+One request is sent to ONE selected workshop. No broadcast/auction/multi-workshop RFQ in Phase 1.
+
+
+
+PO-004 Booking
+
+Time Proposed and No Show are official states. A different proposed time requires user acceptance before confirmation.
+
+
+
+PO-005 Preliminary Quote
+
+Inspection is not universally required before Quote. Priceable services may have preliminary quote. Complex/diagnostic services require inspection before final authorization price. Material post-inspection change requires new Quote revision + new user approval.
+
+
+
+PO-006 Job creation
+
+Job Card may be created when vehicle arrives/inspection begins. It is not authorized for paid execution until user accepts the applicable Quote revision.
+
+
+
+PO-007 Invoice and Payment
+
+Invoice Status: Draft / Issued / Cancelled.
+
+Payment Status: Unpaid / Paid.
+
+Paid Outside Miftah is settlement/source metadata, not Invoice status.
+
+
+
+PO-008 Module control
+
+Only Miftah Admin may enable/disable workshop modules, bundles and Marketplace Pack. Workshop Owner/staff cannot toggle modules.
+
+
+
+PO-009 Workshop staff management
+
+Workshop Owner may add/invite/deactivate staff and change fixed roles inside own workshop without Admin approval.
+
+
+
+PO-010 Fixed Phase 1 workshop roles
+
+Workshop Owner, Service Advisor, Reception, Technician. No custom role builder or per-user custom permission toggles in Phase 1.
+
+
+
+PO-011 Workshop brands
+
+Workshop selects supported Brands or All Brands. Brand compatibility is a matching eligibility condition.
+
+
+
+PO-012 Workshop services
+
+Workshop selects from central Miftah Service Taxonomy only. No workshop-created canonical services in Phase 1.
+
+
+
+PO-013 Starting prices
+
+Workshop may configure Starting From price per service. It is informative, not binding. Final authorized price comes from accepted Quote revision.
+
+
+
+PO-014 Matching ranking
+
+Use Best Match, not nearest-only. Hard eligibility filters first. Ranking factors include service match, brand, distance within same Emirate, rating, availability, response performance and starting price when relevant. No paid boost in Phase 1.
+
+
+
+PO-015 Emirate scope
+
+Matching is constrained to selected/current service Emirate. Dubai and Sharjah only in Phase 1. No automatic cross-emirate fallback. User may manually change Emirate if no results.
+
+
+
+PO-016 Service zones
+
+No area/service-zone configuration inside Emirate in Phase 1. One primary workshop location; distance affects ranking.
+
+
+
+PO-017 Multi-branch
+
+Out of Phase 1. Each Workshop Tenant is one operating workshop with one primary location/calendar/workspace.
+
+
+
+PO-018 Workshop lifecycle
+
+Pending Verification / Active / Suspended / Inactive / Rejected.
+
+Approved is an action; approval moves workshop to Active.
+
+
+
+PO-019 Control boundary
+
+Miftah Admin controls activation, Marketplace participation, subscription/entitlements and modules.
+
+Workshop Owner controls internal staff and operations only.
+
+
+
+Binding retained rules:
+
+- User is sole Quote approver.
+
+- Sent Quote revision is immutable.
+
+- Material change requires new revision + approval.
+
+- Review only after Completed Job.
+
+- Suspension/disable never erases history.
+
+- Core cannot be disabled.
+
+- Marketplace Pack must be complete for participating workshop.
+
+- Matching Engine separate from LLM.
+
+- AI never chooses Workshop ID.
+
+- Payment gateway is outside Phase 1.
+
+
+
+END.
+
+
+

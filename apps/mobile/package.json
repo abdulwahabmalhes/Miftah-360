@@ -1,0 +1,18 @@
+{
+  "name": "@miftah/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Mobile App code ready\""
+  },
+  "dependencies": {
+    "@miftah/config": "*",
+    "@miftah/contracts": "*",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "typescript": "^5.5.4"
+  }
+}

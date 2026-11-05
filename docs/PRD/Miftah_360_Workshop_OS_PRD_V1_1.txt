@@ -1,0 +1,3112 @@
+Miftah 360 Workshop OS PRD V1.1
+
+متطلبات تشغيل الورشة ومركز خدمة السيارات في ‪Phase 1‬
+
+الإصدار ‪V1.1‬ | ‪5‬ أكتوبر ‪2026‬ | تابع لـ ‪Project Bible V1.1‬ | الجمهور ‪Workshop Operations‬ و ‪UX/UI‬ و ‪Frontend‬ و ‪Backend‬ و ‪QA‬.
+
+مراجعة ‪V1.1‬ لوثيقة ‪Workshop Dashboard PRD V1‬، بالاسم الجديد ‪Miftah 360 Workshop OS‬. تحفظ الوظائف والحالات والشاشات القائمة وتضيف ‪Shell‬ و ‪Entitlements‬ و ‪Module guards‬ وإدارة ‪Config‬. المنتج ‪Modular‬ بثلاث طبقات وفق ‪MD01‬ إلى ‪MD12‬؛ لا تصميم واجهات أوكود أو ‪Schema‬ نهائية. المصدر ‪S24‬ إلى ‪S38‬ و ‪S03‬ و ‪S06‬ و ‪S18‬ إلى ‪S23‬ و ‪S59‬ إلى ‪S61‬. النطاق ورشة ‪Tenant‬ واحدة لكل ‪Owner‬ في ‪Pilot‬، بالعربية والإنجليزية، وخدمات دبي والشارقة؛ لا فروع أو محاسبة مخزون أو ‪Payroll‬ أو بوابة دفع.
+
+مراجعة ‪Product V1.1   5‬ أكتوبر ‪2026‬
+
+
+
+فهرس الأقسام
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+‪1‬ قواعد عامة لجميع ‪W Screens‬
+
+‪2‬ مصفوفة ‪Workshop Roles‬
+
+‪3‬ جميع ‪Statuses‬ والانتقالات المرجعية
+
+4 Authentication Verification and Onboarding
+
+5 Daily Operations Requests Bookings and CRM
+
+6 Inspection Job Cards Quotes and Job Status
+
+7 Invoices Reviews Staff Reports and Settings
+
+8 Backend Data and Command Ownership
+
+9 Open Questions Assumptions and Dependencies
+
+10 Acceptance Gate and Source Traceability
+
+11 Workshop OS Modules and Workspace Requirements
+
+مخططات المنتج  ‪Product diagrams‬
+
+
+
+سجل التغييرات من ‪V1‬ إلى ‪V1.1‬
+
+مراجعة ‪Product‬ بتاريخ ‪5‬ أكتوبر ‪2026‬. تبقى معرفات الشاشات والحالات و ‪Assumptions‬ السابقة؛ يظهر كل تعديل متأثر في موضعه وتفصيل القرار في ‪Project Bible Section 25‬ و ‪ADR OS 001‬. المصدر ‪Sxx‬ لم يغيّر؛ مصدر الإضافة المعتمد ‪MD01‬ إلى ‪MD12‬.
+
+Change ID
+
+الأجزاء
+
+الفرق عن ‪V1‬
+
+التتبع
+
+CH-W1
+
+‪Sections 1‬ و ‪2‬ و ‪4‬ إلى ‪8‬ و ‪11‬
+
+كل شاشة مرتبطة ‪Core‬ أو ‪Pack‬ مع ‪module-aware shell‬ و ‪dynamic sidebar‬
+
+MD01 MD02 MD03 MD05
+
+CH-W2
+
+‪Sections 3.8‬ و ‪3.9‬ و ‪11‬
+
+‪Available Enabled Disabled‬ وحماية ‪Golden Flow‬ و ‪Data retention‬
+
+‪MD07 MD09‬ و ‪A17 A19‬
+
+CH-W3
+
+‪W35‬ إلى ‪W38‬ و ‪W09 W16 W17 W29 W32 W33‬
+
+‪Shell‬ و ‪module overview/config‬ و ‪retained records‬؛ ‪Basic CRM‬ دائمة
+
+MD02 MD05 MD06
+
+CH-W4
+
+‪A11‬ و ‪Section 9‬ و ‪11‬
+
+‪manual grants‬ مستقلة عن ‪Subscription‬؛ ‪Optional Apps catalog‬ دون تنفيذها
+
+‪MD04 MD08 MD10‬ و ‪A20‬
+
+CH-W5
+
+‪Acceptance‬ والتتبع والمخططات
+
+‪Dependency checks‬ و ‪stale access‬ و ‪migration‬ مع حفظ ‪W01‬ إلى ‪W34‬
+
+MD03 MD09 MD12
+
+
+
+‪1‬ قواعد عامة لجميع ‪W Screens‬
+
+‪WG01‬ كل شاشة ونموذج ورسالة و ‪Status‬ و ‪PDF‬ يدعم ‪AR/EN‬ و ‪RTL/LTR‬. العملة ‪AED‬، عرض الموعد ‪Asia/Dubai‬؛ أسماء العملاء والبريد والأرقام والمحتوى المدخل يحافظ على اتجاهه. ‪Table sorting/search/pagination‬ لا يلغي ‪applied filters‬.
+
+‪WG02 Loading‬ مستقل للقائمة وللتفاصيل ولـ ‪Submit‬؛ منع إعادة الضغط ليس بديلاً عن ‪Backend idempotency. Empty‬ يشرح الإجراء التالي حسب ‪Permission. Offline‬ يمنع تأكيد عمل لم يحفظ؛ ‪Draft input‬ يبقى محلياً وفق سياسة جهاز العمل ولا يخزن معلومات حساسة في ‪Logs. Error‬ يتضمن ‪Retry‬ أو ‪correction‬؛ ‪Conflict‬ يعرض النسخة الحالية؛ ‪Session expired→W01‬ مع العودة للوجهة؛ ‪Forbidden‬ لا يعرض بيانات محفوظة لحساب آخر.
+
+‪WG03 Workshop tenant_id‬ يفرض في ‪Backend‬ على كل ‪Query‬ و ‪Mutation‬ و ‪Attachment. Owner/Advisor/Reception/Technician‬ حدود فعلية، وليس ‪Navigation‬ فقط. ‪List/Detail‬ يعيدان ‪Fields‬ المصرح بها فقط؛ ‪Disable staff‬ يوقف جلساته. ‪Shared notes‬ تختلف عن ‪Internal notes‬؛ لا إرسال ‪internal note‬ إلى المستخدم أو ‪AI‬.
+
+‪WG04 Draft/Sent/Accepted/Issued‬ وثائق مختلفة. إرسال ‪Quote‬ يعتمد نسخة كاملة، وقبول العميل وحده يصرح بالسعر. الورشة لا تنقر ‪Approve on behalf of user. Invoice Issued‬ لا يحرر؛ لا حذف مالي أو تعديل ‪Quote Accepted‬ صامت. ‪Audit mandatory‬ لتغييرات الحالة والأسعار والساعات والأدوار والدفع.
+
+‪WG05‬ لا وظيفة ‪Pending‬ أو ‪Suspended workshop‬ تستقبل طلباً جديداً. عمليات الخدمة القائمة يمكن إكمالها إذا التعليق يمنع ‪Intake‬ فقط؛ ‪Full freeze‬ الأمني يوقف ‪Staff mutations‬ ويحال إلى ‪Admin/Support‬. يستطيع ‪Owner‬ الوصول لحالة التعليق والبيانات المصرح بها للتسوية.
+
+‪WG06‬ كل ‪Notification‬ مرتبط ‪Entity/version/event‬؛ يصدر بعد ‪Commit‬؛ لا تكرار من ‪Retry. Push‬ للمستخدم و ‪In-app dashboard‬ للورشة؛ ‪Email‬ اختياري. لا ‪SMS Marketing‬ أو حملات ‪CRM‬ في ‪MVP. Source of truth‬ هو ‪Backend‬ لا ‪Calendar cache‬.
+
+‪WG07‬ حدود الحقول العامة المقترحة ‪A13: title/name2–100‬، ‪description/notes‬≤‪2000‬، ‪reject reason5–500‬، كمية أكبر من ‪0‬، ‪Unit price‬≥‪0. Search‬ حدود نتائج ‪server-side‬؛ ‪export‬ وتقارير محاسبية متقدمة ليست لازمة.
+
+‪WG08 Events‬ للقياس من ‪Backend‬ للقرارات، مع ‪event_id/entity/tenant/actor/timestamp‬ و ‪city/language‬، دون ‪Phone/VIN/Plate‬ والصور ونص ‪AI. Changed fields‬ و ‪From/To‬ في ‪Audit‬ الخاص، لا ‪Analytics‬ العام.
+
+‪WG09‬ التنقل بعد الإجراء: إنشاء كيان يفتح ‪Detail‬ بمعرفه؛ ‪Save‬ أو ‪State action‬ ناجح يبقي ‪Detail‬ مع أحدث حالة و ‪Confirmation‬؛ ‪Archive draft‬ يعود للقائمة مع ‪Filter‬ محفوظ. خطأ ‪Validation‬ أو ‪Conflict‬ يبقي النموذج ويعرض الأحدث، ولا ينفذ ‪Back‬ القرار. ‪Deep link‬ يحتاج ‪Auth‬ و ‪Tenant/Role check‬ ثم الوجهة؛ لا رجوع لبيانات ‪Cached‬ بعد تغيير الحساب. أي ‪CTA‬ إلى شاشة أخرى محدد داخل ‪Wxx‬ ويغلب هذا الافتراضي.
+
+‪WG10 Module gates‬: الوصول التشغيلي لكل شاشة و ‪CTA‬ و ‪API‬ وملف يحقق ‪Implementation‬ و ‪Enabled‬ للـ ‪Tenant‬ و ‪Dependencies‬ و ‪RBAC‬ وحالة الكيان. ‪Sidebar‬ و ‪Dashboard cards‬ وقائمة ‪Permissions‬ تعرض المتاح فعلاً فقط. ‪Core‬ لا تعطل. تراجع ‪Backend‬ أحدث ‪Entitlement‬ عند ‪mutation‬؛ ‪cache‬ أو ‪deep link‬ أو ‪Owner role‬ لا يتجاوز ‪Gate‬.
+
+‪WG11 Pack integrity‬: كل مشارك ‪Marketplace‬ يحتاج الحزمة كاملة، مع ‪History‬ و ‪Reviews integrations. Admin‬ وحده يغير ‪Enabled/Disabled‬؛ ‪Owner‬ يعدل ‪Config‬ المصرح فقط. الاشتراك لا يفعّل كل ‪Module‬ ولا ينفذ ‪charge. Mapping‬ و ‪Lifecycle‬ و ‪Historical read‬ في ‪Sections 3.8‬ و ‪3.9‬ و ‪11‬.
+
+‪2‬ مصفوفة ‪Workshop Roles‬
+
+القدرة
+
+Owner
+
+Service Advisor
+
+Reception
+
+Technician
+
+Profile Services Brands Hours
+
+تعديل
+
+قراءة
+
+قراءة
+
+لا
+
+‪Requests‬ وردودها
+
+كامل
+
+كامل
+
+قبول/رفض/اقتراح وقت
+
+لا
+
+‪Bookings‬ و ‪Calendar‬ و ‪Arrived‬
+
+كامل
+
+كامل
+
+كامل ضمن الموعد
+
+قراءة المسند
+
+‪CRM‬ والتواصل
+
+كامل
+
+كامل
+
+بيانات الموعد اللازمة
+
+اسم/سيارة للمسند فقط
+
+Inspection notes
+
+كامل
+
+كامل
+
+لا
+
+المسند إليه
+
+Quote create/send/revision
+
+كامل
+
+كامل
+
+لا
+
+قراءة الخدمات المصرح بها فقط
+
+Job start/complete
+
+كامل
+
+كامل
+
+‪Arrived‬ فقط
+
+تحديث ‪progress‬ وملاحظات للمسند؛ لا ‪Complete‬ مالي
+
+Invoice issue/PDF/payment record
+
+كامل
+
+كامل
+
+قراءة ‪status‬ للموعد دون تعديل
+
+لا
+
+Reviews reply
+
+كامل
+
+كامل
+
+قراءة
+
+لا
+
+‪Staff/role/subscription/settings‬ المالية
+
+كامل
+
+لا
+
+لا
+
+لا
+
+‪Reports‬ المالية
+
+كامل
+
+قراءة عمليات ورشته
+
+مؤشرات مواعيد فقط
+
+لا
+
+
+
+‪Assumption A02‬ هذا التوزيع ثابت في ‪V1.1‬؛ لا ‪Custom role builder. Owner‬ لا يستطيع حذف آخر ‪Owner‬ أو تصعيد موظف إلى ‪Super Admin‬. نقل ملكية ‪Workshop‬ خارج ‪MVP‬ ويعالج بمراجعة ‪Operations‬.
+
+‪3‬ جميع ‪Statuses‬ والانتقالات المرجعية
+
+‪Status IDs‬ أدناه ‪Canonical‬ باللغة الإنجليزية للـ ‪Backend‬، مع ‪Labels AR/EN. Booking‬ هو ‪Projection‬ متسق لرحلة الخدمة، بينما ‪Request/Quote/Job/Invoice/Payment‬ كيانات مستقلة؛ لا يكرر ‪Frontend‬ منطقاً مختلفاً. انتقال غير مذكور مرفوض ويظهر ‪Conflict/Forbidden‬ مع أحدث بيانات. التفاصيل ‪Time Proposed/No Show/Awaiting Approval‬ مفترضة ‪A04‬ لتغطية المسارات المطلوبة.
+
+3.1 Workshop Verification and Operating Status
+
+From
+
+‪Action‬ والفاعل
+
+To
+
+الأثر والشرط
+
+Draft
+
+Owner Submit complete profile
+
+Pending Verification
+
+لا ‪Discovery‬ أو ‪Requests‬
+
+Pending Verification
+
+Admin Request changes
+
+Changes Requested
+
+‪reason/fields‬؛ ‪Owner‬ يعدل ويعيد ‪Submit‬
+
+Changes Requested
+
+Owner Resubmit
+
+Pending Verification
+
+‪verification revision‬ جديدة
+
+Pending Verification
+
+Admin Approve
+
+Active
+
+‪verified_at/by‬؛ ‪eligibility‬ منفصلة وتتطلب الحزمة والمشاركة والقدرات
+
+Pending Verification
+
+Admin Reject
+
+Rejected
+
+سبب؛ لا نشر؛ إعادة التقديم بقرار ‪Admin‬
+
+Rejected
+
+Admin reopen application
+
+Draft
+
+لا ‪approval‬ ضمني
+
+Active
+
+Admin Suspend
+
+Suspended
+
+‪intake disabled‬؛ ‪existing scope‬ حسب التعليق
+
+Active
+
+‪Owner request deactivate‬ ثم ‪Admin‬ أو ‪Admin deactivate‬
+
+Inactive
+
+لا ‪intake‬؛ حفظ التاريخ
+
+‪Suspended‬ أو ‪Inactive‬
+
+Admin reactivate after checks
+
+Active
+
+لا يلغي أسباب/‪Audit‬ السابق
+
+
+
+‪Approved Label‬ في ‪Admin‬ يقابل ‪Active‬؛ ‪Verification approval‬ ليس ‪Subscription activation. Profile edit‬ بعد ‪Active‬ يبقي السجل الأصلي؛ تغيير ‪Legal name/location/identity‬ يتحول ‪Pending Change review‬ ولا ينشر قبل اعتماد ‪Admin‬، دون إيقاف خدمة قائمة تلقائياً. ‪Pending Change request‬ كيان مراجعة مستقل لا ‪Workshop status‬ ثانية مخفية.
+
+3.2 Service Request
+
+From
+
+Trigger
+
+To
+
+نتيجة مرتبطة
+
+لا كيان مرسل
+
+User Submit eligible workshop
+
+Submitted
+
+‪Request‬ ثابت؛ ‪Booking Pending‬ إن وقت محدد
+
+‪Submitted‬ أو ‪Time Proposed‬
+
+Workshop Accept requested time
+
+Accepted
+
+‪Booking Accepted‬ ثم ‪Confirmed‬ بعد ‪capacity check‬
+
+‪Submitted‬ أو ‪Time Proposed‬
+
+Workshop Propose different time
+
+Time Proposed
+
+‪Booking Time Proposed‬ أو إنشاؤه؛ لا ‪confirmation‬
+
+Time Proposed
+
+User Accept current proposal
+
+Accepted
+
+‪Booking Confirmed‬ بعد ‪recheck‬
+
+Time Proposed
+
+User Decline proposal
+
+Submitted
+
+‪Booking Pending‬؛ تحفظ ‪proposal rejected‬ ويقترح غيرها
+
+‪Submitted‬ أو ‪Time Proposed‬
+
+Workshop Reject with reason
+
+Rejected
+
+‪Booking Cancelled‬ إن وجد؛ ‪no Job‬
+
+‪Submitted‬ أو ‪Time Proposed‬
+
+Validity deadline reached
+
+Expired
+
+‪deadline Config‬ معتمد؛ ‪no auto fake acceptance‬
+
+‪Submitted‬ أو ‪Time Proposed‬ أو ‪Accepted‬
+
+‪User/Workshop Cancel‬ قبل ‪Arrived‬
+
+Cancelled
+
+Booking Cancelled؛ reason/audit
+
+Accepted
+
+Booking No Show recorded
+
+Cancelled
+
+‪reason no_show‬؛ ‪Booking No Show‬ ولا ‪History‬
+
+Accepted
+
+Job Complete committed
+
+Completed
+
+‪Invoice‬ و ‪History‬ و ‪Booking Completed‬
+
+
+
+‪Accepted‬ يبقى حالة ‪Request‬ أثناء الفحص والتنفيذ؛ لا يتحول ‪Request‬ إلى ‪Quote Sent. Expiry‬ لا يطبق على خدمة بدأ تنفيذها. إرسال طلب جديد بعد ‪Reject/Expire‬ عملية جديدة، لا إعادة استعمال قرار سابق.
+
+3.3 Booking Appointment and Journey
+
+From
+
+Trigger/Actor
+
+To
+
+‪Guard‬ والأثر
+
+لا ‪Booking‬
+
+‪Request with time‬ أو ‪Workshop time proposal‬
+
+‪Pending‬ أو ‪Time Proposed‬
+
+unique Request/Booking
+
+Pending
+
+Workshop accepts exact requested time
+
+Accepted
+
+‪workshop Active‬ و ‪Pack Enabled‬ و ‪time available‬؛ طلب جديد وفق ‪Eligibility‬، والقائم وفق ‪A17‬؛ انتقال سجل قصير
+
+Accepted
+
+Server commits agreed appointment
+
+Confirmed
+
+لا قرار ‪Quote‬؛ يحفظ ‪user-intended requested time‬
+
+‪Pending‬ أو ‪Time Proposed‬
+
+Workshop proposes time
+
+Time Proposed
+
+latest proposal version/expiry
+
+Time Proposed
+
+User accepts
+
+Confirmed
+
+‪current proposal valid + capacity‬ و ‪Pack Enabled‬؛ ‪new-intake eligibility‬ أو ‪existing-flow continuation A17‬ حسب سياق الطلب
+
+Time Proposed
+
+User declines
+
+Pending
+
+بلا موعد مؤكد؛ ‪retains previous proposals‬
+
+Confirmed
+
+Reception/Advisor/Owner marks arrival
+
+Vehicle Arrived
+
+‪appointment entity‬ لا ‪User mutation‬
+
+Vehicle Arrived
+
+Advisor/Owner starts inspection
+
+Inspection
+
+‪Job Card Inspection‬ ينشأ مرة واحدة
+
+Inspection
+
+Advisor/Owner sends quote
+
+Quote Sent
+
+‪Quote Sent‬ و ‪Job Awaiting Approval‬
+
+Quote Sent
+
+User accepts first quote
+
+Quote Approved
+
+‪Quote Accepted‬ و ‪Job Confirmed‬
+
+Quote Sent
+
+User rejects/expires first quote
+
+Inspection
+
+‪Job Inspection‬؛ يمكن فحص/‪Quote‬ جديدة
+
+Quote Approved
+
+Owner/Advisor starts authorized job
+
+In Progress
+
+latest accepted quote & no pending revision
+
+In Progress
+
+Workshop sends full-scope revision
+
+Quote Sent
+
+‪Job Awaiting Approval/paused‬؛ ‪old approval‬ محفوظ
+
+‪Quote Sent‬ مع ‪started_at‬ موجود
+
+User accepts revision
+
+In Progress
+
+‪replaces current authorized snapshot‬ بعد حفظ القرار
+
+‪Quote Sent‬ مع ‪started_at‬ موجود
+
+‪User rejects‬ أو ‪quote expires‬
+
+Quote Sent
+
+‪stays paused Awaiting Approval‬؛ ‪Support/revise‬، لا متابعة زيادة غير معتمدة
+
+In Progress
+
+Owner/Advisor Complete transaction
+
+Completed
+
+‪Job/Invoice/History commit‬ ناجح
+
+Pending Time Proposed Accepted Confirmed
+
+‪Cancel‬ قبل ‪Arrived‬
+
+Cancelled
+
+‪reason‬ و ‪Request Cancelled‬ أو ‪Rejected‬ حسب ‪trigger‬
+
+Confirmed
+
+‪Workshop records missed appointment‬ بعد الوقت
+
+No Show
+
+‪grace interval Config‬؛ لا ‪Invoice/Review‬
+
+
+
+لا رجوع من ‪Completed‬ إلى ‪In Progress‬ ولا إعادة تحديد موعد بعد ‪Inspection‬ في ‪V1.1. Reschedule‬ قبل الوصول يخلق ‪Proposal version‬؛ يحتفظ الموعد ‪Confirmed‬ الحالي حتى قبول الجديد، ويعرض «تغيير وقت مقترح» دون سحب تأكيد القديم. الجدول ‪Pending→Time Proposed‬ يخص رحلة لم تؤكد؛ ‪proposal_change‬ على ‪Confirmed‬ كيان مستقل يحفظ حالة ‪Confirmed‬. يراجع نفس ‪capacity‬ وقت القبول؛ ‪Decline‬ يحافظ على الموعد القديم.
+
+‪Cancellation‬ بعد ‪Vehicle Arrived‬ ليست متاحة كزر عادي. ‪Advisor/Owner‬ يفتح ‪Support‬؛ قبل ‪Job start‬ قد يغلق ‪Admin Job cancelled‬ بسبب مسجل إذا لا التزام مالي معتمد ولم تبدأ أعمال، مع ‪Request/Booking Cancelled‬. بعد ‪Start‬ لا يمحو ‪Invoice‬ أو الخدمات؛ النزاع يتطلب حل ‪Operations/Finance‬ خارج ‪Auto-refund‬.
+
+3.4 Quote Status and Revisions
+
+From
+
+Action
+
+To
+
+Guard
+
+لا ‪Quote‬
+
+Owner/Advisor Create
+
+Draft
+
+‪Job/Booking‬ صالح؛ ‪version family‬
+
+Draft
+
+Author edit
+
+Draft
+
+totals recalculated server-side
+
+Draft
+
+Author Send
+
+Sent
+
+complete items/tax/expiry؛ immutable revision
+
+Sent
+
+User Accept
+
+Accepted
+
+current/nonexpired/authorized/atomic
+
+Sent
+
+User Reject
+
+Rejected
+
+decision audit
+
+Sent
+
+expires_at passed
+
+Expired
+
+decision disabled
+
+Sent
+
+Workshop publishes new revision
+
+Superseded
+
+no accept old revision
+
+‪Rejected Expired Superseded‬ أو ‪Accepted‬
+
+Create revision
+
+New Draft
+
+original immutable؛ latest accepted retained
+
+Draft
+
+Author discard before send
+
+Draft archived
+
+لا ‪financial history deletion‬
+
+
+
+‪Accepted‬ تبقى ‪Accepted‬ تاريخياً حتى إذا وافق على ‪Revision‬ أحدث؛ ‪current_approved_revision pointer‬ يتحرك ولا يعاد كتابة ‪decision‬. الـ ‪Revision‬ أثناء التنفيذ تشمل النطاق الكامل والمبالغ السابقة والإضافات، وتوضح الفرق؛ لا فاتورة على إضافة منفصلة غير مقبولة. ‪Draft revision‬ لا توقف ‪Job‬ قبل ‪Send‬، ولكن يجب ألا تنفذ الإضافة المقترحة. ‪Sending revision‬ بعد ‪Start‬ يوقف تقدم/‪Complete‬ حتى قبول أو حل النطاق. ‪Quote rejected‬ لا ينشئ ‪charge‬ تلقائياً؛ ‪inspection fee‬ إن مطلوبة يجب عرضها في ‪Quote‬ وتوافق عليها مسبقاً، ولا تضاف كرسوم مخفية.
+
+3.5 Job Status
+
+From
+
+Trigger
+
+To
+
+الشرط
+
+لا ‪Job‬
+
+start inspection after arrival
+
+Inspection
+
+‪one job/booking‬؛ ‪field work‬ ليس مصرحاً بعد
+
+Inspection
+
+Send first Quote
+
+Awaiting Approval
+
+no start
+
+‪Awaiting Approval‬ بلا ‪started_at‬
+
+Quote accepted
+
+Confirmed
+
+approved snapshot
+
+‪Awaiting Approval‬ بلا ‪started_at‬
+
+Quote rejected/expired
+
+Inspection
+
+awaiting revised inspection/quote
+
+Confirmed
+
+Owner/Advisor Start
+
+In Progress
+
+latest approval; technician assignment optional
+
+In Progress
+
+Send revision
+
+Awaiting Approval
+
+‪paused_at/reason‬؛ ‪started_at‬ يبقى
+
+‪Awaiting Approval‬ مع ‪started_at‬
+
+Revision accepted
+
+In Progress
+
+approved full scope؛ resume audit
+
+‪Awaiting Approval‬ مع ‪started_at‬
+
+Revision rejected/expired
+
+Awaiting Approval
+
+‪operational resolution‬ لا ‪hidden execution‬
+
+In Progress
+
+Complete
+
+Completed
+
+invoice/history atomic، completed mileage ≥ current reading
+
+‪Inspection‬ أو ‪Awaiting Approval‬ بلا ‪start‬
+
+Admin authorized close through Support
+
+Cancelled
+
+no unhandled approved obligation؛ audit
+
+
+
+‪Technician‬ لا يصدر ‪Invoice‬ أو ‪Complete‬ نهائي؛ يستطيع تحديث ملاحظات/‪progress‬ على المسند إليه فقط. ‪Completed/Cancelled terminal‬. تصحيح مالي بعد ‪Complete‬ عبر ‪Finance/Support‬ وليس تغيير بنود في ‪Job‬ المغلق.
+
+3.6 Invoice and Payment Status
+
+بُعد
+
+الحالات والانتقالات
+
+الضوابط
+
+Invoice lifecycle
+
+‪Draft→Issued‬؛ ‪Issued→Cancelled‬ بإجراء ‪Finance authorized‬
+
+‪Golden Flow‬ ينشئ ‪Issued‬ عند ‪Complete‬؛ ‪Draft‬ ل ‪preparation preview‬ فقط
+
+Payment
+
+‪Unpaid→Paid‬؛ ‪Paid→Unpaid‬ كتصحيح ‪authorized‬ مع سبب
+
+لا حذف ‪settlement record‬؛ ‪Audit‬ يربط التصحيح
+
+Settlement channel
+
+خارج ‪Miftah‬ أو ‪manual unspecified‬
+
+لا ‪Gateway‬ ولا ‪Wallet‬؛ ‪Paid outside = Paid+outside flag‬
+
+
+
+لا يحرر ‪Issued‬ ولا يعاد رقمها. ‪Cancelled‬ مستبعدة من ‪GMV totals‬ المعرّفة وتظل في ‪History‬ كرابط مستند ملغى مع ‪reason‬؛ لا تحذف ‪Maintenance Record‬ لخدمة حدثت. إلغاء وثيقة مالية يحتاج سياسة ‪Finance‬ قبل ‪Public release‬، وقد يرفض الإجراء مع توجيه بديل قانوني؛ لا يفترض أن الحذف المباشر مسموح.
+
+‪3.7‬ بقية الحالات
+
+‪Staff Invited→Active‬ بعد قبول وتحقق→‪Disabled‬ بواسطة ‪Owner‬؛ ‪Invited→Expired‬ أو ‪Revoked‬؛ إعادة ‪Invite‬ تنشئ دعوة جديدة وتلغي القديمة. ‪Subscription Trial→Active/Expired‬ بالتعيين الإداري؛ ‪Active→Expired/Cancelled‬ بواسطة ‪Admin‬؛ لا ‪Automated billing‬ أو تأثير ‪Intake‬ تلقائي بلا سياسة معتمدة ‪A11. Review Published→Hidden‬ أو العكس بواسطة ‪Moderation Admin‬؛ ‪WorkshopReply Draft→Published‬، والرد لا يغير ‪Rating. Support Submitted→In Review→Awaiting User/Workshop→In Review→Resolved→Closed‬؛ ‪reopen Resolved/Closed‬ بإجراء مصرح مع سبب. ‪Notifications Unread→Read‬؛ ‪Delivery queued/sent/failed‬ لا علاقة لها بالحالة التجارية.
+
+3.8 Module Lifecycle
+
+‪Status lifecycle‬ هنا مستقل عن ‪Verification‬ و ‪Subscription‬ و ‪Job. Available‬ تعني ‪Module implemented‬ وقابلة للمنح وليست ‪Enabled‬ للـ ‪Tenant. Core‬ تنشأ ‪Enabled‬ ولا يطبق عليها ‪Available→Disabled. Roadmap label‬ يخص ‪Implementation‬ وليست حالة ‪Module‬ تشغيلية تسمح بالتفعيل.
+
+From
+
+Actor and action
+
+To
+
+‪Guard‬ والنتيجة
+
+‪Available‬ أو ‪Disabled‬
+
+‪Admin Enable‬ عبر ‪A33‬
+
+Enabled
+
+‪implemented‬؛ ‪Dependencies Enabled‬؛ ‪Tenant valid‬؛ ‪version/permission/reason‬؛ ‪pack activation‬ كامل إذا مشاركة
+
+‪Enabled Optional Module‬ منفذة لاحقاً
+
+Admin Disable
+
+Disabled
+
+‪dependent modules‬ و ‪active obligations‬ لا تتضرر؛ سياسة ‪module‬ معتمدة قبل تطويرها
+
+Enabled Marketplace Pack
+
+‪Admin Disable group‬ عبر ‪A33‬
+
+‪Disabled‬ للمجموعة
+
+‪participation Off‬ أولاً؛ ‪no unresolved obligations A17‬؛ ‪no Core removal‬؛ ‪retain data‬
+
+‪Enabled module‬ داخل ‪Pack‬ مشاركة
+
+Admin Disable item
+
+لا انتقال
+
+‪PACK_REQUIRED‬؛ لا ‪partial commit‬ أوتعديل ‪eligibility‬ مزيف
+
+Core Enabled
+
+أي ‪Disable/Uninstall‬
+
+لا انتقال
+
+‪CORE_REQUIRED‬؛ لا حذف أوتعطيل
+
+‪Roadmap‬ غير منفذة
+
+‪Enable‬ بأي ‪actor‬
+
+لا انتقال
+
+‪NOT_IMPLEMENTED‬؛ لا ‪sidebar‬ أو ‪API‬ وهمي
+
+أي حالة
+
+‪Owner/Staff Enable‬ أو ‪Disable‬
+
+لا انتقال
+
+‪Admin authority‬ فقط؛ ‪Config edit‬ ليست ‪activation‬
+
+
+
+‪Trial‬ و ‪Expired‬ للـ ‪Modules‬ مؤجلتان. ‪Subscription Trial/Active/Expired/Cancelled‬ كما في ‪Section3.7‬ باقية، ولا تطلق انتقال ‪Module‬ آلياً. ‪Audit‬ يسجل ‪grant source‬ و ‪reason‬ و ‪Actor‬ و ‪version‬ و ‪bundle/subscription reference‬ عند وجودها. رفض مهم للتعطيل أوالتفعيل يسجل كمحاولة فاشلة دون ‪from-to‬ مزيف.
+
+3.9 Marketplace Participation and Eligibility
+
+‪Participation intent‬ يضبطه ‪Admin On‬ أو ‪Off‬، و ‪Eligibility‬ مشتقة ‪Eligible‬ أو ‪Ineligible‬ للطلبات الجديدة مع ‪reasons‬ وتوقيت النسخة. هذان محورا ‪Product‬ وليسا ‪Workshop status‬ جديداً؛ ‪Workshop‬ يمكن ‪Active‬ و ‪Core-only‬ و ‪Ineligible. Enabled Pack‬ لا يتجاوز ‪Verification‬ أو ‪Security Freeze‬ أو ‪Service inactive‬.
+
+الفعل
+
+شروطه
+
+أثر الرحلة
+
+تهيئة مشارك جديد
+
+‪Core + Pack‬ كاملة +‪Config‬ صحيحة؛ ‪Verification Active‬ وسوق وخدمات/براندات صالحة
+
+‪Eligible‬ للـ ‪matching/new intake‬ بعد ‪commit‬
+
+إيقاف ‪participation‬
+
+Admin authorized reason
+
+يختفي من نتائج الطلبات الجديدة؛ طلبات ‪committed‬ تبقى مع الحزمة ‪Enabled‬
+
+‪Disable‬ كامل ‪Pack‬ بعد الإيقاف
+
+‪no open Request/Booking/proposal/Sent quote/Job/financial service obligation‬ بحسب ‪A17‬
+
+عمليات ‪Pack‬ ممنوعة؛ حفظ ‪Core‬ والتاريخ والقراءة ‪A19‬
+
+محاولة ‪Disable‬ أثناء ‪Job‬ أو ‪Request‬ قائم
+
+يرفض مع ‪affected entity IDs‬؛ لا ‪state mutation‬
+
+تواصل الخدمة وفق صلاحياتها أو ‪Support‬؛ لا ‪orphan‬ أو ‪Cancel‬ تلقائي
+
+إعادة ‪participation‬
+
+‪recheck current Active‬ و ‪Config‬ و ‪Core‬ و ‪Full Pack‬ و ‪capabilities‬
+
+‪future intake‬ فقط؛ لا ‪Review‬ أو ‪Invoice‬ مكرر أوفتح ‪Job terminal‬
+
+
+
+إكمال رحلة ‪committed‬ بعد ‪participation Off‬ يراجع ‪Pack Enabled‬ و ‪Tenant/Role/Entity‬ و ‪capacity‬ وكل ‪state guard‬ الأصلي؛ ‪new matching gate‬ لا يستخدم لإغلاق رحلة سبق استقبالها. ‪Full Security Freeze‬ يلغي ‪continuation operational access‬ ويحتاج ‪Support‬. لا يُسمح ‪Create‬ رحلة أخرى عبر ‪clone‬ أو ‪direct endpoint‬ بحجة أن بيانات العميل موجودة.
+
+4 Authentication Verification and Onboarding
+
+الدخول والجلسة
+
+W01 Login and Session
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+دخول ‪Owner/Staff‬ من ‪web‬ أو ‪invitation/deep link‬.
+
+الحقول  ‪Fields‬
+
+‪Email/password A01‬، ‪Show password‬، لا ‪workshop selector‬ متعدد في ‪V1.1‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Login/Forgot password→W02/Register→W03‬. نجاح ‪Active→W09‬ داخل ‪W35 Shell‬ بحسب ‪modules‬ و ‪role‬، ‪incomplete→W05‬، ‪pending→W04‬؛ ‪Staff‬ إلى الصفحة المصرح بها.
+
+قواعد التحقق  ‪Validation‬
+
+بريد صالح وكلمة غير فارغة، رسالة موحدة ‪invalid credentials‬، ‪rate limit/secure sessions‬؛ لا تسجيل ‪Admin‬ هنا.
+
+حالات الشاشة  ‪States‬
+
+‪logged out/loading‬، ‪disabled/revoked→access stopped‬؛ ‪expired→login‬ مع ‪safe return‬؛ ‪offline retry‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+لا ‪RBAC‬ من ‪Client token‬ فقط؛ ‪password hashed backend‬؛ ‪Tenant‬ من حساب مصرح.
+
+الإشعارات  ‪Notifications‬
+
+‪security login anomaly‬ إن ‪Config‬ لا وعد محدد.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+WorkshopMember/AuthSession.
+
+معايير القبول  ‪AC‬
+
+‪W01.1  Disabled staff‬ لا يدخل؛
+
+‪W01.2  Advisor‬ لا يرى ‪Owner settings‬؛
+
+‪W01.3‬  تبديل الحساب يزيل ‪Cache tenant‬ السابق.
+
+استعادة كلمة المرور والتحقق من التواصل
+
+W02 Password Recovery and Contact Verification
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+استعادة ‪credentials‬ من ‪W01‬ وتحقق ‪Email/Phone‬ أثناء ‪Registration‬.
+
+الحقول  ‪Fields‬
+
+‪Email‬ أو ‪Phone challenge‬ حسب ‪contact‬، ‪verification code/token‬، ‪New password/Confirm‬ عند ‪recovery‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Send/Verify/Resend/Set password→W01‬ أو ‪W05‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪expiry/one-use/attempt limits‬، ‪Password policy Security config‬ وعرض شروطه؛ لا يرسل ‪Password‬ بالنص.
+
+حالات الشاشة  ‪States‬
+
+waiting/expired/invalid/provider down؛ Email enumeration avoided.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+استعادة تلغي ‪sessions‬ وفق ‪Security‬، لا تغير ‪Role/Tenant‬؛ ‪invite accepted verifies target contact‬.
+
+الإشعارات  ‪Notifications‬
+
+recovery/contact verification transactional.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+AuthChallenge/Member.
+
+معايير القبول  ‪AC‬
+
+‪W02.1  token‬ مستعمل لا يعمل ثانية؛
+
+‪W02.2  change‬ يوقف ‪old session‬ حسب السياسة؛
+
+‪W02.3  wrong tenant‬ لا يكتسب ‪membership‬.
+
+تسجيل الورشة
+
+W03 Workshop Registration
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ جديد من ‪W01‬.
+
+الحقول  ‪Fields‬
+
+Owner name، email، phone، password/confirm، legal name، trade name، emirate Dubai/Sharjah؛ Terms/Privacy consent required.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Register→W02 verification→W05؛ Open policies.
+
+قواعد التحقق  ‪Validation‬
+
+‪legal/trade2–150‬، ‪email/phone format‬، ‪password policy‬، ‪duplicate email yields safe existing-login path‬، ‪workshop suspected duplicate location/legal name‬ إلى ‪Admin‬ لا إنشاء ‪Active‬.
+
+حالات الشاشة  ‪States‬
+
+‪incomplete/saving/contact unavailable‬؛ ‪unsupported emirate‬ يعطي ‪no current coverage‬ ويمنع ‪Submit‬ تشغيل.
+
+قواعد العمل  ‪Rules‬
+
+‪Workshop Draft‬ غير منشور؛ ‪consent‬ ليس ‪Admin approval‬.
+
+الإشعارات  ‪Notifications‬
+
+‪verification challenge‬ لا طلبات.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+User/Workshop/OwnerMembership/Consent.
+
+معايير القبول  ‪AC‬
+
+‪W03.1  register‬ لا يجعل الورشة ‪verified‬؛
+
+‪W03.2  retries‬ لا ‪tenant duplicate‬؛
+
+‪W03.3‬  كلا ‪AR/EN‬ يعمل.
+
+حالة التحقق والتعديلات المطلوبة
+
+W04 Verification Status and Requested Changes
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ بعد ‪Submit‬ أو ‪Notification Admin‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪status/submitted time/reviewer request/reason/fields checklist‬؛ ‪Fields‬ رد مختصر أو تعديل روابط إلى ‪W05/W06‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Edit requested fields/Resubmit/Contact support‬؛ لا ‪Approve‬ زر.
+
+حالات الشاشة  ‪States‬
+
+‪Pending waiting‬، ‪Changes requested‬، ‪Rejected‬، ‪Suspended/Inactive‬ مع ‪reason and permitted operations‬؛ ‪loading/conflict approval while edit→refresh‬.
+
+قواعد العمل  ‪Rules‬
+
+‪resubmit new revision‬؛ ‪docs‬ الحساسة فقط إذا ‪policy confirmed‬ وليس ‪automatic Trade licence upload‬؛ ‪Owner‬ يرى ملفه فقط.
+
+الإشعارات  ‪Notifications‬
+
+approved/rejected/changes/suspension.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+VerificationCase/Workshop/ReviewDecision.
+
+معايير القبول  ‪AC‬
+
+‪W04.1  reason‬ واضح؛
+
+‪W04.2‬  تعديل لا ينشر ورشة غير معتمدة؛
+
+‪W04.3  Active‬ يفتح ‪operations‬.
+
+‪V1.1 MD09: Active verified‬ ليست ‪Marketplace Eligible‬ وحدها.
+
+المعلومات المعروضة  ‪Data‬
+
+يوضح ‪Owner‬ حالة المشاركة و ‪readiness‬ وأسباب ‪setup‬ المسموحة من ‪W36‬؛ لا يغيّر ‪eligibility‬.
+
+معايير القبول  ‪AC‬
+
+‪W04.4  Admin approval‬ بلا ‪Pack‬ لا ينشر الورشة.
+
+إعداد الورشة وقائمة الاكتمال
+
+W05 Onboarding Setup Checklist
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+إكمال ملف ورشة ‪Draft‬ من ‪Registration/Login‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪checklist Business/location/contact/services/brands/hours/logo/photos/description. Fields‬ حسب ‪W06–W08‬؛ ‪optional licence metadata‬ إذا ‪Admin‬ طلبه ضمن سياسة.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save draft/Continue section/Submit for verification→W04.
+
+قواعد التحقق  ‪Validation‬
+
+‪required legal/trade/contact/address/emirate/map coordinates‬ و ‪service‬ واحدة و ‪brand‬ أو ‪All Brands‬ و ‪hours‬ يوم عمل واحد على الأقل، ‪profile description‬؛ ‪logo/photos‬ اقتراح ‪checklist‬ مفيد لا ‪blocking‬ إذا لم تعتمد سياسة.
+
+حالات الشاشة  ‪States‬
+
+empty steps/saving draft/error/validation per missing field.
+
+قواعد العمل  ‪Rules‬
+
+لا ‪Marketplace Orders‬ قبل ‪Active‬ والأهلية؛ ‪Core setup‬ متاح وفق حالة الحساب؛ كل ‪step‬ يحفظ ‪tenant‬ نفسه.
+
+الإشعارات  ‪Notifications‬
+
+‪Admin verification submitted‬ بعد ‪Commit‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/Profile/Services/Brands/Hours/Verification.
+
+معايير القبول  ‪AC‬
+
+‪W05.1  incomplete submit‬ يمنع مع قائمة؛
+
+‪W05.2  Back‬ لا يفقد ‪saved draft‬؛
+
+‪W05.3  Submit‬ يرسل ‪snapshot revision‬ قابلة للمراجعة.
+
+‪V1.1 A18: Core‬ تهيأ تلقائياً؛ ‪Admin‬ يهيئ كامل ‪Pack‬ للمشارك. ‪Checklist‬ تعرض ‪readiness‬ و ‪Dependency/config blockers‬ منفصلة عن ‪Verification‬.
+
+معايير القبول  ‪AC‬
+
+‪W05.4  incomplete Pack‬ تمنع ‪Marketplace readiness‬ لا تمحو ‪Core profile‬.
+
+ملف النشاط والموقع
+
+W06 Business Profile and Location
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ من ‪Onboarding/Settings‬.
+
+الحقول  ‪Fields‬
+
+‪legal/trade names/phone/email/address/emirate/coordinates/description AR/EN‬ إن توفر/‪logo/cover/photos‬؛ ‪tax profile link to W33‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/View public profile/Submit material changes.
+
+قواعد التحقق  ‪Validation‬
+
+‪coordinates‬ ضمن المنطقة الصحيحة و ‪address‬ غير فارغ، ‪photo same private upload validation‬ ثم ‪public approved gallery‬؛ ‪phone/email valid‬؛ لغة ثانية لا ترجمة آلية مخفية.
+
+حالات الشاشة  ‪States‬
+
+missing location/preview/loading/save conflict/asset failure.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪only Owner edit‬؛ تغير ‪legal/location‬ بعد ‪verification‬ عبر ‪Admin change request‬؛ ‪public fields‬ فقط في ‪App‬.
+
+الإشعارات  ‪Notifications‬
+
+‪material change request‬ إلى ‪Admin‬؛ ‪no user push‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Workshop/ProfileChangeRequest/Attachment.
+
+معايير القبول  ‪AC‬
+
+‪W06.1  draft change‬ لا يستبدل ‪verified live address‬؛
+
+‪W06.2  Public preview‬ لا ‪internal tax notes‬؛
+
+‪W06.3  Provider map down‬ لا يمحو ‪saved coordinates‬.
+
+‪V1.1 MD02: Workshop identity/Profile Core‬ دائماً؛ ‪public preview‬ لا يضمن ظهوراً عاماً إذا ‪participation Off‬.
+
+معايير القبول  ‪AC‬
+
+‪W06.4  Disable Pack‬ لا يزيل هوية ‪Tenant‬.
+
+الخدمات والعلامات المدعومة
+
+W07 Services and Supported Brands
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ من ‪Setup/Settings‬.
+
+الحقول  ‪Fields‬
+
+‪taxonomy services selected/enabled‬، ‪optional From price AED‬، ‪supported brand IDs‬ أو ‪All Brands flag‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Enable/Disable/Save.
+
+المعلومات المعروضة  ‪Data‬
+
+‪active Master AR/EN‬ و ‪current workshop associations‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪price‬≥‪0‬، ‪service/master brand active‬، ‪All Brands‬ يحل محل ‪shortlist‬ في ‪eligibility‬ بشكل واضح؛ ‪disabling last service‬ يمنع ‪intake‬ وتحتاج إشعار ‪Owner‬ بأن لا عروض متاحة.
+
+حالات الشاشة  ‪States‬
+
+no selected services/brands، loading، master retired while save→refresh.
+
+قواعد العمل  ‪Rules‬
+
+لا إنشاء خدمات عشوائية؛ ‪Oil/Battery canonical IDs‬؛ تعطيل لا يغير ‪Quote‬ أو ‪job‬ قائم.
+
+الإشعارات  ‪Notifications‬
+
+no user marketing؛ audit/service change→matching invalidation.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+WorkshopService/WorkshopBrand/Taxonomy.
+
+معايير القبول  ‪AC‬
+
+‪W07.1  AC disabled‬ لا ‪Match‬ جديد له؛
+
+‪W07.2  accepted job‬ السابق يبقى؛
+
+‪W07.3  From price‬ ليس ‪Quote‬.
+
+‪V1.1 MD02: Core Services‬ لا تعطل كوحدة؛
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Enable/Disable‬ هنا تخص خدمة محددة. ‪Brand‬ و ‪Hours‬ تتبع ‪Core settings‬ وليست ‪Optional Apps‬.
+
+معايير القبول  ‪AC‬
+
+‪W07.4‬  لا ‪service toggle‬ يغيّر ‪enabled_modules‬.
+
+ساعات العمل والتوفر
+
+W08 Working Hours and Availability
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ من ‪Setup/Settings/Calendar‬.
+
+الحقول  ‪Fields‬
+
+‪weekday/open/close/closed flag‬، ‪optional multiple intervals‬ وحدود ‪exception dates‬ إن احتاج ‪Pilot A08‬؛ ‪slot availability configuration‬ إذا اعتمد ‪Operations‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/Preview hours/Mark temporary closed.
+
+قواعد التحقق  ‪Validation‬
+
+‪start<end‬، ‪no overlapping intervals‬، ‪overnight‬ يقدم كفترتين يوميتين لا وقت سالب؛ ‪Asia/Dubai‬؛ ‪hours active before matching‬.
+
+حالات الشاشة  ‪States‬
+
+no open days warns and no new availability، saving، concurrent bookings conflict list.
+
+قواعد العمل  ‪Rules‬
+
+‪Hours‬ ليست ‪staff rota‬، لا ‪complex resource capacity‬؛ تغييرها لا يلغي ‪appointments‬ مؤكدة آلياً بل يعرض ‪affected bookings‬ ليقترح ‪Owner‬ وقتاً آخر.
+
+الإشعارات  ‪Notifications‬
+
+‪proposal‬ عبر ‪Booking‬ فقط؛ ‪matching config updated‬ داخلياً.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+WorkingHours/AvailabilityException/Booking.
+
+معايير القبول  ‪AC‬
+
+‪W08.1  Open Now‬ يحسب الصحيح؛
+
+‪W08.2‬  تغيير الوقت لا يلغى ‪confirmed booking‬؛
+
+‪W08.3  closed date‬ يمنع عرض ‪slot‬ متاح جديد.
+
+5 Daily Operations Requests Bookings and CRM
+
+نظرة عامة على التشغيل
+
+W09 Dashboard Overview
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ بعد ‪Login‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Core setup/Customers/Vehicles‬ وروابط الإدارة، مع ‪Today bookings/New requests/Pending quotes/Jobs in progress/Completed jobs value/Average rating‬ فقط عند ‪modules Enabled‬ و ‪role‬ يسمح؛ ‪cards link to filtered lists. Core-only‬ لا يرسل ‪financial‬ أو ‪Marketplace aggregate payload. No editable fields‬ إلا ‪date range‬ إذا ‪role‬ يسمح.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Requests→W10/Calendar→W15/Jobs→W18/Reports→W30.
+
+حالات الشاشة  ‪States‬
+
+‪no activity onboarding tips‬ لا أرقام وهمية؛ ‪loading widgets‬؛ ‪error partial retains other cards‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Revenue label‬ «قيمة الخدمات المكتملة» و ‪collections‬ منفصلة؛ ‪Reception‬ يرى ‪booking counters‬ فقط؛ ‪no data another tenant‬.
+
+الإشعارات  ‪Notifications‬
+
+unread center badge.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+aggregates Request/Booking/Quote/Job/Invoice/Review.
+
+معايير القبول  ‪AC‬
+
+‪W09.1  counters‬ تتطابق مع ‪lists‬ لنفس الفترة؛
+
+W09.2  pending quote = latest Sent families؛
+
+‪W09.3  roles‬ لا تتلقى ‪financial payload‬ مخفي.
+
+‪V1.1 MD05: W35‬ يبني ‪navigation‬؛ ‪missing module‬ يخفي ‪widget‬ ورابطه ولا يعرض ‪zero‬ وهمياً. ‪Empty Core-only‬ يقترح ‪profile/customer/vehicle context‬ و ‪Contact support‬؛ ‪no Buy now‬ أو ‪Module Store‬.
+
+معايير القبول  ‪AC‬
+
+‪W09.4‬  نفس الدور في ‪Tenant‬ ين مختلفين يرى بطاقات حسب ‪modules‬؛
+
+‪W09.5  aggregates‬ لا تتضمن ‪domains disabled‬.
+
+طلبات الخدمة الواردة
+
+W10 Incoming Service Requests
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor/Reception‬ من ‪overview/notification‬.
+
+المعلومات المعروضة  ‪Data‬
+
+request time/customer limited/vehicle/service/AI category/risk/selected workshop/preferred time/status/response age.
+
+الحقول  ‪Fields‬
+
+filters status/date/service/search.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open→W11؛ no blind bulk accept.
+
+حالات الشاشة  ‪States‬
+
+no incoming، paginated loading/error؛ suspended intake note؛ stale counts refresh.
+
+قواعد العمل  ‪Rules‬
+
+‪one chosen workshop sees request‬؛ لا كل مرشحي ‪Matching‬؛ ‪Staff sees relevant fields‬.
+
+الإشعارات  ‪Notifications‬
+
+‪new request/event assignment‬; لا ‪SMS campaigns‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+ServiceRequest/Vehicle/ClassificationSnapshot.
+
+معايير القبول  ‪AC‬
+
+‪W10.1  tenant B‬ لا يستلم ‪request A‬؛
+
+‪W10.2  Submitted‬ يظهر ‪once‬؛
+
+W10.3  list filter active preserves after Back.
+
+تفاصيل الطلب والرد عليه
+
+W11 Request Details and Response
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor/Reception‬ من ‪W10‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Customer contact authorized/Vehicle/problem/photos/AI summary and risk/location distance/requested time/status/history‬؛ ‪Reception‬ لا ‪full AI log‬.
+
+الحقول  ‪Fields‬
+
+‪reject reason required‬، ‪proposed date/time required‬ للتغيير، ‪response note optional‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Accept exact time→Booking confirmed W14‬، ‪Reject→Rejected with reason‬، ‪Propose→Time Proposed‬ وينتظر ‪User‬؛ إذا لا وقت لا ‪Accept‬ بلا إنشاء ‪proposal‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪current request version‬، ‪active operations‬ و ‪Pack Enabled‬ و ‪continuation‬ أو ‪new-intake guard‬ بحسب السياق، ‪future time/hours/known capacity‬، ‪no Reject‬ بعد ‪Started‬.
+
+حالات الشاشة  ‪States‬
+
+no preferred time→propose، sending، expired/cancelled/conflicting accepted→current details؛ image failure retry.
+
+قواعد العمل  ‪Rules‬
+
+‪original Description‬ لا تعدله الورشة؛ لا ‪AI diagnosis guarantee‬؛ ‪no user approval impersonation‬.
+
+الإشعارات  ‪Notifications‬
+
+user response/proposal، workshop audit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Request/Booking/TimeProposal/Attachment.
+
+معايير القبول  ‪AC‬
+
+‪W11.1‬  اقتراح لا يؤكد الموعد؛
+
+‪W11.2  repeated accept same request‬ يعيد نفس ‪booking‬؛
+
+‪W11.3  expired version‬ مرفوضة.
+
+اقتراح المواعيد وسجل الردود
+
+W12 Time Proposals and Response History
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+جدولة بديل ‪Owner/Advisor/Reception‬ من ‪Request‬ أو ‪Booking‬.
+
+المعلومات المعروضة  ‪Data‬
+
+original appointment/latest proposal/older proposals/status/expiry/actor.
+
+الحقول  ‪Fields‬
+
+new date/time/reason optional.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Send proposal/Withdraw pending proposal/View customer response.
+
+قواعد التحقق  ‪Validation‬
+
+future and within hours، proposal validity configured؛ new version supersedes prior pending؛ no silent reschedule.
+
+حالات الشاشة  ‪States‬
+
+no proposal، awaiting user، accepted/rejected/expired، loading/error.
+
+قواعد العمل  ‪Rules‬
+
+‪Confirmed appointment retains old time until accepted new‬; ‪conflict at user accept returns unavailable to both and no time change‬؛ ‪Withdraw‬ لا يلغي ‪confirmed original‬.
+
+الإشعارات  ‪Notifications‬
+
+user time proposal and workshop response.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+TimeProposal/Booking/Audit.
+
+معايير القبول  ‪AC‬
+
+‪W12.1  decline‬ يبقي القديم؛
+
+W12.2  accept updates once؛
+
+‪W12.3  pending proposal ID‬ قديم لا يعمل.
+
+قائمة الحجوزات
+
+W13 Bookings List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪operational appointment list‬ من ‪Overview/Menu/CRM‬.
+
+المعلومات المعروضة  ‪Data‬
+
+customer/vehicle/service/agreed time/booking journey/status/no_show/cancel reason.
+
+الحقول  ‪Fields‬
+
+date/status/search.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open→W14/Calendar→W15.
+
+حالات الشاشة  ‪States‬
+
+no bookings، pagination/load/error.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+Reception schedule fields؛ technicians assigned jobs only؛ no full customer records for unauthorized.
+
+الإشعارات  ‪Notifications‬
+
+reminders refer same booking ID.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Booking/Request/Vehicle/CustomerRelation.
+
+معايير القبول  ‪AC‬
+
+‪W13.1  booking accepted‬ لا ‪quote accepted‬؛
+
+W13.2  filters use Asia/Dubai day؛
+
+‪W13.3  completed‬ لا ‪Pending count‬.
+
+تفاصيل الحجز والوصول والإلغاء
+
+W14 Booking Details Arrival Cancellation and No Show
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor/Reception‬ من ‪List/Calendar/Request‬.
+
+المعلومات المعروضة  ‪Data‬
+
+appointment/request/customer/vehicle/full status timeline/quote/job/invoice links/changes.
+
+الحقول  ‪Fields‬
+
+cancellation/no_show reason، arrival timestamp server-captured؛ proposal link W12.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Mark Arrived، Start inspection→W19 for Owner/Advisor، Cancel before arrival، Mark no show after grace time، Request support after arrival.
+
+قواعد التحقق  ‪Validation‬
+
+state guard table؛ no arrival for cancelled؛ no_show only Confirmed after appointment+configured grace؛ no financial cancellation by Reception.
+
+حالات الشاشة  ‪States‬
+
+awaiting slot/pending proposal/loading/action conflicts/old deep link.
+
+قواعد العمل  ‪Rules‬
+
+Reschedule no bypass، arrived starts not Job execution؛ cancel existing approved financial obligation escalates Support.
+
+الإشعارات  ‪Notifications‬
+
+arrival optionally transactional، cancel/no_show/user; audit all changes.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Booking/Transition/Job/SupportCase.
+
+معايير القبول  ‪AC‬
+
+‪W14.1  no_show‬ لا ‪Invoice/History/Review‬؛
+
+W14.2  arrival twice no duplicate Job؛
+
+‪W14.3  after Started‬ لا ‪Cancel ordinary CTA‬.
+
+تقويم المواعيد
+
+W15 Calendar Day Week and Month
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪visual schedule Owner/Advisor/Reception‬ من ‪W13/Menu‬.
+
+المعلومات المعروضة  ‪Data‬
+
+bookings positioned by date/time، status labels، suggested proposals distinct from confirmed، nonworking time.
+
+الحقول  ‪Fields‬
+
+view/day/week/month/date/status.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open booking→W14، propose time from detail.
+
+حالات الشاشة  ‪States‬
+
+empty day/week، loading range، offline stale label، calendar conflict alert.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+no drag-and-drop silent change؛ proposed appointments not counted as confirmed capacity until accepted؛ Calendar real-time freshness after mutation.
+
+الإشعارات  ‪Notifications‬
+
+no calendar-only event.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Booking/Hours/Proposal/Availability.
+
+معايير القبول  ‪AC‬
+
+W15.1  list/calendar same data؛
+
+W15.2  proposed and confirmed visible distinct؛
+
+‪W15.3  timezone‬ لا ينقل ‪booking‬ ليوم خاطئ.
+
+إدارة العملاء وملف العميل
+
+W16 Core Customers Basic CRM List and Customer Profile
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪menu/booking‬؛ ‪Reception subset‬.
+
+المعلومات المعروضة  ‪Data‬
+
+name/contact/vehicles serviced here/past visits/total jobs/invoices/internal notes.
+
+الحقول  ‪Fields‬
+
+‪search/customer note‬≤‪2000‬ مع ‪author/time‬؛ ‪contact correction‬ لا يعيد كتابة ‪User identity‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open vehicle→W17، Booking→W14، Invoice→W27، Add note.
+
+حالات الشاشة  ‪States‬
+
+no customer relationships، loading؛ privacy restrictions fields masked؛ failure saving note retry.
+
+قواعد العمل  ‪Rules‬
+
+‪CRM relation arises from Request accepted/serviced‬, لا ‪import marketing lists‬؛ كل ورشة ترى تاريخها لا كل منصة؛ ‪Technician no CRM‬.
+
+الإشعارات  ‪Notifications‬
+
+‪notes‬ داخلية لا ‪push user‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+CustomerWorkshopRelation/VehicleSnapshot/Job/Invoice/InternalNote.
+
+معايير القبول  ‪AC‬
+
+‪W16.1‬  ورشة جديدة لا ترى كل ‪Users‬؛
+
+‪W16.2  note‬ لا يظهر ‪App‬؛
+
+‪W16.3  cancelled inquiry‬ لا يضخم ‪Completed visits‬.
+
+‪V1.1 MD02‬ و ‪A20: W16 Core‬ غير قابل للتعطيل. ‪Basic CRM‬ هنا ليست ‪Advanced CRM App. Job/Invoice links‬ للـ ‪Enabled domain‬، أو ‪Retained Records W38‬ للقراءة التاريخية المسموحة.
+
+معايير القبول  ‪AC‬
+
+‪W16.4‬  حذف أوتعطيل ‪CRM Core‬ مرفوض؛
+
+‪W16.5‬  لا ‪record‬ لعميل ورشة أخرى مع ‪retained read‬؛
+
+‪W16.6  Advanced CRM unavailable‬ لا يخفي قائمة العملاء الأساسية.
+
+السيارات وسجلها لدى الورشة
+
+W17 Vehicles List and Local Vehicle History
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪Menu/CRM/Job‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪owner authorized contact/model/year/current submitted mileage/history jobs/invoices‬ عند الورشة نفسها.
+
+الحقول  ‪Fields‬
+
+‪search plate/model‬ إن ‪role allowed‬؛ ‪no ownership edit‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Job→W19/Invoice→W27/Customer→W16‬؛ ‪mileage reading update‬ ضمن ‪Inspection/Completion‬ لا تعديل صامت في ‪master‬.
+
+حالات الشاشة  ‪States‬
+
+‪no serviced vehicles‬، ‪loading‬، ‪vehicle archived‬ يظهر ‪snapshot‬ لا اختفاء التاريخ.
+
+قواعد العمل  ‪Rules‬
+
+لا ‪VIN decoder‬ أو نقل ملكية؛ لا كشف بقية ‪History‬ من ورش أخرى؛ ‪snapshot preserves financial records‬.
+
+الإشعارات  ‪Notifications‬
+
+no public push for browsing.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Vehicle/WorkshopVehicleRelation/LocalHistory/Job.
+
+معايير القبول  ‪AC‬
+
+W17.1  Local history tenant-only؛
+
+W17.2  archived car invoice accessible authorized؛
+
+W17.3  update submitted current reading audited.
+
+‪V1.1 MD02 MD07: Vehicles‬ والعلاقة المحلية ‪Core‬ ثابتة؛ ‪history‬ قراءة محفوظة، وأي عمل جديد يحتاج ‪modules‬ الحالية.
+
+معايير القبول  ‪AC‬
+
+‪W17.4  Disable Pack‬ يبقي السيارة و ‪IDs‬ والتاريخ؛
+
+‪W17.5‬  لا ‪standalone Job create‬ عبر ‪Vehicles‬ في ‪Phase 1‬.
+
+6 Inspection Job Cards Quotes and Job Status
+
+قائمة بطاقات العمل
+
+W18 Job Cards List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor/Technician assigned‬ من ‪Overview/Menu‬.
+
+المعلومات المعروضة  ‪Data‬
+
+job id/customer/vehicle/complaint/technician/status/last update/approved or awaiting quote؛ financial total only Owner/Advisor.
+
+الحقول  ‪Fields‬
+
+status/date/technician filters.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open→W19؛ no standalone create unlinked Job in V1.1.
+
+حالات الشاشة  ‪States‬
+
+no jobs، loading؛ technician no assignment empty؛ error/no permission.
+
+قواعد العمل  ‪Rules‬
+
+Job created at inspection tied booking؛ one per booking؛ list includes Inspection not just authorized.
+
+الإشعارات  ‪Notifications‬
+
+assigned technician internal.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/Booking/Assignment.
+
+معايير القبول  ‪AC‬
+
+W18.1  technician list only assigned؛
+
+W18.2  no job detached from vehicle/request؛
+
+W18.3  Awaiting Approval cannot Start from quick action.
+
+بطاقة العمل وتعيين الفني
+
+W19 Job Card Detail and Technician Assignment
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ أو ‪assigned technician‬ من ‪W18/Booking‬.
+
+المعلومات المعروضة  ‪Data‬
+
+customer/vehicle/complaint/inspection notes/services/parts/technician/status/images/quote/invoice/mileage؛ private/internal and shared labeled.
+
+الحقول  ‪Fields‬
+
+technician active staff optional، complaint original readonly، local operational notes.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Inspection→W20، Create quote→W22، Send/view→W23، Status→W24، Invoice→W27.
+
+قواعد التحقق  ‪Validation‬
+
+‪assignment belongs same tenant and active role‬؛ ‪no delete referenced staff or job‬؛ ‪quote/parts‬ ليست ‪stock quantities‬.
+
+حالات الشاشة  ‪States‬
+
+‪no tech assigned‬ ليس خطأ، ‪loading/conflict‬، ‪customer cancelled before inspection stops creation‬.
+
+الصلاحيات  ‪Permissions‬
+
+tech only notes/images/progress assigned؛ Owner/Advisor assign and financial actions.
+
+الإشعارات  ‪Notifications‬
+
+staff assignment، no unnecessary user notification for internal note.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/Assignment/Inspection/Quote/Invoice.
+
+معايير القبول  ‪AC‬
+
+W19.1  parts scope matches current approval؛
+
+W19.2  Staff other tenant cannot assign؛
+
+W19.3  client does not get internal note.
+
+ملاحظات الفحص وصور العمل
+
+W20 Inspection Notes and Job Images
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor/assigned Technician‬ من ‪W19‬.
+
+الحقول  ‪Fields‬
+
+findings text≤2000، checklist service IDs optional، mileage inspection≥current or audited correction، shared summary text، visibility internal/shared، images same validation as User limits.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/Add photo/Mark inspection documented؛ advisor Create Quote.
+
+قواعد التحقق  ‪Validation‬
+
+‪no diagnosis certainty AI imposed‬، ‪image formats/privacy‬، ‪required Shared summary before Quote‬ إذا ‪job requires explanatory findings A13‬؛ ‪saving does not accept quote‬.
+
+حالات الشاشة  ‪States‬
+
+blank notes prompt، saving/upload progress/partial failure، job closed readonly، conflict revision.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+Notes author/version; internal defaults for staff discussion، shared chosen explicitly؛ no uploading sensitive unrelated docs.
+
+الإشعارات  ‪Notifications‬
+
+shared summary appears in quote context not every draft save.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+InspectionNote/Attachment/MileageReading/Job.
+
+معايير القبول  ‪AC‬
+
+W20.1  internal never returned to User API؛
+
+W20.2  tech cannot edit Quote total؛
+
+W20.3  retry image no duplicates.
+
+قائمة عروض الأسعار
+
+W21 Quotes List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪menu/job/overview‬.
+
+المعلومات المعروضة  ‪Data‬
+
+family/revision/job/vehicle/customer/total/status/sent/expiry/accepted time؛ tabs Draft/Sent/Decided.
+
+الحقول  ‪Fields‬
+
+date/status/search.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open→W23/Create for job→W22.
+
+حالات الشاشة  ‪States‬
+
+no quotes، loading/error؛ Accepted original history remains readable even with revision.
+
+قواعد العمل  ‪Rules‬
+
+current family count avoids inflated Pending؛ Rejected not Job cancelled by default؛ Technician only authorized service summary on Job.
+
+الإشعارات  ‪Notifications‬
+
+quote_decided to workshop.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+QuoteFamily/Quote/Job.
+
+معايير القبول  ‪AC‬
+
+W21.1  Sent immutable؛
+
+W21.2  old accepted not overwritten؛
+
+W21.3  pending card counts latest Sent not Draft.
+
+تحرير العرض وبنوده
+
+W22 Quote Editor and Quote Line Items
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪Inspection/Quote list‬.
+
+الحقول  ‪Fields‬
+
+‪job/customer/vehicle readonly‬؛ ‪each item type Service/Part/Labor‬، ‪description/service_id optional for parts/labor‬، ‪quantity>0‬، ‪unit price‬≥‪0‬؛ ‪quote-level discount fixed amount‬ أو ‪percentage mutually exclusive‬، ‪tax profile/rate from approved settings‬، ‪expires_at future‬، ‪terms optional. Parts manual lines‬ لا ‪Inventory‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Add/Delete draft item/Save draft/Preview/Send→W23؛ Create revision copies full scope and shows delta to current approved.
+
+قواعد التحقق  ‪Validation‬
+
+≥‪1 item‬، ‪total‬≥‪0‬، ‪discount‬≤‪subtotal‬ و ‪percentage0–100‬، ‪decimal precision per Finance‬، ‪tax setup complete‬، ‪no arbitrary free-tax changes by Technician. Assumption A09‬ الحساب: ‪line base=qty×unit price rounded to0.01AED‬؛ ‪subtotal=sum line bases‬؛ ‪discount allocated across taxable bases‬؛ ‪VAT rounded per Finance-approved rule‬؛ ‪total=subtotal‬−‪discount+VAT. Finance decides taxable/non-taxable allocation‬ قبل ‪production‬؛ المثال ليس فتوى ضريبية.
+
+حالات الشاشة  ‪States‬
+
+‪new empty draft‬، ‪calculating server totals‬، ‪invalid line/duplicate item warning‬، ‪version conflict‬، ‪no tax profile→block Send‬ مع ‪remediation‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+edit Draft only؛ Accepted never edited؛ Quote0 total allowed with explicit approval؛ new revision invalidates only older Sent and retains old Accepted snapshot.
+
+الإشعارات  ‪Notifications‬
+
+no user for Draft؛ Send to customer after commit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Quote/LineItem/TaxConfig/QuoteRevision.
+
+معايير القبول  ‪AC‬
+
+W22.1  Backend/client totals identical؛
+
+W22.2  editing sent creates new revision؛
+
+W22.3  labor/part displayed separately without stock ledger.
+
+إرسال العرض وحالة قرار العميل
+
+W23 Quote Detail Send and Decision Status
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪W21/W22/Job‬.
+
+المعلومات المعروضة  ‪Data‬
+
+all quote lines/totals/expiry/revision/customer decision actor/time/reason/delta history.
+
+الحقول  ‪Fields‬
+
+no editing Sent; Send confirmation uses frozen preview.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Send valid Draft/View in customer context/Create revision/Discard Draft/View job.
+
+قواعد التحقق  ‪Validation‬
+
+exact Draft version current، expiry future، related job open؛ Sending revision after start pauses authorized completion; latest accepted scope remains preserved.
+
+حالات الشاشة  ‪States‬
+
+Draft/Sent wait/Accepted/Rejected/Expired/Superseded، sending/timeouts resolve persisted outcome، customer decision concurrent→refresh.
+
+قواعد العمل  ‪Rules‬
+
+‪only User accepts‬؛ ‪webhook/AI/admin‬ لا ‪proxy approval‬؛ ‪no Ask Question chat‬.
+
+الإشعارات  ‪Notifications‬
+
+Sent user، decided workshop، superseded old deep link resolves current.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Quote/Decision/Job/Booking/Audit.
+
+معايير القبول  ‪AC‬
+
+W23.1  Approve button absent workshop and backend forbidden؛
+
+W23.2  new Sent old Sent becomes Superseded؛
+
+W23.3  retry Send no duplicate push or quote.
+
+بدء العمل والتقدم والإكمال
+
+W24 Job Start Progress and Completion
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪Job‬؛ ‪Technician limited progress‬.
+
+الحقول  ‪Fields‬
+
+status action، progress note، complete services confirmation، completion mileage required، payment status optional as record separate default Unpaid؛ completed_at server time.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Start approved Job/Update progress/Complete Job/Request support.
+
+قواعد التحقق  ‪Validation‬
+
+Start latest Accepted no pending revision؛ Complete only In Progress، mileage≥last confirmed، all work within approved full scope، final financial/tax settings ready؛ tech no financial Complete.
+
+حالات الشاشة  ‪States‬
+
+awaiting approval disables Start؛ revision pending paused، completing، invoice/history generation failure returns original In Progress and retry؛ already completed returns same results.
+
+قواعد العمل  ‪Rules‬
+
+completion atomic creates Issued Invoice+History+Booking/Request completed؛ no manual separate invoice before job done؛ no recurring duplicate history.
+
+الإشعارات  ‪Notifications‬
+
+job complete/invoice ready/review invitation after commit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/QuoteApproval/Invoice/History/OutboxEvent.
+
+معايير القبول  ‪AC‬
+
+W24.1  injected invoice failure no Completed without links؛
+
+W24.2  repeated Complete gives same invoice number؛
+
+W24.3  quote total pending revision blocks Complete.
+
+‪V1.1 MD03‬ و ‪A17: Complete‬ يحتاج كامل ‪dependency closure‬ للعمل والفاتورة والسجل ‪Enabled‬، بجانب ‪guards‬ الأصلية. ‪Admin Disable‬ يحجب أثناء وجود ‪Job‬ مفتوح؛ إن تغيّر الوصول الأمني تفشل ‪mutation‬ دون ‪partial writes‬ وتوجّه ‪Support‬.
+
+معايير القبول  ‪AC‬
+
+‪W24.4‬  محاولة تعطيل ‪dependency‬ أثناء ‪In Progress‬ مرفوضة؛
+
+‪W24.5‬  لا ‪Completed‬ إذا ‪mandatory integration‬ غير متاحة.
+
+7 Invoices Reviews Staff Reports and Settings
+
+معاينة الفاتورة قبل الإصدار
+
+W25 Invoice Preparation Preview
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪active Job‬ قبل ‪Complete‬ إذا يريد مراجعة المستند.
+
+المعلومات المعروضة  ‪Data‬
+
+issuer tax setup/customer/vehicle/approved items/totals؛ Preview marked Draft not financial issued document.
+
+الحقول  ‪Fields‬
+
+لا ‪amounts‬ مستقلة؛ ‪missing legal/tax metadata‬ يحرره ‪Owner‬ في ‪W33‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+View/Return job/Complete→W24.
+
+حالات الشاشة  ‪States‬
+
+no accepted quote→not available، loading، tax setup error.
+
+قواعد العمل  ‪Rules‬
+
+‪no invoice number consumed for preview‬ إلا سياسة ‪Finance‬؛ ‪no send as Issued‬ قبل ‪Complete‬؛ تعديل السعر يعود ‪Quote revision‬ لا ‪Draft invoice overwrite‬.
+
+الإشعارات  ‪Notifications‬
+
+none.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Job/ApprovedQuote/InvoiceDraftView.
+
+معايير القبول  ‪AC‬
+
+‪W25.1  Draft‬ ليس ‪counted GMV‬؛
+
+W25.2  no tax ready blocks final issuance؛
+
+‪W25.3  Preview total‬ مطابق ‪Quote‬.
+
+قائمة الفواتير
+
+W26 Invoice List
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪Menu/Overview/CRM‬.
+
+المعلومات المعروضة  ‪Data‬
+
+invoice number/job/customer/vehicle/issue date/lifecycle/total/payment/outside marker.
+
+الحقول  ‪Fields‬
+
+date/status/payment/customer search.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open→W27/Download PDF.
+
+حالات الشاشة  ‪States‬
+
+no issued invoices، loading، PDF retry؛ no Draft counted as Issued.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+Reception minimal status only through booking not financial list؛ Cancelled rows kept؛ Paid/Unpaid filter separate from lifecycle.
+
+الإشعارات  ‪Notifications‬
+
+no browsing event.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Invoice/PaymentRecord/Job.
+
+معايير القبول  ‪AC‬
+
+W26.1  unpaid not draft؛
+
+W26.2  payment PaidOutside correctly filters Paid؛
+
+W26.3  tenant isolated download.
+
+تفاصيل الفاتورة وتسجيل الدفع
+
+W27 Invoice Detail PDF and Payment Recording
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪Invoice list/Job‬.
+
+المعلومات المعروضة  ‪Data‬
+
+immutable invoice/issuer/customer/vehicle/items/VAT/subtotal/total/approved quote revision/job/time/history link/payment records/audit.
+
+الحقول  ‪Fields‬
+
+Mark Paid amount/time/channel/reference optional، correction reason required. No partial-payment accounting V1.1 A09؛ record full invoice paid only.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Download PDF/Mark paid outside/Correct payment status with reason/Report financial issue؛ Invoice cancellation only Admin Finance-authorized route.
+
+قواعد التحقق  ‪Validation‬
+
+full amount equals total، no future settlement time without warning، one current payment state، version conflict؛ no card/bank data collection.
+
+حالات الشاشة  ‪States‬
+
+Issued Unpaid/Paid، Cancelled، saving/PDF error/retry.
+
+قواعد العمل  ‪Rules‬
+
+‪changing payment‬ لا يكمل ‪Job‬ أو يحذف ‪History‬؛ ‪cancellation reviewed according Finance‬؛ ‪paid outside differs real processor settlement‬.
+
+الإشعارات  ‪Notifications‬
+
+user payment status updated if enabled؛ always audit.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Invoice/PaymentRecord/FinancialCase/Attachment.
+
+معايير القبول  ‪AC‬
+
+W27.1  paid change cannot edit amounts؛
+
+W27.2  wrong tenant rejected؛
+
+W27.3  correction retains old record reason.
+
+التقييمات وردود الورشة
+
+W28 Reviews and Workshop Replies
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner/Advisor‬ من ‪menu/overview‬.
+
+المعلومات المعروضة  ‪Data‬
+
+rating/count/reviews/job reference when authorized/published dates/own replies/moderation state.
+
+الحقول  ‪Fields‬
+
+reply text0–1000، report reason.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Reply/Save reply/Report review؛ no delete rating.
+
+حالات الشاشة  ‪States‬
+
+no reviews، loading، flagged/hidden labeled for own moderation case؛ duplicate reply updates one authorized reply with history.
+
+قواعد العمل  ‪Rules‬
+
+reply cannot expose phone/VIN/private notes؛ average from published reviews؛ reply moderation can hide inappropriate response.
+
+الإشعارات  ‪Notifications‬
+
+user workshop_reply transactional optional؛ Admin report.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Review/WorkshopReply/ModerationCase.
+
+معايير القبول  ‪AC‬
+
+‪W28.1  report‬ لا يمحو ‪rating‬ تلقائياً؛
+
+W28.2  only Completed job review allowed upstream؛
+
+W28.3  response no financial change.
+
+دعوة الموظفين وصلاحياتهم
+
+W29 Staff Invitations and Roles
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ من ‪Settings/Staff‬.
+
+المعلومات المعروضة  ‪Data‬
+
+name/email/phone/role/invitation status/last active/assignment counts.
+
+الحقول  ‪Fields‬
+
+staff name/email/contact، role Advisor/Technician/Reception؛ no Admin option.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Invite/Resend/Revoke/Disable/Change role؛ accept invite route W02/W01.
+
+قواعد التحقق  ‪Validation‬
+
+unique tenant membership/contact، invite expiry/single-use، no self remove Owner، assigned jobs warning before disabling; role change invalidates privilege caches immediately.
+
+حالات الشاشة  ‪States‬
+
+no staff، invited/waiting/expired/disabled، sending error/contact duplicate/conflict.
+
+قواعد العمل  ‪Rules‬
+
+simple fixed RBAC، Owner only، no payroll/attendance؛ invitation not active until accepted/verified.
+
+الإشعارات  ‪Notifications‬
+
+staff invitation via configured email؛ owner accepted notification; affected staff role event.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Member/Invitation/RoleAssignment/Audit.
+
+معايير القبول  ‪AC‬
+
+W29.1  revoked token fails؛
+
+W29.2  Technician cannot send quote by raw request؛
+
+W29.3  disable active technician leaves Job but removes access.
+
+‪V1.1 MD05: staff roles‬ ثابتة؛ ‪display permissions‬ يقتصر على ‪Core‬ و ‪modules Enabled‬، دون إنشاء ‪role‬ جديد. ‪Grants‬ القديمة ‪dormant‬ إذا ‪module Disabled‬؛ ‪re-enable‬ لا يعيد عضو ‪Disabled‬ أو ‪revoked invitation‬.
+
+معايير القبول  ‪AC‬
+
+‪W29.4  cached module action denied‬ بعد ‪Disable‬؛
+
+‪W29.5  Reception‬ لا يصدر فاتورة بعد ‪Enable‬ بسبب ‪default grant‬.
+
+التقارير الأساسية
+
+W30 Basic Reports
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Owner/Advisor read from Overview/Menu.
+
+المعلومات المعروضة  ‪Data‬
+
+Requests/replies/Confirmed bookings/Quote acceptances/Completed jobs/GMV including VAT/collections/unpaid invoices/repeat customers/average review with sample.
+
+الحقول  ‪Fields‬
+
+date range/service/status filters؛ report scope tenant only.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Drill into list؛ Export advanced not required.
+
+قواعد التحقق  ‪Validation‬
+
+start≤end؛ period labelled؛ distinct Quote families not revision count؛ paid collections based payment record dates not completion date.
+
+حالات الشاشة  ‪States‬
+
+zero vs no data distinguished، loading aggregate/partial failure؛ no impossible negative counts.
+
+قواعد العمل  ‪Rules‬
+
+platform revenue not workshop GMV؛ support resolved isn't repaired vehicle metric.
+
+الإشعارات  ‪Notifications‬
+
+none.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+operational aggregates/Invoice/Payment/Review.
+
+معايير القبول  ‪AC‬
+
+W30.1  source lists reconcile؛
+
+W30.2  double completion no inflated totals؛
+
+W30.3  Service filter clearly partial/scope treatment.
+
+‪V1.1 A20: Basic Reports‬ تبقى؛ مصدر كل ‪widget‬ من ‪enabled operational domain‬ أو ‪authorized historical read‬ موسوم. ‪Advanced Reports‬ ليست صفحة متاحة في ‪Phase 1‬.
+
+معايير القبول  ‪AC‬
+
+‪W30.4  report‬ لا يسرّب مالية بعد فقد ‪Permission‬؛
+
+‪W30.5‬  لا ‪Advanced Reports CTA‬ توحي أنها ‪implemented‬.
+
+مركز الإشعارات
+
+W31 Notifications Center
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Owner/Staff from header/menu.
+
+المعلومات المعروضة  ‪Data‬
+
+requests/time decisions/quote decisions/job assignment/admin verification/subscription changes/support updates؛ entity/time/read.
+
+الحقول  ‪Fields‬
+
+unread/all/type.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Open entity/Mark read/Preferences→W32.
+
+حالات الشاشة  ‪States‬
+
+empty/loading/pagination/entity no permission→safe summary؛ role changed strips unauthorized links.
+
+قواعد العمل  ‪Rules‬
+
+notification permission same as entity؛ no sensitive quote amount to Technician؛ event dedup.
+
+الإشعارات  ‪Notifications‬
+
+channel in-app، email optional؛ no SMS optional imposed.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Notification/Delivery/Preference.
+
+معايير القبول  ‪AC‬
+
+W31.1  tenant-specific events؛
+
+W31.2  old quote link shows current decision؛
+
+W31.3  unread count accurate.
+
+‪V1.1 MD05 MD07: notification link‬ للوحدة ‪Disabled‬ يفتح ‪safe summary‬ أو ‪W38‬ إذا ‪historical-read‬ مخول؛ لا يفتح ‪operational screen cached. Notice entitlement_changed‬ للموظفين المعنيين بعد ‪commit‬.
+
+معايير القبول  ‪AC‬
+
+‪W31.4  retry‬ للتنبيه لا يعيد ‪Module enabled‬؛
+
+‪W31.5  dormant permission‬ لا يفتح ‪CTA‬ قديم.
+
+الإعدادات وتفضيلات الإشعارات
+
+W32 Settings and Notification Preferences
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Owner from menu، Staff own language/preferences only.
+
+المعلومات والحقول  ‪Data/Fields‬
+
+language،notification toggles transactional channels، links profile/services/brands/hours/staff/subscription/tax، policies/support.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/Logout/Open linked setting.
+
+حالات الشاشة  ‪States‬
+
+‪saving/error config unavailable fallback‬؛ ‪disabling transactional email‬ لا يمنع ‪in-app essential status‬.
+
+قواعد العمل  ‪Rules‬
+
+Staff cannot update workshop config؛ Logout clears session and tenant cache؛ no unauthorized integrations.
+
+الإشعارات  ‪Notifications‬
+
+preferences changed no user marketing.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Preference/WorkshopConfig/AuthSession.
+
+معايير القبول  ‪AC‬
+
+‪W32.1  staff change language‬ لا يغير ‪Owner default‬؛
+
+W32.2  RTL/LTR retains current entity؛
+
+W32.3  unsupported preference not saved silently.
+
+‪V1.1 MD05‬: روابط ‪module settings‬ تعتمد ‪enabled_modules‬؛ ‪Core Settings‬ تبقى وفيها ‪W36‬ و ‪Retained Records‬ حسب ‪Role. Owner‬ لا يملك ‪enable/disable‬ هنا.
+
+معايير القبول  ‪AC‬
+
+‪W32.4  direct module settings URL‬ يراجع ‪backend gate‬؛
+
+‪W32.5‬  تبديل اللغة لا يعيد ‪route disabled‬.
+
+الاشتراك وبيانات مصدر الفاتورة
+
+W33 Subscription Overview and Invoice Issuer Settings
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Owner from Settings؛ Commercial and issuer subpages distinct.
+
+المعلومات المعروضة  ‪Data‬
+
+Plan/Trial start/end/status/manual assignment/reference/price only if agreed؛ legal name/address/TRN if applicable/tax profile/invoice numbering policy state. Fields issuer legal/tax metadata approved via Admin، no numeric price entitlement editor.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Contact platform to activate/Request plan change/Save issuer review.
+
+قواعد التحقق  ‪Validation‬
+
+no automated billing/card input؛ tax data format/conditions Finance policy؛ update verified issuer needs audit/approval؛ no blank required legal field for issuance.
+
+حالات الشاشة  ‪States‬
+
+Trial/Active/Expired/Cancelled، no plan assigned→contact؛ invalid fiscal setup→cannot issue.
+
+قواعد العمل  ‪Rules‬
+
+‪A11‬ محدثة؛ ‪Pilot commercial plan‬ يدوياً ولا يفعّل ‪modules‬؛ ‪enabled_modules‬ الحالية يحددها ‪Admin‬ ويعرضها ‪W36‬؛ ‪expired no silent suspension while unfinished jobs‬؛ ‪Owner sees commercial state not platform finance access‬؛ ‪no branch VAT consolidation‬.
+
+الإشعارات  ‪Notifications‬
+
+trial ending/plan assignment from Admin if Config؛ no automatic charge.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Subscription/Plan/IssuerProfile/TaxConfig/ChangeRequest.
+
+معايير القبول  ‪AC‬
+
+W33.1  expiry does not orphan jobs؛
+
+W33.2  no checkout UI؛
+
+W33.3  old Invoice keeps old issuer snapshot after update.
+
+‪V1.1 MD06‬: يعرض ‪Owner‬ مصدر ‪module grants‬ و ‪Bundle/Subscription references‬ من ‪W36‬ منفصلاً عن مبلغ الاشتراك. ‪Invoice Issuer metadata‬ ضمن ‪Core Profile settings‬؛ إصدار/معاينة ‪Invoice‬ ضمن ‪Pack‬.
+
+معايير القبول  ‪AC‬
+
+‪W33.4  Expired subscription‬ لا ينفذ ‪disable‬ أو ‪charge‬ آلياً؛
+
+‪W33.5  Plan‬ لا يعطي صلاحية ‪Optional App‬ غير منفذة.
+
+الدعم والخلافات الخاصة بالورشة
+
+W34 Workshop Support and Dispute Cases
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+Owner/Advisor from menu/request/job/invoice/suspension.
+
+الحقول  ‪Fields‬
+
+topic/description/linked entity/images permitted، case response.
+
+المعلومات المعروضة  ‪Data‬
+
+case state/updates/next actor.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Submit/View/Respond when Awaiting workshop؛ contact channel configured.
+
+حالات الشاشة  ‪States‬
+
+no cases، sending/Submitted/In Review/Awaiting Workshop/Resolved/Closed، timeout resolve outcome.
+
+قواعد العمل  ‪Rules‬
+
+no automatic refund/job cancellation from case; staff privacy permission; participant view scoped، internal Admin notes not returned.
+
+الإشعارات  ‪Notifications‬
+
+case status/requests for info.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+SupportCase/Participant/Update/EntityLink.
+
+معايير القبول  ‪AC‬
+
+W34.1  active job dispute preserves financial linkage؛
+
+W34.2  case tenant isolated؛
+
+W34.3  resolution audit references any actual state change.
+
+8 Backend Data and Command Ownership
+
+مجموعة الشاشة
+
+الكيانات
+
+كتابة معتمدة
+
+‪W01‬ إلى ‪W05‬
+
+Auth Member Workshop Verification
+
+signup/verify/submit profile
+
+‪W06‬ إلى ‪W08‬
+
+Profile Taxonomy association Hours
+
+Owner-only profile/services/brands/hours
+
+‪W10‬ إلى ‪W15‬
+
+Request Booking Proposal
+
+Accept/Reject/Propose/Arrived/no_show with state/version guards
+
+W16 W17
+
+Relation Vehicle snapshot InternalNote
+
+‪Local CRM notes‬ فقط؛ لا ‪master ownership‬
+
+‪W18‬ إلى ‪W24‬
+
+Job Assignment Inspection Quote Decision
+
+Workshop inspection/quote/start/complete؛ User alone decides
+
+‪W25‬ إلى ‪W27‬
+
+Invoice Payment
+
+preview/system issue/payment record؛ immutable issued amounts
+
+‪W28‬ إلى ‪W34‬
+
+Review Reply Staff Report Subscription Support
+
+‪reply/staff/preferences/support‬ حسب ‪role‬
+
+
+
+‪Master User/Vehicle identity‬ ليست مملوكة للورشة؛ مشتقات زيارة العميل محلية. ‪Financial service totals‬ مصدرها ‪accepted quote‬، و ‪Invoice‬ المصدر النهائي لقيمة ‪completed job‬. كل ‪Command‬ يحتاج ‪actor/tenant/entity/version/idempotency/reason‬ إذا حساس. لا حاجة لتحديد ‪endpoint‬ أو ‪Database schema‬ في هذا ‪PRD‬.
+
+9 Open Questions Assumptions and Dependencies
+
+السؤال
+
+الحالة
+
+Owner
+
+‪Staff RBAC‬ الثابت ‪Owner‬ واحد/‪Invite auth‬
+
+A01 A02
+
+Product/Security
+
+verification policy/license evidence/material edits
+
+المصدر تركها حسب الحاجة
+
+Operations/Legal
+
+slot duration/capacity/grace/expiry
+
+‪A04 A08 A10‬؛ لا وعد ‪capacity‬ بلا ‪config‬
+
+Operations/Product
+
+tax profile/discount allocation/rounding/numbering/cancellation
+
+‪A09‬؛ مانع ‪Production issuance‬ إذا غير محسوم
+
+Finance/Legal
+
+interruption/reapproval and support resolution
+
+‪A04 A10‬؛ ‪full-scope revised quote‬ مقترح
+
+Product/Operations
+
+Trial duration/price/plans/entitlements
+
+‪A11‬ محدثة؛ ‪manual commercial plan‬ و ‪module grants‬ مستقلة، ‪Core‬ و ‪full Pack‬ للمشاركين
+
+Commercial
+
+limits for notes/images/replies/invite expiry
+
+A13؛ centralized config
+
+Product/Security
+
+
+
+‪Availability implementation‬ يجب أن يميز معروف غير متاح عن غير مؤكد. ‪Known full/closed‬ يستبعد؛ ‪unknown‬ لا يوصف ‪Available‬ وقد يعرض «وقت يحتاج تأكيد الورشة» ما دام باقي الأهلية سليماً. تثبيت ‪Slot‬ يطبق سياسة ‪Capacity‬ المعتمدة ذرياً. ‪Auto-accept‬ و ‪overbooking‬ المتعمد غير موجودين.
+
+10 Acceptance Gate and Source Traceability
+
+‪QA‬ يحول ‪Wxx.n‬ إلى حالات اختبار، ويختبر كل انتقال مسموح وممنوع، ويعيده مع ‪duplicate/version mismatch/wrong tenant/disabled role. golden acceptance: verified Workshop‬ تستقبل ‪Request‬ ثم ‪propose/accept‬ ثم ‪arrival/inspection‬ ثم ‪Draft→Sent→User Accepted‬ ثم ‪Start→Complete→Invoice Issued/History→Review/Reply‬. تشغيلها لا يحتاج ‪Spreadsheet‬ نقل بيانات أو ‪Admin‬ موافقة نيابة عن العميل.
+
+تغطية التكليف: ‪Auth W01/W02‬، ‪Registration W03‬، ‪Verification W04‬، ‪Onboarding W05‬، ‪Business Profile W06‬، ‪Services/Brands W07‬، ‪Hours W08‬، ‪Overview W09‬، ‪Incoming Requests W10‬، ‪Details/Accept/Reject/Propose W11/W12‬، ‪Bookings W13/W14‬، ‪Calendar W15‬، ‪CRM W16‬، ‪Vehicles W17‬، ‪Job Cards W18/W19‬، ‪Inspection W20‬، ‪Quotes W21/W23‬، ‪Line items W22‬، ‪Job Status W24‬، ‪Invoices W25–W27‬، ‪Reviews W28‬، ‪Staff/Roles W29/Section2‬، ‪Notifications W31‬، ‪Reports W30‬، ‪Settings W32/W33‬، ‪Support W34. Status table Section3‬ مرجع مشترك لجميع المنتجات.
+
+المصدر ‪S03‬ و ‪S18‬ إلى ‪S23‬ للحالات والموافقة والفاتورة والسجل؛ ‪S24‬ إلى ‪S38‬ للشاشات؛ ‪S52‬ إلى ‪S54‬ للإشعارات والموقع واللغتين؛ ‪S59‬ إلى ‪S61‬ للصلاحيات والأمان والخصوصية. كل تطبيع إضافي يحمل ‪Axx‬ ولا يتحول تلقائياً إلى ‪Scope‬ تجاري جديد.
+
+11 Workshop OS Modules and Workspace Requirements
+
+11.1 Core and Module Ownership Matrix
+
+هذه المصفوفة تحدد ‪preconditions‬ إضافية لكل شاشة حالية. جميع ‪W01‬ إلى ‪W34‬ ووظائفها ومعايير قبولها محفوظة؛ الوظيفة التشغيلية ضمن ‪Pack‬ لا تتاح لمجرد أن ‪screen route‬ موجود. ‪Auth‬ و ‪Support‬ و ‪Subscription overview‬ و ‪Basic Reports utilities‬ مرتبطة ‪Core‬ وبنطاق البيانات؛ لا تُحوّل إلى ‪optional paid apps‬ بلا قرار.
+
+Ownership
+
+Screen IDs and capabilities
+
+Gate and navigation
+
+Core identity and setup
+
+‪W01‬ إلى ‪W08‬؛ ‪profile/verification/hours/services/brands‬
+
+‪Core Enabled‬ دائماً؛ ‪login/verification guards‬؛ ‪Setup‬ و ‪Settings‬
+
+Core shared Customers and Vehicles
+
+W16 W17
+
+‪Core‬ دائماً؛ ‪Basic CRM‬ والهوية والعلاقات المحلية؛ ‪local financial links‬ تحتاج ‪Pack‬ أو ‪W38 historical read‬
+
+Core users and permissions
+
+‪W29‬ و ‪Section2‬
+
+‪Owner manages fixed roles‬؛ القائمة ‪effective‬ بحسب ‪Enabled modules‬؛ لا إزالة ‪Core RBAC‬
+
+Core Notifications and Settings
+
+‪W31 W32‬ و ‪W35 W36 W37‬
+
+‪no operational disabled-module links‬؛ ‪Owner configuration‬ وفق ‪module gate‬
+
+Marketplace Requests
+
+W10 W11
+
+‪Requests Enabled‬؛ ‪Pack closure‬ كاملة؛ ‪Incoming Requests sidebar‬
+
+Marketplace Booking and Calendar
+
+‪W12‬ إلى ‪W15‬
+
+‪Booking‬ و ‪Calendar Enabled‬ مع ‪dependencies‬؛ موعد قائم يحترم ‪A17‬
+
+Marketplace Job Cards and Inspection
+
+W18 W19 W20
+
+‪Job Cards‬ و ‪Inspection Enabled‬؛ ‪staff assignment scope‬
+
+Marketplace Quotations
+
+W21 W22 W23
+
+‪Quotations Enabled‬؛ ‪User‬ وحده ‪Accept‬؛ لا ‪Inventory‬ لازم للبنود اليدوية
+
+Marketplace Jobs
+
+W24
+
+‪Jobs Enabled‬ مع ‪Quote/Invoice/History closure‬؛ ‪state guards‬ كما في ‪Section3‬
+
+Marketplace Invoices
+
+W25 W26 W27
+
+‪Invoices Enabled‬؛ ‪Preview‬ لا ‪Issue‬؛ ‪immutable history via W38‬ عند ‪Disable‬
+
+Marketplace Reviews and History
+
+‪W28‬ و ‪integration‬ إلى ‪W17/User history‬
+
+الخلفية ‪Mandatory‬ ولو لا ‪sidebar‬ منفصل؛ ‪Replies‬ تحتاج ‪Enabled‬؛ ‪completed-user history‬ مستقل ‪A19‬
+
+Shared utilities
+
+W09 W30 W33 W34 W38
+
+‪module-aware aggregate/shell‬؛ ‪commercial state‬ و ‪Support‬ و ‪historical read‬ حسب الصلاحيات؛ ‪Basic Reports‬ غير ‪Advanced Reports‬
+
+Future Optional Apps
+
+Inventory Warranty Suppliers POS Advanced CRM Tasks Contracts HR Advanced Reports Multi Branch Accounting integrations
+
+‪Catalog/Roadmap‬ فقط؛ لا ‪Screens‬ أو ‪CTAs‬ تشغيلية أو ‪API‬ أعمال ‪Phase 1‬
+
+
+
+‪Workshop Profile‬ و ‪Customers‬ و ‪Vehicles‬ ليست ‪Plugins‬؛ لا نسخ هوية جديدة لكل ‪App. Optional Inventory‬ لا يؤثر على إمكانية ‪Quote line‬ من ‪Part‬ يدوي في ‪Phase 1‬؛ وجود ‪Parts‬ في ‪Quote‬ ليس ‪Inventory implemented. Warranty App‬ لا تعني إضافة ‪warranty certificate‬ لسجل المستخدم حالياً. ‪Basic CRM supports_crm‬ موجودة؛ ‪Advanced CRM‬ ليست مرادفاً لها.
+
+11.2 Dependencies and Effective Entitlements
+
+Component
+
+Product dependency
+
+أثر فقدها
+
+جميع ‪capabilities‬
+
+‪Core Identity‬ و ‪Users/RBAC‬ و ‪Customers‬ و ‪Vehicles‬ و ‪Services‬ و ‪Settings/Notifications‬ بحسب الفعل
+
+‪Core removal‬ ممنوع؛ ‪Tenant/Ownership‬ مشترك
+
+Requests and Booking
+
+‪service/brand/location readiness‬؛ ‪Requests‬ للإنشاء؛ ‪Booking‬ و ‪Calendar‬ للموعد
+
+لا ‪new request/booking‬ قادر على إنهاء ‪Flow‬ إذا ‪Pack‬ ناقصة
+
+Job Card and Inspection
+
+‪Booking‬ مرتبطة بالطلب و ‪vehicle/customer‬؛ ‪Job Card‬ لتسجيل ‪Inspection‬
+
+لا ‪standalone Job‬ في ‪Phase 1‬؛ ‪inspection‬ ليست ‪execution approval‬
+
+Quotations and Jobs
+
+‪Inspection/Job context‬؛ ‪current accepted Quote‬ قبل ‪Start‬؛ ‪reapproval‬ كما في ‪V1‬
+
+‪no accepted price bypass‬؛ ‪no Start‬ بلا موافقة
+
+Invoices and Vehicle History
+
+‪Jobs‬ و ‪approved scope‬ و ‪issuer config‬؛ ‪History integration‬ جزء ‪Complete atomic‬
+
+‪no Completed‬ بلا ‪Invoice+History linked‬
+
+Reviews Integration
+
+‪Completed Job‬ و ‪Owner‬؛ نشر وتقييم عبر ‪platform‬
+
+لا ‪review‬ لخدمة غير مكتملة؛ ‪retained reviews‬ قواعد ‪A19‬
+
+Optional future Apps
+
+يعرّف ‪manifest‬ خاص عند تطويرها
+
+لا نفترض أن ‪Inventory‬ يطلب ‪Accounting‬ أو ‪Suppliers‬ في ‪MVP‬
+
+
+
+المصفوفة تعبر عن علاقات ‪Product‬، وليست دورة ‪dependencies‬ لتثبيت برنامج. ‪Full Marketplace Pack‬ يمنح ‪group closure‬ كاملة في ‪Phase 1‬؛ ‪Backend‬ يراجع ‪current manifest‬ وإصدار ‪entitlement/config‬ عند أي فعل. لا تعديل حر ل ‪dependencies‬ من ‪Owner‬ ولا ‪Code plugin upload‬ من ‪Admin‬. تحديد تقسيم ‪services‬ أو ‪endpoints‬ أو ‪joints‬ في ‪Database Architecture‬ لاحق.
+
+11.3 Module Configuration and Permissions
+
+‪Config‬ تعدل كيف تعمل الوحدة المفعلة، وليست طريقة بديلة لتفعيلها. ‪Services/Brands/Hours‬ و ‪Issuer metadata‬ من ‪Core settings‬ الحالية، وسياسات ‪booking/grace/request validity‬ و ‪Quote expiry‬ حسب صلاحيات ‪Owner‬ أو ‪Admin‬ القائمة. تغييرات ‪Config‬ المرتبطة ‪Marketplace‬ يعاد تقييم ‪readiness‬ لها، وتبقى ‪Quote Accepted‬ و ‪Invoice snapshots‬ القديمة كما هي. لا ‪settings‬ جديدة لـ ‪HR‬ أو ‪Inventory‬ وهمي.
+
+‪Effective access‬ يجمع ‪Role grants‬ و ‪module entitlements‬ و ‪tenant scope‬ و ‪entity state‬. إخفاء مجموعة ‪Permission‬ لا يمحو ‪role assignment‬ أو ‪Audit‬ سابق. عند ‪Disable‬ لا تظهر ‪Permission‬ الخاصة بالعمليات التشغيلية لهذه الوحدة ولا تنفذ ‪request‬ مباشر؛ ‪Context historical-read‬ له صلاحية مشتركة منفصلة ومحدودة من الأدوار الحالية، ولا يعيد كل ‪module permissions. A19‬ لا يمنح ‪Technician‬ قوائم فواتير أو ‪Reception total amounts‬ بمجرد وصوله ‪Core Vehicles‬.
+
+هيكل النظام وقائمة التنقل المتغيرة
+
+W35 Module Aware Dashboard Shell and Dynamic Sidebar
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+هيكل ‪Web Workspace‬ لجميع ‪Owner‬ و ‪Staff‬ بعد ‪Auth‬ وقبل فتح ‪W09‬ أو ‪deep link‬؛ مرتبط دائماً ‪Core‬.
+
+المعلومات المعروضة  ‪Data‬
+
+هوية ‪Workshop‬ و ‪current member role‬ و ‪language‬ و ‪effective navigation‬ و ‪entitlement/config version‬ و ‪readiness summary‬ عند ‪Permission‬.
+
+الحقول  ‪Fields‬
+
+اللغة وتفضيلات عرض قائمة التنقل فقط؛ لا ‪Enabled editor‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪Open permitted screen/Settings→W32/Modules→W36‬ للـ ‪Owner/Support→W34/Logout→W01‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪backend manifest/tenant/session current‬؛ ‪no mixed-tenant cache‬؛ كل ‪route‬ يراجع ‪gate‬ لا ‪Sidebar‬ وحدها.
+
+الإجراءات والتنقل  ‪Actions/Navigation‬
+
+يفتح ‪current permitted landing‬؛ إذا ‪route‬ غير مفعلة يعود ‪W09‬ أو ‪Core settings‬ مع رسالة «هذه الوظيفة غير مفعلة لهذه الورشة» و«‪This feature is not enabled for this workshop‬». يفقد ‪deep link‬ التشغيلي حق العرض دون تسريب ‪Entity‬.
+
+حالات الشاشة  ‪States‬
+
+‪loading entitlement‬ يعرض ‪shell‬ محدوداً بلا ‪mutation‬؛ ‪empty menu‬ يعرض ‪Core‬ المصرح فقط ولا ‪invent links‬؛ ‪config unavailable‬ يقدم ‪Retry‬ ويحظر التشغيل الذي لا يعرف حقه؛ ‪session expired login‬؛ ‪removed access‬ يزيل ‪screen cache‬ ويوقف ‪Submit‬ ويراجع ‪persisted outcome‬ عند ‪timeout‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Core‬ دائم، ‪Pack‬ حسب ‪closure‬؛ ‪modules Roadmap‬ غير مرئية ‪Sidebar‬؛ ‪staff‬ لا يرى ‪grants‬ مالية؛ ‪Module active‬ و ‪Role denied‬ لا يظهر له العنصر؛ ‪Dynamic Sidebar AR/EN‬ و ‪RTL/LTR‬ دون تعريف ‪layout pixels‬ أو ‪UI Design‬.
+
+الإشعارات  ‪Notifications‬
+
+‪entitlement_changed‬ و ‪role_changed‬ بعد ‪Commit‬ لمن تأثر؛ لا إشعار ‪User App‬ بأسماء ‪Modules‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+‪Workshop/Core identity/Member/Role grant/Module Entitlement/Navigation manifest/Config version‬ مفاهيم منطقية.
+
+معايير القبول  ‪AC‬
+
+W35.1  module Disabled hidden and API denied؛
+
+‪W35.2  Core‬ لا تختفي عند ‪Disable Pack‬؛
+
+‪W35.3  tenant A modules‬ لا تسرب ل ‪B‬؛
+
+‪W35.4  link‬ قديم لا يتجاوز ‪gate‬؛
+
+‪W35.5‬  تغيير اللغة يحفظ ‪permitted destination‬؛
+
+‪W35.6‬  فشل ‪entitlement load‬ لا يفترض ‪full access‬.
+
+الوحدات وحقوق تفعيلها في مساحة العمل
+
+W36 Workspace Modules and Entitlements Overview
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ يرى إعداد ‪Workspace‬ ومصدره من ‪W32/W33‬؛ ‪Staff summary‬ فقط إن له ‪permission‬ وليس ‪Catalog‬ مالي.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Core fixed Enabled‬؛ ‪Pack complete/incomplete‬ و ‪Participation/Eligibility/readiness reasons‬؛ ‪Modules implemented available‬ أو ‪Enabled/Disabled‬، مصدر ‪Manual/Subscription/Bundle‬ و ‪reason/reference/time‬؛ ‪Optional Roadmap‬ موسومة غير متاحة للتشغيل.
+
+الحقول  ‪Fields‬
+
+‪filter‬ طبقة/‪status‬ للعرض فقط، ‪no editable grant‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪View permitted configuration→W37‬ أو ‪W06‬ إلى ‪W08/W33‬؛ ‪Contact platform/Request change→W34‬؛ ‪Retained Records→W38‬؛ ‪Back→Settings‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪records tenant-scoped‬، ‪Subscription status‬ لايعادل ‪entitlement‬؛ لا ‪Buy/Enable/Disable button‬ أو ‪Store self-service‬ في ‪Phase 1‬.
+
+حالات الشاشة  ‪States‬
+
+‪no optional implemented shows Core/Pack‬، ‪Available‬ ليست ‪activated‬؛ ‪loading‬؛ ‪conflict refresh latest‬؛ ‪errors‬ لا تحول ‪Roadmap‬ إلى ‪Trial‬؛ ‪owner revoked returns Forbidden‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Admin‬ هو صاحب صلاحية لل ‪grant‬؛ الأسعار والباقات النهائية ‪Open‬؛ ‪Basic CRM‬ ليست ‪Optional CRM‬؛ ‪partial pack‬ تشخص ‪Internal readiness‬ ولاعرض طبيعي للمستخدم.
+
+الإشعارات  ‪Notifications‬
+
+‪admin grant change summary‬ للـ ‪Owner‬ بعد ‪Commit‬.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Module Catalog/Entitlement/Source reference/Bundle application/Capability Profile/Eligibility.
+
+معايير القبول  ‪AC‬
+
+‪W36.1  owner‬ لا يرسل ‪raw request‬ لتغيير ‪entitlement‬؛
+
+‪W36.2  Enabled Pack‬ يعرض كل ‪components‬ بما فيها ‪integrations‬؛
+
+‪W36.3  Roadmap‬ ليست ‪selectable activation‬؛
+
+‪W36.4  subscription Expired‬ مع ‪grants Enabled‬ تعرض المحورين دون ‪charge‬ أو ‪disable‬؛
+
+‪W36.5  CRM Core fixed‬ وحالة ‪Advanced CRM‬ منفصلة.
+
+إعدادات الوحدة المفعلة
+
+W37 Enabled Module Configuration
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+‪Owner‬ من ‪W36‬ أو ‪module settings‬ لتعديل ‪Config‬ مسموح لوحدة منفذة مفعلة.
+
+المعلومات المعروضة  ‪Data‬
+
+‪module name/Enabled/status/current config/version/dependencies/setup blockers‬ و ‪permission scope‬.
+
+الحقول  ‪Fields‬
+
+حقول الإعداد الموجودة لكل ‪domain‬ فقط؛ ‪Profile/Service/Hours‬ يعاد توجيهها ‪W06/W07/W08‬، و ‪Issuer‬ إلى ‪W33‬؛ سياسات ‪platform restricted‬ تعرض ‪readonly‬.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+Save/Cancel/Open relevant setup/Support.
+
+قواعد التحقق  ‪Validation‬
+
+‪module implemented and Enabled‬ أو ‪Core‬؛ ‪role‬ يسمح ‪config‬ المحددة؛ ‪latest version‬؛ القيم تحقق ‪validation‬ للشاشة الأصلية؛ لا ‪Activate‬ ضمن ‪Save‬ أو ‪toggle‬ سري لل ‪grant. Action Save‬ يثبت ‪Config‬ ثم ‪readiness‬ وتظهر نتيجة الحفظ؛ أي ‪affected booked appointments‬ وفق قواعد ‪W08/W12‬ لا ‪cancellation‬ تلقائي.
+
+حالات الشاشة  ‪States‬
+
+‪defaults‬ غير محسومة تظهر ‪Not configured‬ و ‪release blocker‬ إن ‪mandatory‬؛ ‪loading/save progress‬؛ ‪Module disabled‬ أثناء ‪edit‬ يمنع ‪Save‬ ويعود ‪W36‬؛ ‪conflict‬ أحدث ‪version‬ مع ‪draft review‬؛ ‪invalid field rule‬ واضح؛ ‪no schema‬ لوحدة ‪Roadmap‬ لا ‪form‬ وهمي.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪Core config‬ ثابتة الوجود؛ ‪no secrets/provider key editor‬؛ ‪whole Pack eligibility‬ من ‪backend recompute‬.
+
+الإشعارات  ‪Notifications‬
+
+‪Owner confirmation/in-app affected staff‬ حسب إعداد موجود؛ لا ‪user notification‬ ما لم موعد أوخدمة فعلية تأثرت.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+ModuleConfig/ConfigVersion/Entitlement/Readiness/Original domain settings.
+
+معايير القبول  ‪AC‬
+
+‪W37.1  Save config‬ لا ‪Enable module‬؛
+
+‪W37.2  Disable‬ أثناء نموذج مفتوح يرفض ‪Write‬؛
+
+‪W37.3  issuer change‬ لا يغير ‪Invoice‬ قديمة؛
+
+‪W37.4  Mandatory invalid config‬ يمنع ‪new eligibility‬؛
+
+‪W37.5  Backend‬ يرفض حقل ‪config‬ غير مصرح حتى لو أخفاه ‪Client‬.
+
+قراءة السجلات المحفوظة
+
+W38 Retained Records Access
+
+الهدف والدور ونقاط الدخول  ‪Purpose/Role/Entry‬
+
+قراءة تاريخ محفوظ للـ ‪Owner‬ أو ‪Advisor‬ المصرح من ‪Core Customers‬ أو ‪Vehicles‬ أو ‪Settings‬ أو ‪Support‬ بعد تعطيل ‪Pack‬؛ ليست شاشة تشغيل للوحدة ‪Disabled‬.
+
+المعلومات المعروضة  ‪Data‬
+
+‪Job‬ و ‪Quote‬ و ‪Invoice‬ و ‪Local History‬ و ‪Review references‬ بحالاتها وتواريخها الأصلية؛ ‪Tenant‬ واحد.
+
+الحقول  ‪Fields‬
+
+‪Date/entity filters‬ فقط.
+
+الأزرار والإجراءات  ‪CTAs‬
+
+‪View readonly/Download issued PDF/Open Support/Back‬؛ لا ‪Create/Edit/Send/Start/Complete/Reply‬ أو ‪Payment update‬.
+
+قواعد التحقق  ‪Validation‬
+
+‪Tenant‬ و ‪Role‬ و ‪Historical-read permission‬ و ‪Retention policy‬؛ ‪Job‬ غير مكتمل ليس ‪Completed retained record‬؛ ‪File access‬ يتحقق عند الفتح.
+
+حالات الشاشة  ‪States‬
+
+‪Empty‬ صحيح؛ ‪Loading‬؛ ‪PDF pending‬ أو ‪Link expired‬ يتيح ‪Artifact retry‬؛ المحتوى الذي أزيل بسياسة معتمدة يعرض ‪Metadata‬ المسموحة أو ‪Not available‬؛ ‪Forbidden‬ لا يكشف مبلغاً أو ‪PII‬.
+
+الصلاحيات وقواعد العمل  ‪Permissions/Rules‬
+
+‪A19‬ يقترح ‪Historic read‬ محدودة من الأدوار القائمة؛ المبالغ للـ ‪Owner/Advisor‬ حسب الأصل، ولا يحصل ‪Technician‬ أو ‪Reception‬ على ‪Financial list. Sidebar‬ التشغيلية للـ ‪Module Disabled‬ تبقى مخفية. القراءة لا تعيد ‪Enable‬ ولا تتجاوز ‪Freeze‬ أو ‪Privacy restriction‬.
+
+الإشعارات  ‪Notifications‬
+
+لا إشعار عرض؛ ‪Sensitive reads‬ تسجل حسب السياسة.
+
+كيانات البيانات المرتبطة  ‪Entities‬
+
+Core identity/Customer relation/Vehicle snapshot/Retained records/Retention rule/Access audit.
+
+معايير القبول  ‪AC‬
+
+‪W38.1  Disable‬ يحفظ ‪Invoice‬ و ‪History‬؛
+
+‪W38.2  Historical API‬ يمنع ‪Mutation‬؛
+
+‪W38.3  Wrong tenant‬ لا يقرأ ‪PDF‬؛
+
+‪W38.4‬  نفس ‪Invoice ID‬ والرقم والمبلغ؛
+
+‪W38.5  Re-enable‬ لا ينسخ ‪Records‬؛
+
+‪W38.6  Disable‬ لا يشغّل ‪Purge‬.
+
+11.4 Disable Procedure and Data Retention
+
+‪Admin‬ يعرض ‪Preview‬ للفرق و ‪Dependencies‬ والالتزامات، ثم يوقف ‪Participation‬ و ‪New intake‬. تبقى ‪Pack‬ كاملة ‪Enabled‬ لإغلاق نفس الخدمات وفق ‪A17. Active obligations‬ تشمل ‪Requests‬ غير ‪Terminal‬، و ‪Booking‬ قائمة، و ‪Proposal pending‬، و ‪Sent quote current‬، و ‪Job‬ غير ‪Terminal‬ أوالتزام مالي للخدمة لم يحسم. وجود أي منها يمنع ‪Disable‬؛ يعرض ‪Preview IDs‬ والحالات ضمن نطاق مصرح وروابط ‪Support‬. لا يلغي ‪Admin‬ الحالات أويمس ‪Quote Accepted‬ لتجاوز الفحص.
+
+بعد الإغلاق، ‪Disable group‬ يبقي ‪Tenant‬ و ‪Core‬ و ‪Customers‬ و ‪Vehicles‬ و ‪Quote decisions‬ و ‪Invoices‬ و ‪History‬ و ‪Reviews‬ و ‪Audit‬ بمعرفاتها وروابطها. المستخدم يرى سجله ويقيّم ‪Completed job. Workshop reply‬ أو ‪Payment record‬ جديد من ‪OS‬ يحتاج ‪Integration‬ أو ‪Invoices Enabled‬؛ التصحيح المالي لوحدة معطلة يمر عبر ‪Admin Finance authorized‬ وفق ‪A09. Re-enable‬ لا يعيد الموظف ‪Disabled‬ ولا يكرر البيانات. مدد الحفظ والنسخ والحذف تبقى ‪OSM 03‬؛ لا سنوات مخترعة.
+
+11.5 Capability Profile and Example Configurations
+
+‪Capability Profile‬ مشتق من ‪Implementation‬ و ‪Entitlements‬ و ‪Config‬، ولا يعدل ‪supports_booking‬ كـ ‪Checkbox‬ حر لتجاوز ‪Pack. supports_inventory‬ و ‪supports_warranty‬ و ‪supports_pos‬ و ‪supports_suppliers‬ تكون ‪false‬ في ‪Phase 1‬ لأن ‪Apps‬ غير منفذة. ‪supports_crm‬ تعني ‪Basic Customers CRM‬ وتكون ‪true‬ في ‪Core‬؛ ‪Advanced CRM‬ مؤجلة. الرحلة تحتاج ‪Booking‬ و ‪Quote‬ و ‪Jobs‬ و ‪Invoices‬ و ‪History‬ و ‪Review‬ وكامل ‪Dependencies‬؛ تغيير الحقوق أو ‪Config‬ يعيد تقييمها دون مساس بالتاريخ.
+
+أمثلة ‪PPF/Tint‬ و ‪Mechanical‬ و ‪Car Care‬ في ‪Bible Section25.7‬: جميع المشاركين ‪Core‬ و ‪Full Pack‬، مع اختلاف ‪Services‬ و ‪Brands‬ و ‪Hours‬. اختيارات ‪Inventory‬ و ‪Warranty‬ و ‪Advanced CRM‬ و ‪Suppliers‬ و ‪Tasks‬ في مثال ‪PPF‬ مستقبلية؛ لا ‪Enable‬ تشغيلي لها حالياً. ‪HR‬ و ‪Contracts‬ و ‪POS‬ يمكن أن تبقى ‪Disabled‬ عند تنفيذها لاحقاً إذا لم تكن ‪Dependencies‬ مطلوبة. ‪Phase 1‬ يصفها ‪Roadmap‬ ولا يقدم شاشات وظائفها.
+
+11.6 Acceptance and Source Traceability
+
+‪QA‬ يختبر ‪Tenant‬ مع ‪Full Pack‬ و ‪Tenant Core-only‬، وكل ‪Role‬ قائم؛ ‪Enable/Disable retry‬، و ‪Core Disable‬، و ‪Partial pack Disable‬، و ‪Roadmap Enable‬، و ‪Wrong tenant‬، و ‪Stale shell‬، و ‪Direct API‬، و ‪Bundle preview/dependency conflict‬، و ‪Subscription Expired‬ دون ‪Automatic disable‬، ومحاولة ‪Disable‬ أثناء ‪Quote‬ أو ‪Complete‬، و ‪Retained readonly‬، و ‪Re-enable‬ دون ‪Duplicate‬، و ‪RTL/LTR‬. الحالات ‪3.1‬ إلى ‪3.7‬ تبقى كما هي؛ ‪Module lifecycle‬ لا يستعير حالات ‪Job‬ أو ‪Subscription‬.
+
+‪Migration A18‬: كل ورشة ‪Pilot‬ تشارك في ‪Marketplace‬ من ‪V1‬ تهيأ بـ ‪Core‬ و ‪Full Pack‬ مع سبب ‪Grant‬ يوضح ترحيل الإعداد المعتمد. ‪Admin‬ يراجع ‪Readiness‬ قبل ‪New intake‬. لا حذف بيانات أوتغيير ‪Quote/Invoice snapshots‬ أوإقصاء آلي لاشتراك ‪Expired‬. آلية ‪Migration‬ التقنية عمل لاحق للفريق ولا تنفذ في مهمة الوثائق.
+
+التتبع: ‪W01‬ إلى ‪W34‬ من ‪S24‬ إلى ‪S38‬ وقواعد ‪S03‬ و ‪S18‬ إلى ‪S23‬؛ ‪W35‬ إلى ‪W38‬ و ‪WG10/WG11‬ و ‪3.8/3.9‬ و ‪Section11‬ إضافات ‪MD01‬ إلى ‪MD09‬ و ‪A16‬ إلى ‪A20. Catalog‬ والأمثلة ‪MD04 MD12‬؛ أسعار ‪MD10‬ تبقى مفتوحة. ‪A01‬ إلى ‪A15‬ وأسئلة ‪Section9‬ باقية؛ ‪OSM 01‬ إلى ‪OSM 05‬ في ‪Bible25.8‬ لها ‪Owners‬. لا ‪Schema‬ أو ‪Billing engine‬ أو ‪Optional App implementation‬ مضافة إلى ‪Phase 1‬.
+
+
+
+مخططات المنتج
+
+Product diagrams
+
+‪W_D01‬  مخطط الرحلة والعلاقات
+
+
+
+‪Sections 3.1‬ و‪3.9. Active‬ وحدها لا تنشر الورشة. فشل فحص المشاركة أوالحزمة أوالقدرات يمنع ‪New intake‬؛ ‪Subscription‬ و‪Verification‬ و‪Eligibility‬ محاور منفصلة. التعليق لا يمحو السجل.
+
+
+
+‪W_D02‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪W10‬ إلى ‪W20‬ و‪Section 3.2‬ و‪3.3. Accepted‬ انتقال تسجيل داخلي قبل ‪Confirmed‬ عند قبول الوقت المطلوب. اقتراح وقت جديد لا يؤكد حجزاً دون قرار المستخدم.
+
+
+
+‪W_D03‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪Section 3.4‬ و‪W21‬ إلى ‪W23‬. نسخة ‪Sent‬ لا تعدل؛ تعديلها ينتج ‪Revision‬ جديدة. ‪Accepted‬ تبقى محفوظة تاريخياً، والورشة لا توافق نيابة عن العميل.
+
+
+
+‪W_D04‬  مخطط الرحلة والعلاقات
+
+
+
+المرجع ‪W24‬ إلى ‪W27‬ و‪Cross Product Logic‬. فشل كتابة عنصر إلزامي يمنع ‪Completed‬. فشل ‪PDF‬ أو‪Push‬ بعد ‪Commit‬ يعيد محاولة التسليم وحدها ولا يولد فاتورة أخرى.
+
+
+
+‪W_D05‬  مخطط الرحلة والعلاقات
+
+
+
+‪Bible25‬ و‪Workshop OS11‬ و‪MD01‬ إلى‪MD04. Core‬ لا تتعطل. ‪Pack‬ تشمل ‪Calendar‬ و‪Job Cards‬ والتكاملات ولو لم تظهر كلها كعناصر ‪Sidebar. Apps‬ المستقبلية غير منفذة وغير قابلة للتفعيل التشغيلي في ‪Phase 1‬.
+
+
+
+‪W_D06‬  مخطط الرحلة والعلاقات
+
+
+
+‪W35‬ إلى‪W38‬ و‪WG10. Sidebar‬ و‪Permissions‬ و‪API‬ تتبع نفس الحقوق الفعالة؛ ‪Owner‬ لا يتجاوز ‪Disabled‬. فشل ‪Role‬ أو‪Entity guard‬ يرفض الفعل أيضاً. ‪Historical read‬ منفصلة ومحدودة ولا تعيد تشغيل الوحدة.
+

@@ -1,0 +1,16 @@
+{
+  "extends": "../../packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "@miftah/contracts": ["../../packages/contracts/src"],
+      "@miftah/config": ["../../packages/config/src"]
+    }
+  },
+  "include": ["src/**/*"]
+}
+

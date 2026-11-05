@@ -1,0 +1,1253 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------
+// ENUMS
+// ----------------------------------------------------
+
+enum Role {
+  CAR_OWNER
+  WORKSHOP_OWNER
+  SERVICE_ADVISOR
+  RECEPTION
+  TECHNICIAN
+  OPERATIONS_ADMIN
+  SUPPORT_ADMIN
+  SUPER_ADMIN
+}
+
+enum WorkshopStaffRole {
+  WORKSHOP_OWNER
+  SERVICE_ADVISOR
+  RECEPTION
+  TECHNICIAN
+}
+
+enum AdminRole {
+  OPERATIONS_ADMIN
+  SUPPORT_ADMIN
+  SUPER_ADMIN
+}
+
+enum StaffStatus {
+  INVITED
+  ACTIVE
+  DISABLED
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum AuthProvider {
+  EMAIL_PASSWORD
+  PHONE_OTP
+  GOOGLE
+}
+
+enum WorkshopStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+  INACTIVE
+  REJECTED
+}
+
+enum Emirate {
+  DUBAI
+  SHARJAH
+}
+
+enum InspectionPolicy {
+  NOT_REQUIRED
+  CONDITIONAL
+  REQUIRED
+}
+
+enum ModuleLayer {
+  CORE
+  MARKETPLACE_PACK
+  OPTIONAL
+}
+
+enum ModuleEntitlementState {
+  ENABLED
+  DISABLED
+}
+
+enum GrantSource {
+  ADMIN
+  SUBSCRIPTION
+  BUNDLE
+}
+
+enum VehicleStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ServiceRequestStatus {
+  DRAFT
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+  CANCELLED
+  CLOSED
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  TIME_PROPOSED
+  CONFIRMED
+  VEHICLE_ARRIVED
+  INSPECTION
+  QUOTE_SENT
+  QUOTE_APPROVED
+  IN_PROGRESS
+  COMPLETED
+  NO_SHOW
+  CANCELLED
+}
+
+enum InspectionStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum InspectionSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum QuoteRevisionStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  SUPERSEDED
+}
+
+enum JobStatus {
+  CREATED
+  INSPECTION
+  AWAITING_APPROVAL
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum NoteVisibility {
+  INTERNAL
+  USER_VISIBLE
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+}
+
+enum SettlementSource {
+  OUTSIDE_MIFTAH
+}
+
+enum ProvenanceType {
+  WORKSHOP_JOB
+  USER_MANUAL
+}
+
+enum ReviewStatus {
+  PUBLISHED
+  HIDDEN
+}
+
+enum MatchingEligibilityStatus {
+  ELIGIBLE
+  EXCLUDED
+}
+
+enum FileOwnerType {
+  USER
+  WORKSHOP
+  PLATFORM
+}
+
+enum QualityTier {
+  OEM
+  OES
+  AFTERMARKET_PREMIUM
+  AFTERMARKET_STANDARD
+  USED_TESTED
+}
+
+enum InventoryItemStatus {
+  ACTIVE
+  OUT_OF_STOCK
+  DISCONTINUED
+  ARCHIVED
+}
+
+enum StockMovementType {
+  STOCK_IN
+  INITIAL_STOCK
+  JOB_RESERVATION
+  JOB_DISPENSE
+  JOB_RETURN_GOOD
+  JOB_RETURN_DEFECTIVE
+  RESERVATION_RELEASE
+  RECONCILIATION_ADJUSTMENT
+  MANUAL_ADJUSTMENT
+  REVERSAL
+}
+
+enum JobReservationStatus {
+  RESERVED
+  PARTIALLY_DISPENSED
+  FULLY_DISPENSED
+  CANCELLED_RELEASED
+}
+
+enum AuditCountStatus {
+  DRAFT
+  IN_PROGRESS
+  PENDING_APPROVAL
+  APPROVED_RECONCILED
+  REJECTED
+}
+
+// ----------------------------------------------------
+// 1. CORE IDENTITY & AUTH
+// ----------------------------------------------------
+
+model User {
+  id                String       @id @default(uuid()) @db.Uuid
+  fullName          String       @map("full_name")
+  email             String?      @unique
+  phoneE164         String?      @unique @map("phone_e164")
+  status            UserStatus   @default(ACTIVE)
+  preferredLanguage String       @default("ar") @map("preferred_language") // 'ar' | 'en'
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @updatedAt @map("updated_at")
+
+  authIdentities    AuthIdentity[]
+  adminAccount      AdminAccount?
+  sessions          Session[]
+  ownedWorkshops    Workshop[]          @relation("WorkshopOwner")
+  staffMemberships  WorkshopStaff[]
+  vehicles          Vehicle[]
+  aiConversations   AiConversation[]
+  matchingRuns      MatchingRun[]
+  serviceRequests   ServiceRequest[]
+  quoteFamilies     QuoteFamily[]
+  quoteRevisionsAccepted QuoteRevision[] @relation("QuoteAcceptedBy")
+  inspectionsCreated Inspection[]       @relation("InspectionCreatedBy")
+  jobsAssigned      Job[]               @relation("JobTechnician")
+  jobNotes          JobNote[]
+  invoices          Invoice[]
+  maintenanceRecords MaintenanceRecord[]
+  reviews           Review[]
+  reviewReplies     ReviewReply[]
+  notifications     Notification[]
+  deviceTokens      DeviceToken[]
+  supportTickets    SupportTicket[]     @relation("TicketOpenedBy")
+  assignedTickets   SupportTicket[]     @relation("TicketAssignedAdmin")
+  auditLogs         AuditLog[]
+  inventoryMovements       InventoryMovement[]
+  jobPartReservations      JobPartReservation[]
+  approvedAuditSessions    InventoryAuditSession[]
+
+  @@map("users")
+}
+
+model AuthIdentity {
+  id              String       @id @default(uuid()) @db.Uuid
+  userId          String       @map("user_id") @db.Uuid
+  provider        AuthProvider
+  providerSubject String       @map("provider_subject")
+  passwordHash    String?      @map("password_hash")
+  verifiedAt      DateTime?    @map("verified_at")
+  createdAt       DateTime     @default(now()) @map("created_at")
+
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerSubject])
+  @@index([userId])
+  @@map("auth_identities")
+}
+
+model AdminAccount {
+  id          String     @id @default(uuid()) @db.Uuid
+  userId      String     @unique @map("user_id") @db.Uuid
+  adminRole   AdminRole  @map("admin_role")
+  mfaRequired Boolean    @default(true) @map("mfa_required")
+  mfaSecret   String?    @map("mfa_secret")
+  status      UserStatus @default(ACTIVE)
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admin_accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  tokenVersion Int      @default(1) @map("token_version")
+  isRevoked    Boolean  @default(false) @map("is_revoked")
+  ipAddress    String?  @map("ip_address")
+  userAgent    String?  @map("user_agent")
+  createdAt    DateTime @default(now()) @map("created_at")
+  expiresAt    DateTime @map("expires_at")
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ----------------------------------------------------
+// 2. WORKSHOP TENANCY
+// ----------------------------------------------------
+
+model Workshop {
+  id                       String         @id @default(uuid()) @db.Uuid
+  ownerUserId              String         @map("owner_user_id") @db.Uuid
+  legalName                String         @map("legal_name")
+  displayNameEn            String         @map("display_name_en")
+  displayNameAr            String         @map("display_name_ar")
+  status                   WorkshopStatus @default(PENDING_VERIFICATION)
+  emirate                  Emirate
+  addressText              String         @map("address_text")
+  latitude                 Decimal        @db.Decimal(10, 7)
+  longitude                Decimal        @db.Decimal(10, 7)
+  verifiedAt               DateTime?      @map("verified_at")
+  marketplaceParticipation Boolean        @default(false) @map("marketplace_participation")
+  primaryPhone             String         @map("primary_phone")
+  primaryEmail             String         @map("primary_email")
+  descriptionEn            String?        @map("description_en")
+  descriptionAr            String?        @map("description_ar")
+  createdAt                DateTime       @default(now()) @map("created_at")
+  updatedAt                DateTime       @updatedAt @map("updated_at")
+
+  owner                    User           @relation("WorkshopOwner", fields: [ownerUserId], references: [id])
+  staff                    WorkshopStaff[]
+  hours                    WorkshopHours[]
+  services                 WorkshopService[]
+  supportedBrands          WorkshopBrand[]
+  entitlements             WorkshopModuleEntitlement[]
+  matchingResults          MatchingResult[]
+  serviceRequests          ServiceRequest[]
+  bookings                 Booking[]
+  quoteFamilies            QuoteFamily[]
+  jobs                     Job[]
+  invoices                 Invoice[]
+  maintenanceRecords       MaintenanceRecord[]
+  reviews                  Review[]
+  reviewReplies            ReviewReply[]
+  inventoryCategories      InventoryCategory[]
+  inventorySubcategories   InventorySubcategory[]
+  inventoryItems           InventoryItem[]
+  inventoryMovements       InventoryMovement[]
+  jobPartReservations      JobPartReservation[]
+  inventoryAuditSessions   InventoryAuditSession[]
+
+  @@index([status, emirate])
+  @@map("workshops")
+}
+
+model WorkshopStaff {
+  id         String            @id @default(uuid()) @db.Uuid
+  workshopId String            @map("workshop_id") @db.Uuid
+  userId     String            @map("user_id") @db.Uuid
+  role       WorkshopStaffRole
+  status     StaffStatus       @default(INVITED)
+  invitedBy  String?           @map("invited_by") @db.Uuid
+  createdAt  DateTime          @default(now()) @map("created_at")
+  updatedAt  DateTime          @updatedAt @map("updated_at")
+
+  workshop   Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workshopId, userId])
+  @@index([userId])
+  @@map("workshop_staff")
+}
+
+model WorkshopHours {
+  id         String   @id @default(uuid()) @db.Uuid
+  workshopId String   @map("workshop_id") @db.Uuid
+  weekday    Int      // 0 = Sunday, 1 = Monday ... 6 = Saturday
+  openTime   String   @map("open_time") // HH:mm
+  closeTime  String   @map("close_time") // HH:mm
+  isClosed   Boolean  @default(false) @map("is_closed")
+
+  workshop   Workshop @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+
+  @@unique([workshopId, weekday])
+  @@map("workshop_hours")
+}
+
+// ----------------------------------------------------
+// 3. MASTER DATA
+// ----------------------------------------------------
+
+model ServiceCategory {
+  id        String    @id @default(uuid()) @db.Uuid
+  code      String    @unique
+  nameEn    String    @map("name_en")
+  nameAr    String    @map("name_ar")
+  active    Boolean   @default(true)
+  sortOrder Int       @default(0) @map("sort_order")
+  services  Service[]
+
+  @@map("service_categories")
+}
+
+model Service {
+  id                      String           @id @default(uuid()) @db.Uuid
+  categoryId              String           @map("category_id") @db.Uuid
+  code                    String           @unique
+  nameEn                  String           @map("name_en")
+  nameAr                  String           @map("name_ar")
+  active                  Boolean          @default(true)
+  preliminaryQuoteAllowed Boolean          @default(false) @map("preliminary_quote_allowed")
+  inspectionPolicy        InspectionPolicy @default(REQUIRED) @map("inspection_policy")
+  taxonomyVersion         Int              @default(1) @map("taxonomy_version")
+
+  category                ServiceCategory  @relation(fields: [categoryId], references: [id])
+  workshopServices        WorkshopService[]
+  quoteItems              QuoteItem[]
+  aiClassificationServices AiClassificationService[]
+  maintenanceRecordServices MaintenanceRecordService[]
+  serviceRequests         ServiceRequest[]
+  matchingRuns            MatchingRun[]
+
+  @@map("services")
+}
+
+model VehicleBrand {
+  id        String         @id @default(uuid()) @db.Uuid
+  code      String         @unique
+  name      String
+  active    Boolean        @default(true)
+  models    VehicleModel[]
+  vehicles  Vehicle[]
+  workshopBrands WorkshopBrand[]
+
+  @@map("vehicle_brands")
+}
+
+model VehicleModel {
+  id       String       @id @default(uuid()) @db.Uuid
+  brandId  String       @map("brand_id") @db.Uuid
+  name     String
+  active   Boolean      @default(true)
+  brand    VehicleBrand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  vehicles Vehicle[]
+
+  @@index([brandId])
+  @@map("vehicle_models")
+}
+
+model WorkshopService {
+  id                  String   @id @default(uuid()) @db.Uuid
+  workshopId          String   @map("workshop_id") @db.Uuid
+  serviceId           String   @map("service_id") @db.Uuid
+  enabled             Boolean  @default(true)
+  startingPriceAmount Decimal? @map("starting_price_amount") @db.Decimal(10, 2)
+  currency            String   @default("AED")
+  notes               String?
+
+  workshop            Workshop @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  service             Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([workshopId, serviceId])
+  @@map("workshop_services")
+}
+
+model WorkshopBrand {
+  id         String        @id @default(uuid()) @db.Uuid
+  workshopId String        @map("workshop_id") @db.Uuid
+  brandId    String?       @map("brand_id") @db.Uuid
+  allBrands  Boolean       @default(false) @map("all_brands")
+
+  workshop   Workshop      @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  brand      VehicleBrand? @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([workshopId, brandId])
+  @@map("workshop_brands")
+}
+
+// ----------------------------------------------------
+// 4. MODULES & ENTITLEMENTS
+// ----------------------------------------------------
+
+model Module {
+  id           String      @id @default(uuid()) @db.Uuid
+  code         String      @unique
+  layer        ModuleLayer
+  implemented  Boolean     @default(true)
+  active       Boolean     @default(true)
+  nameEn       String      @map("name_en")
+  nameAr       String      @map("name_ar")
+
+  entitlements WorkshopModuleEntitlement[]
+
+  @@map("modules")
+}
+
+model WorkshopModuleEntitlement {
+  id                  String                 @id @default(uuid()) @db.Uuid
+  workshopId          String                 @map("workshop_id") @db.Uuid
+  moduleId            String                 @map("module_id") @db.Uuid
+  state               ModuleEntitlementState @default(ENABLED)
+  grantSource         GrantSource            @default(ADMIN) @map("grant_source")
+  reason              String?
+  changedByAdminUserId String?               @map("changed_by_admin_user_id") @db.Uuid
+  changedAt           DateTime               @default(now()) @map("changed_at")
+
+  workshop            Workshop               @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  module              Module                 @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([workshopId, moduleId])
+  @@map("workshop_module_entitlements")
+}
+
+// ----------------------------------------------------
+// 5. VEHICLES (GARAGE)
+// ----------------------------------------------------
+
+model Vehicle {
+  id                 String        @id @default(uuid()) @db.Uuid
+  ownerUserId        String        @map("owner_user_id") @db.Uuid
+  brandId            String        @map("brand_id") @db.Uuid
+  modelId            String        @map("model_id") @db.Uuid
+  year               Int
+  mileage            Int
+  trim               String?
+  fuelType           String?       @map("fuel_type")
+  transmission       String?
+  vin                String?
+  plateNumber        String?       @map("plate_number")
+  emirate            Emirate?
+  registrationExpiry DateTime?     @map("registration_expiry")
+  insuranceExpiry    DateTime?     @map("insurance_expiry")
+  photoFileId        String?       @map("photo_file_id") @db.Uuid
+  notes              String?
+  status             VehicleStatus @default(ACTIVE)
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+
+  owner              User          @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  brand              VehicleBrand  @relation(fields: [brandId], references: [id])
+  model              VehicleModel  @relation(fields: [modelId], references: [id])
+  serviceRequests    ServiceRequest[]
+  jobs               Job[]
+  maintenanceRecords MaintenanceRecord[]
+  invoices           Invoice[]
+  aiConversations    AiConversation[]
+  matchingRuns       MatchingRun[]
+
+  @@index([ownerUserId, status])
+  @@map("vehicles")
+}
+
+// ----------------------------------------------------
+// 6. AI & MATCHING
+// ----------------------------------------------------
+
+model AiConversation {
+  id              String            @id @default(uuid()) @db.Uuid
+  userId          String            @map("user_id") @db.Uuid
+  vehicleId       String?           @map("vehicle_id") @db.Uuid
+  language        String            @default("ar")
+  status          String            @default("ACTIVE")
+  createdAt       DateTime          @default(now()) @map("created_at")
+
+  user            User              @relation(fields: [userId], references: [id])
+  vehicle         Vehicle?          @relation(fields: [vehicleId], references: [id])
+  classifications AiClassification[]
+
+  @@map("ai_conversations")
+}
+
+model AiClassification {
+  id               String            @id @default(uuid()) @db.Uuid
+  conversationId   String            @map("conversation_id") @db.Uuid
+  issueSummary     String            @map("issue_summary")
+  categoryId       String?           @map("category_id") @db.Uuid
+  riskLevel        RiskLevel         @default(LOW) @map("risk_level")
+  uncertainty      Decimal?          @db.Decimal(5, 4)
+  taxonomyVersion  Int               @default(1) @map("taxonomy_version")
+  structuredOutput Json?             @map("structured_output")
+  createdAt        DateTime          @default(now()) @map("created_at")
+
+  conversation     AiConversation    @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  suggestedServices AiClassificationService[]
+  serviceRequests  ServiceRequest[]
+
+  @@map("ai_classifications")
+}
+
+model AiClassificationService {
+  id                 String           @id @default(uuid()) @db.Uuid
+  classificationId   String           @map("classification_id") @db.Uuid
+  serviceId          String           @map("service_id") @db.Uuid
+  confidenceInternal Decimal?         @map("confidence_internal") @db.Decimal(5, 4)
+
+  classification     AiClassification @relation(fields: [classificationId], references: [id], onDelete: Cascade)
+  service            Service          @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([classificationId, serviceId])
+  @@map("ai_classification_services")
+}
+
+model MatchingRun {
+  id             String           @id @default(uuid()) @db.Uuid
+  userId         String           @map("user_id") @db.Uuid
+  vehicleId      String?          @map("vehicle_id") @db.Uuid
+  serviceId      String           @map("service_id") @db.Uuid
+  emirate        Emirate
+  inputs         Json?
+  rankingVersion String           @default("1.0") @map("ranking_version")
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  user           User             @relation(fields: [userId], references: [id])
+  vehicle        Vehicle?         @relation(fields: [vehicleId], references: [id])
+  service        Service          @relation(fields: [serviceId], references: [id])
+  results        MatchingResult[]
+
+  @@map("matching_runs")
+}
+
+model MatchingResult {
+  id                String                    @id @default(uuid()) @db.Uuid
+  matchingRunId     String                    @map("matching_run_id") @db.Uuid
+  workshopId        String                    @map("workshop_id") @db.Uuid
+  eligibilityStatus MatchingEligibilityStatus @map("eligibility_status")
+  exclusionReason   String?                   @map("exclusion_reason")
+  rank              Int?
+  scoreComponents   Json?                     @map("score_components")
+  selectedByUser    Boolean                   @default(false) @map("selected_by_user")
+
+  matchingRun       MatchingRun               @relation(fields: [matchingRunId], references: [id], onDelete: Cascade)
+  workshop          Workshop                  @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+
+  @@index([matchingRunId, eligibilityStatus])
+  @@map("matching_results")
+}
+
+// ----------------------------------------------------
+// 7. SERVICE JOURNEY (REQUEST -> BOOKING -> INSPECTION -> QUOTE -> JOB)
+// ----------------------------------------------------
+
+model ServiceRequest {
+  id                 String               @id @default(uuid()) @db.Uuid
+  userId             String               @map("user_id") @db.Uuid
+  vehicleId          String               @map("vehicle_id") @db.Uuid
+  workshopId         String               @map("workshop_id") @db.Uuid
+  serviceId          String               @map("service_id") @db.Uuid
+  aiClassificationId String?              @map("ai_classification_id") @db.Uuid
+  status             ServiceRequestStatus @default(SUBMITTED)
+  issueSummary       String?              @map("issue_summary")
+  preferredDatetime  DateTime             @map("preferred_datetime")
+  emirate            Emirate
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+
+  user               User                 @relation(fields: [userId], references: [id])
+  vehicle            Vehicle              @relation(fields: [vehicleId], references: [id])
+  workshop           Workshop             @relation(fields: [workshopId], references: [id])
+  service            Service              @relation(fields: [serviceId], references: [id])
+  aiClassification   AiClassification?    @relation(fields: [aiClassificationId], references: [id])
+  booking            Booking?
+  quoteFamily        QuoteFamily?
+  jobs               Job[]
+
+  @@index([workshopId, status])
+  @@index([userId])
+  @@map("service_requests")
+}
+
+model Booking {
+  id                String        @id @default(uuid()) @db.Uuid
+  serviceRequestId  String        @unique @map("service_request_id") @db.Uuid
+  workshopId        String        @map("workshop_id") @db.Uuid
+  userId            String        @map("user_id") @db.Uuid
+  status            BookingStatus @default(PENDING)
+  requestedStartAt  DateTime      @map("requested_start_at")
+  proposedStartAt   DateTime?     @map("proposed_start_at")
+  confirmedStartAt  DateTime?     @map("confirmed_start_at")
+  arrivedAt         DateTime?     @map("arrived_at")
+  noShowAt          DateTime?     @map("no_show_at")
+  cancelledAt       DateTime?     @map("cancelled_at")
+  cancellationReason String?      @map("cancellation_reason")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  serviceRequest    ServiceRequest @relation(fields: [serviceRequestId], references: [id], onDelete: Cascade)
+  workshop          Workshop       @relation(fields: [workshopId], references: [id])
+  inspections       Inspection[]
+  job               Job?
+
+  @@index([workshopId, status])
+  @@map("bookings")
+}
+
+model Inspection {
+  id                 String             @id @default(uuid()) @db.Uuid
+  bookingId          String             @map("booking_id") @db.Uuid
+  jobId              String?            @map("job_id") @db.Uuid
+  status             InspectionStatus   @default(NOT_STARTED)
+  startedAt          DateTime?          @map("started_at")
+  completedAt        DateTime?          @map("completed_at")
+  summaryUserVisible String?            @map("summary_user_visible")
+  internalNotes      String?            @map("internal_notes")
+  createdByUserId    String             @map("created_by_user_id") @db.Uuid
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  booking            Booking            @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  job                Job?               @relation(fields: [jobId], references: [id])
+  createdByUser      User               @relation("InspectionCreatedBy", fields: [createdByUserId], references: [id])
+  findings           InspectionFinding[]
+
+  @@map("inspections")
+}
+
+model InspectionFinding {
+  id                String             @id @default(uuid()) @db.Uuid
+  inspectionId      String             @map("inspection_id") @db.Uuid
+  title             String
+  description       String?
+  severity          InspectionSeverity @default(LOW)
+  proposedServiceId String?            @map("proposed_service_id") @db.Uuid
+  userVisible       Boolean            @default(true) @map("user_visible")
+
+  inspection        Inspection         @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+
+  @@map("inspection_findings")
+}
+
+model QuoteFamily {
+  id               String          @id @default(uuid()) @db.Uuid
+  serviceRequestId String          @unique @map("service_request_id") @db.Uuid
+  workshopId       String          @map("workshop_id") @db.Uuid
+  userId           String          @map("user_id") @db.Uuid
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  serviceRequest   ServiceRequest  @relation(fields: [serviceRequestId], references: [id], onDelete: Cascade)
+  workshop         Workshop        @relation(fields: [workshopId], references: [id])
+  user             User            @relation(fields: [userId], references: [id])
+  revisions        QuoteRevision[]
+
+  @@map("quote_families")
+}
+
+model QuoteRevision {
+  id               String              @id @default(uuid()) @db.Uuid
+  quoteFamilyId    String              @map("quote_family_id") @db.Uuid
+  revisionNumber   Int                 @map("revision_number")
+  status           QuoteRevisionStatus @default(DRAFT)
+  currency         String              @default("AED")
+  subtotal         Decimal             @db.Decimal(10, 2)
+  discount         Decimal             @default(0) @db.Decimal(10, 2)
+  tax              Decimal             @db.Decimal(10, 2)
+  total            Decimal             @db.Decimal(10, 2)
+  sentAt           DateTime?           @map("sent_at")
+  expiresAt        DateTime?           @map("expires_at")
+  acceptedAt       DateTime?           @map("accepted_at")
+  rejectedAt       DateTime?           @map("rejected_at")
+  acceptedByUserId String?             @map("accepted_by_user_id") @db.Uuid
+  immutableHash    String?             @map("immutable_hash")
+  createdAt        DateTime            @default(now()) @map("created_at")
+
+  quoteFamily      QuoteFamily         @relation(fields: [quoteFamilyId], references: [id], onDelete: Cascade)
+  acceptedByUser   User?               @relation("QuoteAcceptedBy", fields: [acceptedByUserId], references: [id])
+  items            QuoteItem[]
+  authorizedJobs   Job[]               @relation("AuthorizedQuoteRevision")
+  sourceInvoices   Invoice[]           @relation("SourceQuoteRevision")
+
+  @@unique([quoteFamilyId, revisionNumber])
+  @@index([status])
+  @@map("quote_revisions")
+}
+
+model QuoteItem {
+  id              String        @id @default(uuid()) @db.Uuid
+  quoteRevisionId String        @map("quote_revision_id") @db.Uuid
+  serviceId       String        @map("service_id") @db.Uuid
+  description     String
+  quantity        Int           @default(1)
+  unitPrice       Decimal       @map("unit_price") @db.Decimal(10, 2)
+  lineTotal       Decimal       @map("line_total") @db.Decimal(10, 2)
+  sortOrder       Int           @default(0) @map("sort_order")
+
+  quoteRevision   QuoteRevision @relation(fields: [quoteRevisionId], references: [id], onDelete: Cascade)
+  service         Service       @relation(fields: [serviceId], references: [id])
+
+  @@map("quote_items")
+}
+
+model Job {
+  id                         String         @id @default(uuid()) @db.Uuid
+  bookingId                  String         @unique @map("booking_id") @db.Uuid
+  serviceRequestId           String         @map("service_request_id") @db.Uuid
+  workshopId                 String         @map("workshop_id") @db.Uuid
+  vehicleId                  String         @map("vehicle_id") @db.Uuid
+  authorizedQuoteRevisionId  String?        @map("authorized_quote_revision_id") @db.Uuid
+  status                     JobStatus      @default(CREATED)
+  assignedTechnicianUserId   String?        @map("assigned_technician_user_id") @db.Uuid
+  startedAt                  DateTime?      @map("started_at")
+  completedAt                DateTime?      @map("completed_at")
+  finalMileage               Int?           @map("final_mileage")
+  createdAt                  DateTime       @default(now()) @map("created_at")
+  updatedAt                  DateTime       @updatedAt @map("updated_at")
+
+  booking                    Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  serviceRequest             ServiceRequest @relation(fields: [serviceRequestId], references: [id])
+  workshop                   Workshop       @relation(fields: [workshopId], references: [id])
+  vehicle                    Vehicle        @relation(fields: [vehicleId], references: [id])
+  authorizedQuoteRevision    QuoteRevision? @relation("AuthorizedQuoteRevision", fields: [authorizedQuoteRevisionId], references: [id])
+  assignedTechnician         User?          @relation("JobTechnician", fields: [assignedTechnicianUserId], references: [id])
+  inspections                Inspection[]
+  notes                      JobNote[]
+  invoice                    Invoice?
+  maintenanceRecord          MaintenanceRecord?
+  review                     Review?
+  partReservations           JobPartReservation[]
+
+  @@index([workshopId, status])
+  @@map("jobs")
+}
+
+model JobNote {
+  id           String         @id @default(uuid()) @db.Uuid
+  jobId        String         @map("job_id") @db.Uuid
+  authorUserId String         @map("author_user_id") @db.Uuid
+  visibility   NoteVisibility @default(INTERNAL)
+  body         String
+  createdAt    DateTime       @default(now()) @map("created_at")
+
+  job          Job            @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  author       User           @relation(fields: [authorUserId], references: [id])
+
+  @@map("job_notes")
+}
+
+// ----------------------------------------------------
+// 8. FINANCIAL, INVOICES & HISTORY
+// ----------------------------------------------------
+
+model Invoice {
+  id                   String           @id @default(uuid()) @db.Uuid
+  jobId                String           @unique @map("job_id") @db.Uuid
+  workshopId           String           @map("workshop_id") @db.Uuid
+  userId               String           @map("user_id") @db.Uuid
+  vehicleId            String           @map("vehicle_id") @db.Uuid
+  invoiceNumber        String           @unique @map("invoice_number")
+  status               InvoiceStatus    @default(DRAFT)
+  currency             String           @default("AED")
+  subtotal             Decimal          @db.Decimal(10, 2)
+  discount             Decimal          @default(0) @db.Decimal(10, 2)
+  tax                  Decimal          @db.Decimal(10, 2)
+  total                Decimal          @db.Decimal(10, 2)
+  issuedAt             DateTime?        @map("issued_at")
+  cancelledAt          DateTime?        @map("cancelled_at")
+  sourceQuoteRevisionId String?         @map("source_quote_revision_id") @db.Uuid
+  createdAt            DateTime         @default(now()) @map("created_at")
+
+  job                  Job              @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  workshop             Workshop         @relation(fields: [workshopId], references: [id])
+  user                 User             @relation(fields: [userId], references: [id])
+  vehicle              Vehicle          @relation(fields: [vehicleId], references: [id])
+  sourceQuoteRevision  QuoteRevision?   @relation("SourceQuoteRevision", fields: [sourceQuoteRevisionId], references: [id])
+  payment              Payment?
+  maintenanceRecords   MaintenanceRecord[]
+
+  @@index([workshopId, status])
+  @@map("invoices")
+}
+
+model Payment {
+  id               String           @id @default(uuid()) @db.Uuid
+  invoiceId        String           @unique @map("invoice_id") @db.Uuid
+  status           PaymentStatus    @default(UNPAID)
+  amountDue        Decimal          @map("amount_due") @db.Decimal(10, 2)
+  amountPaid       Decimal          @default(0) @map("amount_paid") @db.Decimal(10, 2)
+  settlementSource SettlementSource @default(OUTSIDE_MIFTAH) @map("settlement_source")
+  paidAt           DateTime?        @map("paid_at")
+  createdAt        DateTime         @default(now()) @map("created_at")
+
+  invoice          Invoice          @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model MaintenanceRecord {
+  id          String          @id @default(uuid()) @db.Uuid
+  vehicleId   String          @map("vehicle_id") @db.Uuid
+  userId      String          @map("user_id") @db.Uuid
+  workshopId  String?         @map("workshop_id") @db.Uuid
+  jobId       String?         @unique @map("job_id") @db.Uuid
+  invoiceId   String?         @map("invoice_id") @db.Uuid
+  provenance  ProvenanceType  @default(WORKSHOP_JOB)
+  serviceDate DateTime        @map("service_date")
+  mileage     Int
+  totalAmount Decimal?        @map("total_amount") @db.Decimal(10, 2)
+  summary     String
+  createdAt   DateTime        @default(now()) @map("created_at")
+
+  vehicle     Vehicle         @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  user        User            @relation(fields: [userId], references: [id])
+  workshop    Workshop?       @relation(fields: [workshopId], references: [id])
+  job         Job?            @relation(fields: [jobId], references: [id])
+  invoice     Invoice?        @relation(fields: [invoiceId], references: [id])
+  services    MaintenanceRecordService[]
+
+  @@index([vehicleId, serviceDate])
+  @@map("maintenance_records")
+}
+
+model MaintenanceRecordService {
+  id                  String            @id @default(uuid()) @db.Uuid
+  maintenanceRecordId String            @map("maintenance_record_id") @db.Uuid
+  serviceId           String            @map("service_id") @db.Uuid
+
+  maintenanceRecord   MaintenanceRecord @relation(fields: [maintenanceRecordId], references: [id], onDelete: Cascade)
+  service             Service           @relation(fields: [serviceId], references: [id])
+
+  @@unique([maintenanceRecordId, serviceId])
+  @@map("maintenance_record_services")
+}
+
+// ----------------------------------------------------
+// 9. REVIEWS, NOTIFICATIONS, AUDIT & FILES
+// ----------------------------------------------------
+
+model Review {
+  id         String       @id @default(uuid()) @db.Uuid
+  jobId      String       @unique @map("job_id") @db.Uuid
+  userId     String       @map("user_id") @db.Uuid
+  workshopId String       @map("workshop_id") @db.Uuid
+  rating     Int          // 1 to 5
+  comment    String?
+  status     ReviewStatus @default(PUBLISHED)
+  createdAt  DateTime     @default(now()) @map("created_at")
+
+  job        Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id])
+  workshop   Workshop     @relation(fields: [workshopId], references: [id])
+  reply      ReviewReply?
+
+  @@index([workshopId, status])
+  @@map("reviews")
+}
+
+model ReviewReply {
+  id           String   @id @default(uuid()) @db.Uuid
+  reviewId     String   @unique @map("review_id") @db.Uuid
+  workshopId   String   @map("workshop_id") @db.Uuid
+  authorUserId String   @map("author_user_id") @db.Uuid
+  body         String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  review       Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  workshop     Workshop @relation(fields: [workshopId], references: [id])
+  author       User     @relation(fields: [authorUserId], references: [id])
+
+  @@map("review_replies")
+}
+
+model Notification {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  type       String
+  title      String
+  body       String
+  entityType String?   @map("entity_type")
+  entityId   String?   @map("entity_id") @db.Uuid
+  readAt     DateTime? @map("read_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@map("notifications")
+}
+
+model DeviceToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  platform  String   // 'ios' | 'android' | 'web'
+  token     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("device_tokens")
+}
+
+model SupportTicket {
+  id                String   @id @default(uuid()) @db.Uuid
+  openedByUserId    String   @map("opened_by_user_id") @db.Uuid
+  workshopId        String?  @map("workshop_id") @db.Uuid
+  relatedEntityType String?  @map("related_entity_type")
+  relatedEntityId   String?  @map("related_entity_id") @db.Uuid
+  status            String   @default("OPEN")
+  category          String
+  subject           String
+  description       String
+  assignedAdminId   String?  @map("assigned_admin_user_id") @db.Uuid
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  openedByUser      User     @relation("TicketOpenedBy", fields: [openedByUserId], references: [id])
+  assignedAdmin     User?    @relation("TicketAssignedAdmin", fields: [assignedAdminId], references: [id])
+
+  @@map("support_tickets")
+}
+
+model AuditLog {
+  id            String   @id @default(uuid()) @db.Uuid
+  actorUserId   String?  @map("actor_user_id") @db.Uuid
+  actorRole     String?  @map("actor_role")
+  tenantId      String?  @map("tenant_id") @db.Uuid
+  entityType    String   @map("entity_type")
+  entityId      String?  @map("entity_id") @db.Uuid
+  action        String
+  fromState     String?  @map("from_state")
+  toState       String?  @map("to_state")
+  reasonCode    String?  @map("reason_code")
+  correlationId String   @map("correlation_id")
+  metadata      Json?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  actorUser     User?    @relation(fields: [actorUserId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([tenantId])
+  @@index([correlationId])
+  @@map("audit_logs")
+}
+
+model File {
+  id          String        @id @default(uuid()) @db.Uuid
+  ownerType   FileOwnerType @map("owner_type")
+  ownerId     String        @map("owner_id") @db.Uuid
+  storageKey  String        @map("storage_key")
+  mimeType    String        @map("mime_type")
+  sizeBytes   Int           @map("size_bytes")
+  isPrivate   Boolean       @default(true) @map("is_private")
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  @@index([ownerType, ownerId])
+  @@map("files")
+}
+
+// ----------------------------------------------------
+// INVENTORY & SPARE PARTS LIFECYCLE
+// ----------------------------------------------------
+
+model InventoryCategory {
+  id            String                  @id @default(uuid()) @db.Uuid
+  workshopId    String                  @map("workshop_id") @db.Uuid
+  nameAr        String                  @map("name_ar")
+  nameEn        String?                 @map("name_en")
+  code          String?                 @map("code")
+  icon          String?                 @map("icon")
+  isArchived    Boolean                 @default(false) @map("is_archived")
+  sortOrder     Int                     @default(0) @map("sort_order")
+  createdAt     DateTime                @default(now()) @map("created_at")
+  updatedAt     DateTime                @updatedAt @map("updated_at")
+
+  workshop      Workshop                @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  subcategories InventorySubcategory[]
+  items         InventoryItem[]
+
+  @@unique([workshopId, nameAr])
+  @@index([workshopId, isArchived])
+  @@map("inventory_categories")
+}
+
+model InventorySubcategory {
+  id            String            @id @default(uuid()) @db.Uuid
+  workshopId    String            @map("workshop_id") @db.Uuid
+  categoryId    String            @map("category_id") @db.Uuid
+  nameAr        String            @map("name_ar")
+  nameEn        String?           @map("name_en")
+  code          String?           @map("code")
+  isArchived    Boolean           @default(false) @map("is_archived")
+  sortOrder     Int               @default(0) @map("sort_order")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+
+  workshop      Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  category      InventoryCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  items         InventoryItem[]
+
+  @@unique([workshopId, categoryId, nameAr])
+  @@index([workshopId, categoryId, isArchived])
+  @@map("inventory_subcategories")
+}
+
+model InventoryItem {
+  id                 String               @id @default(uuid()) @db.Uuid
+  workshopId         String               @map("workshop_id") @db.Uuid
+  categoryId         String               @map("category_id") @db.Uuid
+  subcategoryId      String               @map("sub_category_id") @db.Uuid
+  sku                String               @map("sku")
+  oemPartNumber      String?              @map("oem_part_number")
+  nameAr             String               @map("name_ar")
+  nameEn             String?              @map("name_en")
+  brand              String?              @map("brand")
+  qualityTier        QualityTier          @default(OEM) @map("quality_tier")
+  unit               String               @default("قطعة") @map("unit")
+  onHandQty          Decimal              @default(0) @map("on_hand_qty") @db.Decimal(10, 2)
+  reservedQty        Decimal              @default(0) @map("reserved_qty") @db.Decimal(10, 2)
+  reorderLevel       Decimal              @default(5) @map("reorder_level") @db.Decimal(10, 2)
+  costPrice          Decimal              @default(0) @map("cost_price") @db.Decimal(10, 2)
+  sellingPrice       Decimal              @default(0) @map("selling_price") @db.Decimal(10, 2)
+  location           String?              @map("location")
+  compatibleVehicles Json?                @map("compatible_vehicles")
+  descriptionAr      String?              @map("description_ar")
+  descriptionEn      String?              @map("description_en")
+  imageUrl           String?              @map("image_url")
+  supplierName       String?              @map("supplier_name")
+  warrantyMonths     Int?                 @map("warranty_months")
+  status             InventoryItemStatus  @default(ACTIVE) @map("status")
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+
+  workshop           Workshop             @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  category           InventoryCategory    @relation(fields: [categoryId], references: [id])
+  subcategory        InventorySubcategory @relation(fields: [subcategoryId], references: [id])
+  movements          InventoryMovement[]
+  reservations       JobPartReservation[]
+  auditLines         InventoryAuditLine[]
+
+  @@unique([workshopId, sku])
+  @@index([workshopId, status])
+  @@index([workshopId, categoryId, subcategoryId])
+  @@index([workshopId, oemPartNumber])
+  @@map("inventory_items")
+}
+
+model InventoryMovement {
+  id               String            @id @default(uuid()) @db.Uuid
+  workshopId       String            @map("workshop_id") @db.Uuid
+  itemId           String            @map("item_id") @db.Uuid
+  movementType     StockMovementType @map("movement_type")
+  quantity         Decimal           @map("quantity") @db.Decimal(10, 2)
+  previousOnHand   Decimal           @map("previous_on_hand") @db.Decimal(10, 2)
+  newOnHand        Decimal           @map("new_on_hand") @db.Decimal(10, 2)
+  previousReserved Decimal           @map("previous_reserved") @db.Decimal(10, 2)
+  newReserved      Decimal           @map("new_reserved") @db.Decimal(10, 2)
+  unitCost         Decimal?          @map("unit_cost") @db.Decimal(10, 2)
+  unitPrice        Decimal?          @map("unit_price") @db.Decimal(10, 2)
+  referenceType    String?           @map("reference_type")
+  referenceId      String?           @map("reference_id")
+  actorUserId      String?           @map("actor_user_id") @db.Uuid
+  notes            String?           @map("notes")
+  linkedMovementId String?           @map("linked_movement_id") @db.Uuid
+  createdAt        DateTime          @default(now()) @map("created_at")
+
+  workshop         Workshop          @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  item             InventoryItem     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  actorUser        User?             @relation(fields: [actorUserId], references: [id])
+  linkedMovement   InventoryMovement? @relation("MovementReversal", fields: [linkedMovementId], references: [id])
+  reversedBy       InventoryMovement[] @relation("MovementReversal")
+
+  @@index([workshopId, itemId, createdAt])
+  @@index([referenceType, referenceId])
+  @@map("inventory_movements")
+}
+
+model JobPartReservation {
+  id             String               @id @default(uuid()) @db.Uuid
+  workshopId     String               @map("workshop_id") @db.Uuid
+  jobId          String               @map("job_id") @db.Uuid
+  itemId         String               @map("item_id") @db.Uuid
+  requestedQty   Decimal              @map("requested_qty") @db.Decimal(10, 2)
+  reservedQty    Decimal              @default(0) @map("reserved_qty") @db.Decimal(10, 2)
+  dispensedQty   Decimal              @default(0) @map("dispensed_qty") @db.Decimal(10, 2)
+  returnedQty    Decimal              @default(0) @map("returned_qty") @db.Decimal(10, 2)
+  shortageQty    Decimal              @default(0) @map("shortage_qty") @db.Decimal(10, 2)
+  unitPrice      Decimal              @map("unit_price") @db.Decimal(10, 2)
+  status         JobReservationStatus @default(RESERVED) @map("status")
+  createdById    String?              @map("created_by_id") @db.Uuid
+  notes          String?              @map("notes")
+  createdAt      DateTime             @default(now()) @map("created_at")
+  updatedAt      DateTime             @updatedAt @map("updated_at")
+
+  workshop       Workshop             @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  job            Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  item           InventoryItem        @relation(fields: [itemId], references: [id])
+  createdBy      User?                @relation(fields: [createdById], references: [id])
+
+  @@index([workshopId, jobId])
+  @@index([workshopId, itemId])
+  @@map("job_part_reservations")
+}
+
+model InventoryAuditSession {
+  id             String              @id @default(uuid()) @db.Uuid
+  workshopId     String              @map("workshop_id") @db.Uuid
+  title          String              @map("title")
+  status         AuditCountStatus    @default(DRAFT) @map("status")
+  notes          String?             @map("notes")
+  approvedById   String?             @map("approved_by_id") @db.Uuid
+  approvedAt     DateTime?           @map("approved_at")
+  createdAt      DateTime            @default(now()) @map("created_at")
+  updatedAt      DateTime            @updatedAt @map("updated_at")
+
+  workshop       Workshop            @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  approvedBy     User?               @relation(fields: [approvedById], references: [id])
+  lines          InventoryAuditLine[]
+
+  @@index([workshopId, status])
+  @@map("inventory_audit_sessions")
+}
+
+model InventoryAuditLine {
+  id             String                @id @default(uuid()) @db.Uuid
+  sessionId      String                @map("session_id") @db.Uuid
+  itemId         String                @map("item_id") @db.Uuid
+  expectedQty    Decimal               @map("expected_qty") @db.Decimal(10, 2)
+  countedQty     Decimal               @map("counted_qty") @db.Decimal(10, 2)
+  differenceQty  Decimal               @map("difference_qty") @db.Decimal(10, 2)
+  reason         String?               @map("reason")
+  createdAt      DateTime              @default(now()) @map("created_at")
+
+  session        InventoryAuditSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  item           InventoryItem         @relation(fields: [itemId], references: [id])
+
+  @@unique([sessionId, itemId])
+  @@map("inventory_audit_lines")
+}
+
