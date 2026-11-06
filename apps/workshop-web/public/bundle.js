@@ -25371,6 +25371,13 @@
           if (parsed.workshopId) {
             setUser(parsed);
             workshopApi.setToken(token);
+            workshopApi.getMyWorkshop().catch((err) => {
+              console.warn("Stale workshop session detected, clearing:", err?.message);
+              setUser(null);
+              workshopApi.setToken(null);
+              sessionStorage.removeItem("miftah_workshop_user");
+              sessionStorage.removeItem("miftah_workshop_token");
+            });
           } else {
             sessionStorage.removeItem("miftah_workshop_user");
             sessionStorage.removeItem("miftah_workshop_token");
@@ -27829,8 +27836,10 @@
         await fetchData();
       } catch (err) {
         const msg = err?.message || "";
-        if (msg.includes("tenant") || msg.includes("assigned workshop") || msg.includes("TENANT_MISMATCH")) {
-          alert('\u26A0\uFE0F \u062A\u0646\u0628\u064A\u0647 \u0635\u0644\u0627\u062D\u064A\u0629 \u0627\u0644\u0648\u0631\u0634\u0629: \u0627\u0644\u062C\u0644\u0633\u0629 \u0627\u0644\u062D\u0627\u0644\u064A\u0629 \u0644\u0627 \u062A\u0645\u0644\u0643 \u0635\u0644\u0627\u062D\u064A\u0629 \u0639\u0644\u0649 \u0628\u064A\u0627\u0646\u0627\u062A \u0647\u0630\u0647 \u0627\u0644\u0648\u0631\u0634\u0629 (\u0642\u062F \u062A\u0643\u0648\u0646 \u0627\u0644\u062C\u0644\u0633\u0629 \u0642\u062F\u064A\u0645\u0629 \u0623\u0648 \u062A\u0627\u0628\u0639\u0629 \u0644\u062D\u0633\u0627\u0628 \u0648\u0631\u0634\u0629 \u0622\u062E\u0631). \u064A\u0631\u062C\u0649 \u0627\u0644\u0636\u063A\u0637 \u0639\u0644\u0649 \u0632\u0631 "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C" \u0641\u064A \u0627\u0644\u0623\u0639\u0644\u0649 \u0648\u0625\u0639\u0627\u062F\u0629 \u0627\u0644\u062F\u062E\u0648\u0644 \u0628\u062D\u0633\u0627\u0628 \u0627\u0644\u0648\u0631\u0634\u0629: owner@workshop.local');
+        if (msg.includes("tenant") || msg.includes("assigned workshop") || msg.includes("TENANT_MISMATCH") || err?.status === 403) {
+          alert("\u26A0\uFE0F \u062A\u0646\u0628\u064A\u0647 \u0627\u0644\u062C\u0644\u0633\u0629: \u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0635\u0644\u0627\u062D\u064A\u0627\u062A \u0627\u0644\u0648\u0631\u0634\u0629 \u0641\u064A \u0627\u0644\u0646\u0638\u0627\u0645. \u064A\u0631\u062C\u0649 \u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 \u0645\u062C\u062F\u062F\u0627\u064B \u0628\u062D\u0633\u0627\u0628 \u0627\u0644\u0648\u0631\u0634\u0629 (owner@workshop.local).");
+          sessionStorage.clear();
+          window.location.reload();
         } else {
           alert(`\u062E\u0637\u0623 \u0641\u064A \u0627\u0644\u062D\u062C\u0632: ${err.message}`);
         }

@@ -396,8 +396,10 @@ export const InventoryManager: React.FC = () => {
       await fetchData();
     } catch (err: any) {
       const msg = err?.message || '';
-      if (msg.includes('tenant') || msg.includes('assigned workshop') || msg.includes('TENANT_MISMATCH')) {
-        alert('⚠️ تنبيه صلاحية الورشة: الجلسة الحالية لا تملك صلاحية على بيانات هذه الورشة (قد تكون الجلسة قديمة أو تابعة لحساب ورشة آخر). يرجى الضغط على زر "تسجيل الخروج" في الأعلى وإعادة الدخول بحساب الورشة: owner@workshop.local');
+      if (msg.includes('tenant') || msg.includes('assigned workshop') || msg.includes('TENANT_MISMATCH') || err?.status === 403) {
+        alert('⚠️ تنبيه الجلسة: تم تحديث صلاحيات الورشة في النظام. يرجى تسجيل الدخول مجدداً بحساب الورشة (owner@workshop.local).');
+        sessionStorage.clear();
+        window.location.reload();
       } else {
         alert(`خطأ في الحجز: ${err.message}`);
       }

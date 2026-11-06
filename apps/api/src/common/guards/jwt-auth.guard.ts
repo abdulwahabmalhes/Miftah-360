@@ -55,7 +55,7 @@ export class JwtAuthGuard implements CanActivate {
       }
     }
 
-    // If workshop staff, verify staff member is not disabled
+    // If workshop staff/owner, verify affiliation is still active
     if (payload.workshop_id && payload.sub) {
       const staff = await this.prisma.workshopStaff.findUnique({
         where: {
@@ -66,11 +66,25 @@ export class JwtAuthGuard implements CanActivate {
         },
       });
 
-      if (staff && staff.status === StaffStatus.DISABLED) {
-        throw new UnauthorizedException({
-          code: StandardErrorCode.TOKEN_REVOKED,
-          message: 'Staff account has been disabled by the workshop owner',
+      if (staff) {
+        if (staff.status === StaffStatus.DISABLED) {
+          throw new UnauthorizedException({
+            code: StandardErrorCode.TOKEN_REVOKED,
+            message: 'Staff account has been disabled by the workshop owner',
+          });
+        }
+      } else {
+        const workshop = await this.prisma.workshop.findUnique({
+          where: { id: payload.workshop_id },
+          select: { ownerUserId: true },
         });
+
+        if (!workshop || workshop.ownerUserId !== payload.sub) {
+          throw new UnauthorizedException({
+            code: StandardErrorCode.TOKEN_REVOKED,
+            message: 'User is no longer affiliated with this workshop tenant',
+          });
+        }
       }
     }
 

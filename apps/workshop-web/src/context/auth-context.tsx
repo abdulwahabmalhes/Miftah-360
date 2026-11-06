@@ -54,6 +54,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (parsed.workshopId) {
           setUser(parsed);
           workshopApi.setToken(token);
+          // Verify session validity with backend
+          workshopApi.getMyWorkshop().catch((err: any) => {
+            console.warn('Stale workshop session detected, clearing:', err?.message);
+            setUser(null);
+            workshopApi.setToken(null);
+            sessionStorage.removeItem('miftah_workshop_user');
+            sessionStorage.removeItem('miftah_workshop_token');
+          });
         } else {
           sessionStorage.removeItem('miftah_workshop_user');
           sessionStorage.removeItem('miftah_workshop_token');
