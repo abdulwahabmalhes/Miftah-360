@@ -2441,7 +2441,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment3 = 7;
+          var Fragment4 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3598,7 +3598,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment3:
+              case Fragment4:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -12027,7 +12027,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment3) {
+              if (current2 === null || current2.tag !== Fragment4) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -12430,7 +12430,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment3) {
+                    if (child.tag === Fragment4) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17906,7 +17906,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment3:
+              case Fragment4:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18178,7 +18178,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment3:
+              case Fragment4:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22439,7 +22439,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment3, elements, key, mode);
+            var fiber = createFiber(Fragment4, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -33309,8 +33309,8 @@ ${c.name} (${c.phone})
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full" }) });
     }
-    if (showIntro) {
-      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(import_jsx_runtime24.Fragment, { children: [
+      showIntro && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         BrandIntro,
         {
           onFinish: () => {
@@ -33322,44 +33322,41 @@ ${c.name} (${c.phone})
             setShowIntro(false);
           }
         }
-      );
-    }
-    if (!isAuthenticated) {
-      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(LoginView, {});
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
-      WorkshopLayout,
-      {
-        currentView,
-        onViewChange: setCurrentView,
-        onReplayIntro: () => setShowIntro(true),
-        children: [
-          currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WorkshopHomeDashboard, { onNavigate: setCurrentView }),
-          currentView === "requests" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-            ServiceRequestsManager,
-            {
-              onNavigateToBooking: () => setCurrentView("bookings")
-            }
-          ),
-          currentView === "bookings" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(BookingsManager, {}),
-          currentView === "profile" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "info" }),
-          currentView === "hours" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "hours" }),
-          currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "brands" }),
-          currentView === "services" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "services" }),
-          currentView === "staff" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(StaffManager, {}),
-          currentView === "customers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CustomersList, {}),
-          currentView === "inventory" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(InventoryManager, {}),
-          currentView === "warranty" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WarrantyManager, {}),
-          currentView === "suppliers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SuppliersManager, {}),
-          currentView === "pos" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PosCheckout, {}),
-          currentView === "crm" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CrmManager, {}),
-          currentView === "tasks" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TasksManager, {}),
-          currentView === "contracts" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ContractsManager, {}),
-          currentView === "hr" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(HrManager, {}),
-          currentView === "reports" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ReportsManager, {})
-        ]
-      }
-    );
+      ),
+      !isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(LoginView, {}) : /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+        WorkshopLayout,
+        {
+          currentView,
+          onViewChange: setCurrentView,
+          onReplayIntro: () => setShowIntro(true),
+          children: [
+            currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WorkshopHomeDashboard, { onNavigate: setCurrentView }),
+            currentView === "requests" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              ServiceRequestsManager,
+              {
+                onNavigateToBooking: () => setCurrentView("bookings")
+              }
+            ),
+            currentView === "bookings" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(BookingsManager, {}),
+            currentView === "profile" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "info" }),
+            currentView === "hours" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "hours" }),
+            currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "brands" }),
+            currentView === "services" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "services" }),
+            currentView === "staff" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(StaffManager, {}),
+            currentView === "customers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CustomersList, {}),
+            currentView === "inventory" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(InventoryManager, {}),
+            currentView === "warranty" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WarrantyManager, {}),
+            currentView === "suppliers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SuppliersManager, {}),
+            currentView === "pos" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PosCheckout, {}),
+            currentView === "crm" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CrmManager, {}),
+            currentView === "tasks" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TasksManager, {}),
+            currentView === "contracts" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ContractsManager, {}),
+            currentView === "hr" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(HrManager, {}),
+            currentView === "reports" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ReportsManager, {})
+          ]
+        }
+      )
+    ] });
   };
   var App = () => {
     return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0646\u0638\u0627\u0645 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DashboardContent, {}) }) }) });

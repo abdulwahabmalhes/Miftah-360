@@ -274,54 +274,53 @@ const DashboardContent: React.FC = () => {
     );
   }
 
-  if (showIntro) {
-    return (
-      <BrandIntro
-        onFinish={() => {
-          sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
-          setShowIntro(false);
-        }}
-        onComplete={() => {
-          sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
-          setShowIntro(false);
-        }}
-      />
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <LoginView />;
-  }
-
   return (
-    <WorkshopLayout
-      currentView={currentView}
-      onViewChange={setCurrentView}
-      onReplayIntro={() => setShowIntro(true)}
-    >
-      {currentView === 'dashboard' && <WorkshopHomeDashboard onNavigate={setCurrentView} />}
-      {currentView === 'requests' && (
-        <ServiceRequestsManager
-          onNavigateToBooking={() => setCurrentView('bookings')}
+    <>
+      {showIntro && (
+        <BrandIntro
+          onFinish={() => {
+            sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
+            setShowIntro(false);
+          }}
+          onComplete={() => {
+            sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
+            setShowIntro(false);
+          }}
         />
       )}
-      {currentView === 'bookings' && <BookingsManager />}
-      {currentView === 'profile' && <ProfileEditor initialTab="info" />}
-      {currentView === 'hours' && <ProfileEditor initialTab="hours" />}
-      {currentView === 'brands' && <ProfileEditor initialTab="brands" />}
-      {currentView === 'services' && <ProfileEditor initialTab="services" />}
-      {currentView === 'staff' && <StaffManager />}
-      {currentView === 'customers' && <CustomersList />}
-      {currentView === 'inventory' && <InventoryManager />}
-      {currentView === 'warranty' && <WarrantyManager />}
-      {currentView === 'suppliers' && <SuppliersManager />}
-      {currentView === 'pos' && <PosCheckout />}
-      {currentView === 'crm' && <CrmManager />}
-      {currentView === 'tasks' && <TasksManager />}
-      {currentView === 'contracts' && <ContractsManager />}
-      {currentView === 'hr' && <HrManager />}
-      {currentView === 'reports' && <ReportsManager />}
-    </WorkshopLayout>
+      {!isAuthenticated ? (
+        <LoginView />
+      ) : (
+        <WorkshopLayout
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          onReplayIntro={() => setShowIntro(true)}
+        >
+          {currentView === 'dashboard' && <WorkshopHomeDashboard onNavigate={setCurrentView} />}
+          {currentView === 'requests' && (
+            <ServiceRequestsManager
+              onNavigateToBooking={() => setCurrentView('bookings')}
+            />
+          )}
+          {currentView === 'bookings' && <BookingsManager />}
+          {currentView === 'profile' && <ProfileEditor initialTab="info" />}
+          {currentView === 'hours' && <ProfileEditor initialTab="hours" />}
+          {currentView === 'brands' && <ProfileEditor initialTab="brands" />}
+          {currentView === 'services' && <ProfileEditor initialTab="services" />}
+          {currentView === 'staff' && <StaffManager />}
+          {currentView === 'customers' && <CustomersList />}
+          {currentView === 'inventory' && <InventoryManager />}
+          {currentView === 'warranty' && <WarrantyManager />}
+          {currentView === 'suppliers' && <SuppliersManager />}
+          {currentView === 'pos' && <PosCheckout />}
+          {currentView === 'crm' && <CrmManager />}
+          {currentView === 'tasks' && <TasksManager />}
+          {currentView === 'contracts' && <ContractsManager />}
+          {currentView === 'hr' && <HrManager />}
+          {currentView === 'reports' && <ReportsManager />}
+        </WorkshopLayout>
+      )}
+    </>
   );
 };
 

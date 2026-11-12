@@ -34,16 +34,6 @@ const MainContent: React.FC = () => {
     setShowIntro(false);
   };
 
-  if (showIntro) {
-    return (
-      <BrandIntro
-        onFinish={handleFinishIntro}
-        systemNameAr="تطبيق ملاك السيارات الذكي"
-        systemNameEn="Smart Automotive Platform"
-      />
-    );
-  }
-
   if (isLoading) {
     return (
       <MobileContainer>
@@ -56,9 +46,19 @@ const MainContent: React.FC = () => {
 
   if (!isAuthenticated) {
     return (
-      <MobileContainer onReplayIntro={() => setShowIntro(true)}>
-        <LoginScreen onReplayIntro={() => setShowIntro(true)} />
-      </MobileContainer>
+      <>
+        {showIntro && (
+          <BrandIntro
+            onFinish={handleFinishIntro}
+            onComplete={handleFinishIntro}
+            systemNameAr="تطبيق ملاك السيارات الذكي"
+            systemNameEn="Smart Automotive Platform"
+          />
+        )}
+        <MobileContainer onReplayIntro={() => setShowIntro(true)}>
+          <LoginScreen onReplayIntro={() => setShowIntro(true)} />
+        </MobileContainer>
+      </>
     );
   }
 
@@ -98,12 +98,21 @@ const MainContent: React.FC = () => {
   };
 
   return (
-    <MobileContainer
-      headerTitle={getHeaderTitle()}
-      onBack={getBackButtonAction()}
-      showLanguageToggle={screen.name === 'garage'}
-      onReplayIntro={() => setShowIntro(true)}
-    >
+    <>
+      {showIntro && (
+        <BrandIntro
+          onFinish={handleFinishIntro}
+          onComplete={handleFinishIntro}
+          systemNameAr="تطبيق ملاك السيارات الذكي"
+          systemNameEn="Smart Automotive Platform"
+        />
+      )}
+      <MobileContainer
+        headerTitle={getHeaderTitle()}
+        onBack={getBackButtonAction()}
+        showLanguageToggle={screen.name === 'garage'}
+        onReplayIntro={() => setShowIntro(true)}
+      >
       <div className="flex-1 flex flex-col overflow-y-auto">
         {screen.name === 'garage' && (
           <GarageScreen
@@ -158,6 +167,7 @@ const MainContent: React.FC = () => {
 
       <BottomNavigation currentTab={currentTab} onTabChange={handleTabChange} />
     </MobileContainer>
+  </>
   );
 };
 

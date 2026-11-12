@@ -2441,7 +2441,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment = 7;
+          var Fragment2 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3598,7 +3598,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment:
+              case Fragment2:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -12027,7 +12027,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment) {
+              if (current2 === null || current2.tag !== Fragment2) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -12430,7 +12430,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment) {
+                    if (child.tag === Fragment2) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17906,7 +17906,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment:
+              case Fragment2:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18178,7 +18178,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment:
+              case Fragment2:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22439,7 +22439,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment, elements, key, mode);
+            var fiber = createFiber(Fragment2, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -27447,8 +27447,8 @@
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full" }) });
     }
-    if (showIntro) {
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+      showIntro && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
         BrandIntro,
         {
           onFinish: () => {
@@ -27460,27 +27460,24 @@
             setShowIntro(false);
           }
         }
-      );
-    }
-    if (!isAuthenticated) {
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoginView, {});
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
-      AdminLayout,
-      {
-        currentView,
-        onViewChange: setCurrentView,
-        onReplayIntro: () => setShowIntro(true),
-        children: [
-          currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(OverviewDashboard, { onNavigate: setCurrentView }),
-          currentView === "queue" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, {}),
-          currentView === "workshops" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, { initialFilter: "ALL" }),
-          currentView === "modules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModuleEntitlementsView, {}),
-          currentView === "taxonomy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TaxonomyManager, {}),
-          currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BrandsManager, {})
-        ]
-      }
-    );
+      ),
+      !isAuthenticated ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoginView, {}) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+        AdminLayout,
+        {
+          currentView,
+          onViewChange: setCurrentView,
+          onReplayIntro: () => setShowIntro(true),
+          children: [
+            currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(OverviewDashboard, { onNavigate: setCurrentView }),
+            currentView === "queue" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, {}),
+            currentView === "workshops" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, { initialFilter: "ALL" }),
+            currentView === "modules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModuleEntitlementsView, {}),
+            currentView === "taxonomy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TaxonomyManager, {}),
+            currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BrandsManager, {})
+          ]
+        }
+      )
+    ] });
   };
   var App = () => {
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0644\u0648\u062D\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DashboardContent, {}) }) }) });

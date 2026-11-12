@@ -190,38 +190,37 @@ const DashboardContent: React.FC = () => {
     );
   }
 
-  if (showIntro) {
-    return (
-      <BrandIntro
-        onFinish={() => {
-          sessionStorage.setItem('miftah_admin_intro_seen', 'true');
-          setShowIntro(false);
-        }}
-        onComplete={() => {
-          sessionStorage.setItem('miftah_admin_intro_seen', 'true');
-          setShowIntro(false);
-        }}
-      />
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <LoginView />;
-  }
-
   return (
-    <AdminLayout
-      currentView={currentView}
-      onViewChange={setCurrentView}
-      onReplayIntro={() => setShowIntro(true)}
-    >
-      {currentView === 'dashboard' && <OverviewDashboard onNavigate={setCurrentView} />}
-      {currentView === 'queue' && <WorkshopQueue />}
-      {currentView === 'workshops' && <WorkshopQueue initialFilter="ALL" />}
-      {currentView === 'modules' && <ModuleEntitlementsView />}
-      {currentView === 'taxonomy' && <TaxonomyManager />}
-      {currentView === 'brands' && <BrandsManager />}
-    </AdminLayout>
+    <>
+      {showIntro && (
+        <BrandIntro
+          onFinish={() => {
+            sessionStorage.setItem('miftah_admin_intro_seen', 'true');
+            setShowIntro(false);
+          }}
+          onComplete={() => {
+            sessionStorage.setItem('miftah_admin_intro_seen', 'true');
+            setShowIntro(false);
+          }}
+        />
+      )}
+      {!isAuthenticated ? (
+        <LoginView />
+      ) : (
+        <AdminLayout
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          onReplayIntro={() => setShowIntro(true)}
+        >
+          {currentView === 'dashboard' && <OverviewDashboard onNavigate={setCurrentView} />}
+          {currentView === 'queue' && <WorkshopQueue />}
+          {currentView === 'workshops' && <WorkshopQueue initialFilter="ALL" />}
+          {currentView === 'modules' && <ModuleEntitlementsView />}
+          {currentView === 'taxonomy' && <TaxonomyManager />}
+          {currentView === 'brands' && <BrandsManager />}
+        </AdminLayout>
+      )}
+    </>
   );
 };
 

@@ -2441,7 +2441,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment = 7;
+          var Fragment2 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3598,7 +3598,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment:
+              case Fragment2:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -12027,7 +12027,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment) {
+              if (current2 === null || current2.tag !== Fragment2) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -12430,7 +12430,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment) {
+                    if (child.tag === Fragment2) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17906,7 +17906,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment:
+              case Fragment2:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18178,7 +18178,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment:
+              case Fragment2:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22439,7 +22439,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment, elements, key, mode);
+            var fiber = createFiber(Fragment2, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -26773,21 +26773,22 @@
       sessionStorage.setItem("miftah_mobile_intro_seen", "true");
       setShowIntro(false);
     };
-    if (showIntro) {
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-        BrandIntro,
-        {
-          onFinish: handleFinishIntro,
-          systemNameAr: "\u062A\u0637\u0628\u064A\u0642 \u0645\u0644\u0627\u0643 \u0627\u0644\u0633\u064A\u0627\u0631\u0627\u062A \u0627\u0644\u0630\u0643\u064A",
-          systemNameEn: "Smart Automotive Platform"
-        }
-      );
-    }
     if (isLoading) {
       return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(MobileContainer, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "flex-1 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "animate-spin inline-block w-8 h-8 border-4 border-[#0E7C86] border-t-transparent rounded-full" }) }) });
     }
     if (!isAuthenticated) {
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(MobileContainer, { onReplayIntro: () => setShowIntro(true), children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoginScreen, { onReplayIntro: () => setShowIntro(true) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+        showIntro && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          BrandIntro,
+          {
+            onFinish: handleFinishIntro,
+            onComplete: handleFinishIntro,
+            systemNameAr: "\u062A\u0637\u0628\u064A\u0642 \u0645\u0644\u0627\u0643 \u0627\u0644\u0633\u064A\u0627\u0631\u0627\u062A \u0627\u0644\u0630\u0643\u064A",
+            systemNameEn: "Smart Automotive Platform"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(MobileContainer, { onReplayIntro: () => setShowIntro(true), children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoginScreen, { onReplayIntro: () => setShowIntro(true) }) })
+      ] });
     }
     const currentTab = screen.name === "requests" ? "requests" : screen.name === "profile" ? "profile" : "garage";
     const handleTabChange = (tab) => {
@@ -26815,60 +26816,71 @@
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
-      MobileContainer,
-      {
-        headerTitle: getHeaderTitle(),
-        onBack: getBackButtonAction(),
-        showLanguageToggle: screen.name === "garage",
-        onReplayIntro: () => setShowIntro(true),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex-1 flex flex-col overflow-y-auto", children: [
-            screen.name === "garage" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              GarageScreen,
-              {
-                onAddVehicle: () => setScreen({ name: "add-vehicle" }),
-                onSelectVehicle: (vehicle) => setScreen({ name: "vehicle-profile", vehicle })
-              },
-              refreshKey
-            ),
-            screen.name === "add-vehicle" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              AddVehicleScreen,
-              {
-                onSuccess: () => {
-                  setRefreshKey((k) => k + 1);
-                  setScreen({ name: "garage" });
-                },
-                onCancel: () => setScreen({ name: "garage" })
-              }
-            ),
-            screen.name === "vehicle-profile" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              VehicleProfileScreen,
-              {
-                vehicle: screen.vehicle,
-                onBack: () => setScreen({ name: "garage" }),
-                onRefresh: () => setRefreshKey((k) => k + 1)
-              }
-            ),
-            screen.name === "requests" && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex-1 flex flex-col items-center justify-center p-6 text-center space-y-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "w-16 h-16 rounded-3xl bg-[#0E7C86]/10 flex items-center justify-center text-3xl border border-[#0E7C86]/20", children: "\u{1F697}" }),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "text-base font-black text-[#2B2E34]", children: language === "ar" ? "\u0633\u0648\u0642 \u062E\u062F\u0645\u0627\u062A \u0645\u0641\u062A\u0627\u062D 360 \u0627\u0644\u0630\u0643\u064A" : "Miftah 360 Smart Marketplace" }),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-xs text-slate-500 max-w-[280px] leading-relaxed", children: language === "ar" ? "\u0627\u0633\u062A\u0643\u0634\u0641 \u0627\u0644\u0648\u0631\u0634 \u0627\u0644\u0645\u0639\u062A\u0645\u062F\u0629\u060C \u0637\u0644\u0628 \u0639\u0631\u0648\u0636 \u0627\u0644\u0623\u0633\u0639\u0627\u0631 \u0627\u0644\u0630\u0631\u064A\u0629\u060C \u0648\u062D\u062C\u0632 \u0645\u0648\u0627\u0639\u064A\u062F \u0627\u0644\u0635\u064A\u0627\u0646\u0629 \u0628\u0646\u0642\u0631\u0629 \u0648\u0627\u062D\u062F\u0629." : "Browse certified workshops, request atomic quotes, and book service appointments instantly." }),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-                "button",
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+      showIntro && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        BrandIntro,
+        {
+          onFinish: handleFinishIntro,
+          onComplete: handleFinishIntro,
+          systemNameAr: "\u062A\u0637\u0628\u064A\u0642 \u0645\u0644\u0627\u0643 \u0627\u0644\u0633\u064A\u0627\u0631\u0627\u062A \u0627\u0644\u0630\u0643\u064A",
+          systemNameEn: "Smart Automotive Platform"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+        MobileContainer,
+        {
+          headerTitle: getHeaderTitle(),
+          onBack: getBackButtonAction(),
+          showLanguageToggle: screen.name === "garage",
+          onReplayIntro: () => setShowIntro(true),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex-1 flex flex-col overflow-y-auto", children: [
+              screen.name === "garage" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                GarageScreen,
                 {
-                  onClick: () => setShowIntro(true),
-                  className: "px-4 py-2 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] text-white text-xs font-bold rounded-xl shadow-md",
-                  children: "\u2728 \u0645\u0634\u0627\u0647\u062F\u0629 \u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0631\u0627\u0646\u062F \u0648\u0645\u0642\u062F\u0645\u0629 \u0627\u0644\u062A\u0637\u0628\u064A\u0642"
+                  onAddVehicle: () => setScreen({ name: "add-vehicle" }),
+                  onSelectVehicle: (vehicle) => setScreen({ name: "vehicle-profile", vehicle })
+                },
+                refreshKey
+              ),
+              screen.name === "add-vehicle" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                AddVehicleScreen,
+                {
+                  onSuccess: () => {
+                    setRefreshKey((k) => k + 1);
+                    setScreen({ name: "garage" });
+                  },
+                  onCancel: () => setScreen({ name: "garage" })
                 }
-              )
+              ),
+              screen.name === "vehicle-profile" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                VehicleProfileScreen,
+                {
+                  vehicle: screen.vehicle,
+                  onBack: () => setScreen({ name: "garage" }),
+                  onRefresh: () => setRefreshKey((k) => k + 1)
+                }
+              ),
+              screen.name === "requests" && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex-1 flex flex-col items-center justify-center p-6 text-center space-y-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "w-16 h-16 rounded-3xl bg-[#0E7C86]/10 flex items-center justify-center text-3xl border border-[#0E7C86]/20", children: "\u{1F697}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "text-base font-black text-[#2B2E34]", children: language === "ar" ? "\u0633\u0648\u0642 \u062E\u062F\u0645\u0627\u062A \u0645\u0641\u062A\u0627\u062D 360 \u0627\u0644\u0630\u0643\u064A" : "Miftah 360 Smart Marketplace" }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-xs text-slate-500 max-w-[280px] leading-relaxed", children: language === "ar" ? "\u0627\u0633\u062A\u0643\u0634\u0641 \u0627\u0644\u0648\u0631\u0634 \u0627\u0644\u0645\u0639\u062A\u0645\u062F\u0629\u060C \u0637\u0644\u0628 \u0639\u0631\u0648\u0636 \u0627\u0644\u0623\u0633\u0639\u0627\u0631 \u0627\u0644\u0630\u0631\u064A\u0629\u060C \u0648\u062D\u062C\u0632 \u0645\u0648\u0627\u0639\u064A\u062F \u0627\u0644\u0635\u064A\u0627\u0646\u0629 \u0628\u0646\u0642\u0631\u0629 \u0648\u0627\u062D\u062F\u0629." : "Browse certified workshops, request atomic quotes, and book service appointments instantly." }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                  "button",
+                  {
+                    onClick: () => setShowIntro(true),
+                    className: "px-4 py-2 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] text-white text-xs font-bold rounded-xl shadow-md",
+                    children: "\u2728 \u0645\u0634\u0627\u0647\u062F\u0629 \u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0631\u0627\u0646\u062F \u0648\u0645\u0642\u062F\u0645\u0629 \u0627\u0644\u062A\u0637\u0628\u064A\u0642"
+                  }
+                )
+              ] }),
+              screen.name === "profile" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ProfileScreen, { onReplayIntro: () => setShowIntro(true) })
             ] }),
-            screen.name === "profile" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ProfileScreen, { onReplayIntro: () => setShowIntro(true) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BottomNavigation, { currentTab, onTabChange: handleTabChange })
-        ]
-      }
-    );
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BottomNavigation, { currentTab, onTabChange: handleTabChange })
+          ]
+        }
+      )
+    ] });
   };
   var App = () => {
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(MainContent, {}) }) });
