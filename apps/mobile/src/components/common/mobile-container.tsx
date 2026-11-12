@@ -6,6 +6,7 @@ interface MobileContainerProps {
   headerTitle?: string;
   onBack?: () => void;
   showLanguageToggle?: boolean;
+  onReplayIntro?: () => void;
 }
 
 export const MobileContainer: React.FC<MobileContainerProps> = ({
@@ -13,18 +14,19 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
   headerTitle,
   onBack,
   showLanguageToggle = true,
+  onReplayIntro,
 }) => {
   const { language, setLanguage, direction, t } = useI18n();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-0 sm:p-4">
+    <div className="min-h-screen bg-[#061E23] flex flex-col items-center justify-center p-0 sm:p-4">
       {/* Floating Device Mode Switcher */}
-      <div className="hidden sm:flex items-center gap-2 mb-3 bg-slate-900 border border-slate-800 p-1.5 rounded-2xl shadow-lg text-xs font-bold">
+      <div className="hidden sm:flex items-center gap-2 mb-3 bg-[#0A2B32]/90 border border-[#0E7C86]/30 p-1.5 rounded-2xl shadow-xl text-xs font-bold backdrop-blur-md">
         <button
           onClick={() => setIsFullscreen(false)}
           className={`px-3 py-1 rounded-xl transition ${
-            !isFullscreen ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
+            !isFullscreen ? 'bg-[#0E7C86] text-white shadow-md' : 'text-slate-400 hover:text-white'
           }`}
         >
           📱 وضع إطار الهاتف (Mobile Shell)
@@ -32,48 +34,79 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({
         <button
           onClick={() => setIsFullscreen(true)}
           className={`px-3 py-1 rounded-xl transition ${
-            isFullscreen ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
+            isFullscreen ? 'bg-[#0E7C86] text-white shadow-md' : 'text-slate-400 hover:text-white'
           }`}
         >
           🖥️ وضع الشاشة المتجاوب (Responsive)
         </button>
+        {onReplayIntro && (
+          <button
+            onClick={onReplayIntro}
+            className="px-2.5 py-1 rounded-xl bg-slate-900/60 hover:bg-[#4DD0E1] text-[#4DD0E1] hover:text-[#061E23] border border-[#4DD0E1]/30 transition text-[11px] font-black"
+            title="مشاهدة مقدمة البراند"
+          >
+            ✨ مقدمة البراند (Intro)
+          </button>
+        )}
       </div>
 
       {/* Device Shell simulating Android / iOS device or Fullscreen */}
       <div
         className={`w-full ${
           isFullscreen ? 'max-w-4xl h-screen sm:h-[880px] sm:rounded-3xl' : 'max-w-[430px] h-screen sm:h-[844px] sm:rounded-[42px]'
-        } bg-slate-50 flex flex-col overflow-hidden shadow-2xl border-0 sm:border-8 sm:border-slate-800 transition-all duration-300 ${
+        } bg-[#F2F5F7] flex flex-col overflow-hidden shadow-2xl border-0 sm:border-8 sm:border-slate-850 transition-all duration-300 ${
           direction === 'rtl' ? 'rtl' : 'ltr'
         }`}
       >
         {/* Device Status Bar */}
-        <div className="bg-slate-900 text-white px-6 pt-2 pb-1 text-[11px] font-semibold flex items-center justify-between shrink-0 select-none">
+        <div className="bg-[#061E23] text-white px-6 pt-2 pb-1 text-[11px] font-semibold flex items-center justify-between shrink-0 select-none">
           <span>09:41</span>
           <div className="w-20 h-4 bg-slate-950 rounded-full mx-auto hidden sm:block"></div>
           <div className="flex items-center gap-1.5 font-mono">
-            <span>5G</span>
+            <span className="text-[#4DD0E1]">5G</span>
             <span>100%</span>
           </div>
         </div>
 
         {/* Top App Header */}
         <div className="bg-white px-4 py-3 border-b border-slate-200 flex items-center justify-between shrink-0 shadow-sm">
-          <div className="flex items-center gap-2">
-            {onBack && (
+          <div className="flex items-center gap-2.5 min-w-0">
+            {onBack ? (
               <button
                 onClick={onBack}
-                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 hover:bg-slate-200 transition"
+                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 hover:bg-[#0E7C86] hover:text-white transition shrink-0"
               >
                 {direction === 'rtl' ? '→' : '←'}
               </button>
+            ) : (
+              <img
+                src="/brand/logo.jpg"
+                alt="Miftah 360"
+                className="w-8 h-8 rounded-xl object-cover shadow-xs border border-slate-200 shrink-0"
+              />
             )}
-            <h1 className="text-base font-bold text-slate-900 truncate">
-              {headerTitle || t('app.name')}
-            </h1>
+            <div className="truncate">
+              <h1 className="text-sm font-black text-[#2B2E34] truncate">
+                {headerTitle || t('app.name')}
+              </h1>
+              {!onBack && (
+                <p className="text-[10px] font-bold text-[#0E7C86] truncate tracking-wide">
+                  YOUR CAR. A SMARTER WAY.
+                </p>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 shrink-0">
+            {onReplayIntro && (
+              <button
+                onClick={onReplayIntro}
+                className="p-1.5 text-xs rounded-lg hover:bg-slate-100 text-[#0E7C86] transition"
+                title="عرض المقدمة"
+              >
+                🎬
+              </button>
+            )}
             {showLanguageToggle && (
               <button
                 onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}

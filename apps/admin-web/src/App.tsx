@@ -8,6 +8,7 @@ import { ModuleEntitlementsView } from './components/modules/module-entitlements
 import { TaxonomyManager } from './components/master-data/taxonomy-manager';
 import { BrandsManager } from './components/master-data/brands-manager';
 import { ErrorBoundary } from './components/common/error-boundary';
+import { BrandIntro } from './components/common/brand-intro';
 
 const LoginView: React.FC = () => {
   const { t, language } = useI18n();
@@ -51,24 +52,29 @@ const LoginView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4" dir="rtl">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100">
+    <div className="min-h-screen bg-[#061E23] flex items-center justify-center p-4 relative overflow-hidden" dir="rtl">
+      {/* Background ambient glow */}
+      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-[#0E7C86]/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-[#4DD0E1]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-200/80 relative z-10">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-amber-600 to-amber-400 rounded-2xl mx-auto flex items-center justify-center font-black text-slate-950 text-2xl shadow-lg mb-3">
-            360
+          <div className="w-20 h-20 bg-[#F2F5F7] rounded-2xl mx-auto flex items-center justify-center p-2 shadow-sm border border-slate-200 mb-3">
+            <img src="/brand/logo.jpg" alt="Miftah 360" className="w-full h-full object-contain" />
           </div>
           <h2 className="text-xl font-black text-slate-900 tracking-tight">لوحة إدارة منصة مفتاح 360</h2>
-          <p className="text-xs text-slate-500 mt-1">بوابة الحوكمة المركزية للمشرفين المعتمدين فقط</p>
+          <p className="text-xs text-[#0E7C86] font-bold mt-1">YOUR CAR. A SMARTER WAY. | سيارتك . بطريقة أذكى</p>
+          <p className="text-[11px] text-slate-400 mt-0.5">بوابة الحوكمة المركزية للمشرفين المعتمدين فقط</p>
         </div>
 
         {/* Demo Fast Login Shortcut */}
         {!mfaChallengeToken && (
-          <div className="mb-5 p-3 bg-amber-50 border border-amber-200 rounded-xl text-center space-y-2">
-            <p className="text-[11px] text-amber-900 font-bold">تجربة الدخول الإداري السريع للمراجعة:</p>
+          <div className="mb-5 p-3.5 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-2xl text-center space-y-2">
+            <p className="text-[11px] text-slate-800 font-bold">تجربة الدخول الإداري السريع للمراجعة:</p>
             <button
               type="button"
               onClick={fillDemoAdmin}
-              className="w-full py-1.5 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-lg text-xs transition shadow-sm"
+              className="w-full py-2.5 px-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-xs transition shadow-md"
             >
               ⚡ تعبئة بيانات المشرف (عبدالله المهيري - Super Admin)
             </button>
@@ -93,7 +99,7 @@ const LoginView: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@miftah.local"
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -107,27 +113,27 @@ const LoginView: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-sm transition shadow-md disabled:opacity-50"
+              className="w-full py-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm transition shadow-md disabled:opacity-50"
             >
               {loading ? 'جاري التحقق...' : 'متابعة إلى خطوة التحقق الثنائي (MFA) ←'}
             </button>
           </form>
         ) : (
           <form onSubmit={handleVerifyMfa} className="space-y-4">
-            <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-950 text-xs space-y-1">
-              <p className="font-bold flex items-center gap-1.5">
+            <div className="p-3 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-xl text-slate-800 text-xs space-y-1">
+              <p className="font-bold flex items-center gap-1.5 text-[#0E7C86]">
                 <span>🔐</span>
                 <span>التحقق الثنائي للمشرفين (Admin MFA)</span>
               </p>
-              <p className="text-[11px] text-indigo-700">
-                لأغراض المراجعة والتطوير، الرمز التجريبي المعتمد هو: <strong className="font-mono text-sm text-indigo-950">123456</strong>
+              <p className="text-[11px] text-slate-600">
+                لأغراض المراجعة والتطوير، الرمز التجريبي المعتمد هو: <strong className="font-mono text-sm text-[#0E7C86]">123456</strong>
               </p>
             </div>
 
@@ -142,7 +148,7 @@ const LoginView: React.FC = () => {
                 value={mfaCode}
                 onChange={(e) => setMfaCode(e.target.value)}
                 placeholder="123456"
-                className="w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -157,7 +163,7 @@ const LoginView: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-sm transition shadow-md disabled:opacity-50"
+                className="flex-1 py-2.5 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-sm transition shadow-md disabled:opacity-50"
               >
                 {loading ? 'جاري التحقق...' : 'تأكيد ودخول اللوحة ←'}
               </button>
@@ -172,12 +178,26 @@ const LoginView: React.FC = () => {
 const DashboardContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
   const [currentView, setCurrentView] = useState<AdminView>('dashboard');
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    return sessionStorage.getItem('miftah_admin_intro_seen') !== 'true';
+  });
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
-        <div className="animate-spin inline-block w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen bg-[#061E23] flex items-center justify-center text-white">
+        <div className="animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full"></div>
       </div>
+    );
+  }
+
+  if (showIntro) {
+    return (
+      <BrandIntro
+        onComplete={() => {
+          sessionStorage.setItem('miftah_admin_intro_seen', 'true');
+          setShowIntro(false);
+        }}
+      />
     );
   }
 
@@ -186,7 +206,11 @@ const DashboardContent: React.FC = () => {
   }
 
   return (
-    <AdminLayout currentView={currentView} onViewChange={setCurrentView}>
+    <AdminLayout
+      currentView={currentView}
+      onViewChange={setCurrentView}
+      onReplayIntro={() => setShowIntro(true)}
+    >
       {currentView === 'dashboard' && <OverviewDashboard onNavigate={setCurrentView} />}
       {currentView === 'queue' && <WorkshopQueue />}
       {currentView === 'workshops' && <WorkshopQueue initialFilter="ALL" />}

@@ -65,7 +65,7 @@ export const ProfileScreen: React.FC = () => {
       {/* Profile Card */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-amber-500 text-slate-950 font-bold text-lg flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#0E7C86] to-[#4DD0E1] text-white font-bold text-lg flex items-center justify-center shadow-sm">
             {user?.fullName?.charAt(0) || 'U'}
           </div>
           <div>
@@ -117,7 +117,7 @@ export const ProfileScreen: React.FC = () => {
           ) : (
             <form
               onSubmit={handleLinkPhoneSubmit}
-              className="p-3 bg-slate-50 rounded-xl space-y-2 border border-amber-300"
+              className="p-3 bg-slate-50 rounded-xl space-y-2 border border-[#0E7C86]/40"
             >
               <input
                 type="tel"
@@ -125,7 +125,7 @@ export const ProfileScreen: React.FC = () => {
                 required
                 value={phoneToLink}
                 onChange={(e) => setPhoneToLink(e.target.value)}
-                className="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono"
+                className="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
               <input
                 type="text"
@@ -134,13 +134,13 @@ export const ProfileScreen: React.FC = () => {
                 required
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value)}
-                className="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono"
+                className="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
               <div className="flex gap-2">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-1.5 bg-amber-500 rounded text-xs font-bold text-slate-950"
+                  className="flex-1 py-1.5 bg-[#0E7C86] hover:bg-[#0A4D56] rounded text-xs font-bold text-white shadow-xs"
                 >
                   {language === 'ar' ? 'تأكيد الربط' : 'Confirm'}
                 </button>

@@ -122,7 +122,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
       <form onSubmit={handleSubmit} className="space-y-4 pb-6">
         {/* Required Fields Section */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
-          <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block">
+          <span className="text-[11px] font-bold text-[#0E7C86] uppercase tracking-wider block">
             {t('vehicle.requiredSection')}
           </span>
 
@@ -135,7 +135,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
               required
               value={selectedBrandId}
               onChange={(e) => handleBrandChange(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
             >
               <option value="">-- {t('vehicle.selectBrand')} --</option>
               {brands.map((b) => (
@@ -156,7 +156,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
               disabled={!selectedBrandId}
               value={selectedModelId}
               onChange={(e) => setSelectedModelId(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:bg-slate-50"
+              className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#0E7C86] disabled:bg-slate-50"
             >
               <option value="">-- {t('vehicle.selectModel')} --</option>
               {models.map((m) => (
@@ -180,7 +180,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                 max={new Date().getFullYear() + 1}
                 value={year}
                 onChange={(e) => setYear(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -195,7 +195,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                 step={100}
                 value={mileage}
                 onChange={(e) => setMileage(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
           </div>
@@ -226,7 +226,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   placeholder="e.g. V8, Platinum, Sport"
                   value={trim}
                   onChange={(e) => setTrim(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
 
@@ -239,7 +239,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   <select
                     value={fuelType}
                     onChange={(e) => setFuelType(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   >
                     <option value="PETROL">Petrol (بنزين)</option>
                     <option value="DIESEL">Diesel (ديزل)</option>
@@ -255,7 +255,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   <select
                     value={transmission}
                     onChange={(e) => setTransmission(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   >
                     <option value="AUTOMATIC">Automatic (أوتوماتيك)</option>
                     <option value="MANUAL">Manual (يدوي)</option>
@@ -272,7 +272,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   <select
                     value={plateEmirate}
                     onChange={(e) => setPlateEmirate(e.target.value as Emirate)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   >
                     <option value={Emirate.DUBAI}>Dubai (دبي)</option>
                     <option value={Emirate.SHARJAH}>Sharjah (الشارقة)</option>
@@ -288,7 +288,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                     placeholder="e.g. B 12345"
                     value={plateNumber}
                     onChange={(e) => setPlateNumber(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   />
                 </div>
               </div>
@@ -304,7 +304,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   placeholder="17-character VIN"
                   value={vin}
                   onChange={(e) => setVin(e.target.value.toUpperCase())}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
 
@@ -318,7 +318,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                     type="date"
                     value={registrationExpiry}
                     onChange={(e) => setRegistrationExpiry(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   />
                 </div>
 
@@ -330,7 +330,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                     type="date"
                     value={insuranceExpiry}
                     onChange={(e) => setInsuranceExpiry(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                   />
                 </div>
               </div>
@@ -345,7 +345,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder={language === 'ar' ? 'أي ملاحظات خاصة بالمركبة...' : 'Any notes...'}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
             </div>
@@ -356,7 +356,7 @@ export const AddVehicleScreen: React.FC<AddVehicleScreenProps> = ({ onSuccess, o
         <button
           type="submit"
           disabled={saving}
-          className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs shadow-md transition disabled:opacity-50"
+          className="w-full py-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-xs shadow-md transition disabled:opacity-50"
         >
           {saving ? t('common.saving') : t('vehicle.save')}
         </button>

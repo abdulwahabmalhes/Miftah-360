@@ -26,12 +26,14 @@ export type WorkshopView =
 interface WorkshopLayoutProps {
   currentView: WorkshopView;
   onViewChange: (view: WorkshopView) => void;
+  onReplayIntro?: () => void;
   children: React.ReactNode;
 }
 
 export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
   currentView,
   onViewChange,
+  onReplayIntro,
   children,
 }) => {
   const { t, language, setLanguage, direction } = useI18n();
@@ -109,37 +111,51 @@ export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
   return (
     <div className={`min-h-screen bg-slate-100 flex flex-col ${direction === 'rtl' ? 'rtl' : 'ltr'}`}>
       {/* Top Navbar */}
-      <header className="bg-slate-900 text-white px-4 py-3 flex items-center justify-between shadow-md">
+      <header className="bg-[#061E23] text-white px-4 py-3 flex items-center justify-between shadow-lg border-b border-[#0A4D56]">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-2xl px-2 py-1 bg-slate-800 rounded focus:outline-none"
+            className="md:hidden text-2xl px-2 py-1 bg-[#0A4D56] rounded-xl focus:outline-none"
           >
             ☰
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950">
-              OS
+            <div className="w-9 h-9 rounded-xl bg-white p-0.5 shadow-md border border-[#0E7C86]/40 flex items-center justify-center overflow-hidden shrink-0">
+              <img src="/brand/logo.jpg" alt="Miftah 360" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-sm font-bold tracking-tight">
+                <h1 className="text-sm font-bold tracking-tight text-white">
                   {user ? (language === 'ar' ? user.workshopNameAr || user.workshopNameEn : user.workshopNameEn || user.workshopNameAr) || t('app.title') : t('app.title')}
                 </h1>
-                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">
+                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#0A4D56] text-[#4DD0E1] border border-[#0E7C86]">
                   {t('app.primaryBranch')}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 hidden sm:block">{t('app.subtitle')}</p>
+              <p className="text-xs text-[#C9CDD3] hidden sm:block">
+                {language === 'ar' ? 'سيارتك . بطريقة أذكى' : 'YOUR CAR. A SMARTER WAY.'}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* Replay Intro Button */}
+          {onReplayIntro && (
+            <button
+              onClick={onReplayIntro}
+              title="عرض مقدمة البراند"
+              className="px-2.5 py-1.5 text-xs font-bold rounded-xl bg-[#0A4D56]/70 hover:bg-[#0E7C86] text-[#4DD0E1] border border-[#0E7C86]/50 transition flex items-center gap-1.5"
+            >
+              <span>🎬</span>
+              <span className="hidden sm:inline">{language === 'ar' ? 'المقدمة' : 'Intro'}</span>
+            </button>
+          )}
+
           {/* Language Switcher */}
           <button
             onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
-            className="px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 transition"
+            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0A4D56] hover:bg-[#0E7C86] border border-[#0E7C86]/50 transition text-white"
           >
             {language === 'ar' ? 'English (LTR)' : 'العربية (RTL)'}
           </button>
@@ -149,11 +165,11 @@ export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-medium">{user.fullName}</p>
-                <p className="text-xs text-emerald-400 font-mono">{t(`role.${user.role}`)}</p>
+                <p className="text-xs text-[#4DD0E1] font-mono">{t(`role.${user.role}`)}</p>
               </div>
               <button
                 onClick={logout}
-                className="px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded font-medium transition"
+                className="px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition"
               >
                 {t('nav.logout')}
               </button>
@@ -197,8 +213,8 @@ export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
                       }}
                       className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition text-right ${
                         active
-                          ? 'bg-emerald-700 text-white shadow-sm'
-                          : 'text-slate-700 hover:bg-slate-100'
+                          ? 'bg-[#0E7C86] text-white shadow-sm'
+                          : 'text-slate-700 hover:bg-[#F2F5F7]'
                       }`}
                     >
                       <span className="text-base">{item.icon}</span>
@@ -228,15 +244,15 @@ export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition text-right ${
                           active
-                            ? 'bg-indigo-700 text-white shadow-sm'
-                            : 'text-slate-700 hover:bg-indigo-50'
+                            ? 'bg-[#0A4D56] text-[#4DD0E1] border border-[#0E7C86] shadow-sm'
+                            : 'text-slate-700 hover:bg-[#F2F5F7]'
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
                           <span className="text-base">{item.icon}</span>
                           <span>{language === 'ar' ? item.labelAr : item.labelEn}</span>
                         </div>
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4DD0E1]"></span>
                       </button>
                     );
                   })}
@@ -245,9 +261,13 @@ export const WorkshopLayout: React.FC<WorkshopLayoutProps> = ({
             )}
           </div>
 
-          <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center mt-6">
-            <p className="text-[10px] text-slate-500 font-bold">منظومة مفتاح 360 الإمارات</p>
-            <p className="text-[9px] text-slate-400 font-mono mt-0.5">Workshop OS V1.2</p>
+          <div className="p-3 bg-[#F2F5F7] rounded-2xl border border-slate-200 text-center mt-6">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <img src="/brand/logo.jpg" alt="360" className="w-4 h-4 object-contain" />
+              <p className="text-[10px] text-slate-800 font-black">منظومة مفتاح 360 الإمارات</p>
+            </div>
+            <p className="text-[9px] text-[#0E7C86] font-bold">YOUR CAR. A SMARTER WAY.</p>
+            <p className="text-[8px] text-slate-400 font-mono mt-0.5">Workshop OS v1.2</p>
           </div>
         </aside>
 

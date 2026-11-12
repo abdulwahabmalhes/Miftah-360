@@ -1,37 +1,20 @@
 const { PrismaClient } = require('@prisma/client');
-require('dotenv').config();
-
 const prisma = new PrismaClient();
 
-async function run() {
-  const user = await prisma.user.findUnique({
+async function main() {
+  const user = await prisma.user.findFirst({
     where: { email: 'owner@workshop.local' },
     include: {
-      staffMemberships: {
-        include: {
-          workshop: {
-            include: {
-              entitlements: {
-                include: {
-                  module: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+      ownedWorkshops: true,
+      staffMemberships: { include: { workshop: true } }
+    }
   });
 
-  const w = user.staffMemberships[0].workshop;
-  console.log('Workshop ID:', w.id);
-  console.log('Workshop Name:', w.nameAr);
-  console.log('Entitlements count:', w.entitlements.length);
-  for (const e of w.entitlements) {
-    console.log(`- ${e.module.code}: ${e.state}`);
-  }
-  await prisma.$disconnect();
+  console.log('User:', user?.id, user?.email);
+  console.log('Owned Workshops:');
+  user?.ownedWorkshops.forEach(w => console.log(' -', w.id, w.displayNameAr));
+  console.log('Staff Memberships:');
+  user?.staffMemberships.forEach(s => console.log(' - role:', s.role, 'ws:', s.workshopId, s.workshop?.displayNameAr));
 }
 
-run().catch(console.error);
-
+main().catch(console.error).finally(() => prisma.$disconnect());

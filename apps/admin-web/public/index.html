@@ -3,29 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة إدارة منصة مفتاح 360 | Miftah 360 Admin</title>
+  <title>لوحة إدارة منصة مفتاح 360 | MIFTAH 360 Admin</title>
+  <link rel="icon" type="image/jpeg" href="/brand/logo.jpg">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal: '#0E7C86',
+              light: '#4DD0E1',
+              dark: '#0A4D56',
+              graphite: '#2B2E34',
+              silver: '#C9CDD3',
+              bg: '#F2F5F7',
+              deep: '#061E23',
+            },
+            primary: {
+              50: '#F0FBFC',
+              100: '#D5F4F7',
+              200: '#ADE9EE',
+              300: '#75D8E2',
+              400: '#4DD0E1',
+              500: '#1BA0AE',
+              600: '#0E7C86',
+              700: '#0A4D56',
+              800: '#0B3F47',
+              900: '#061E23',
+            }
+          }
+        }
+      }
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { font-family: 'Cairo', 'Inter', system-ui, -apple-system, sans-serif; }
     .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; }
-    /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    ::-webkit-scrollbar-track { background: #f2f5f7; }
+    ::-webkit-scrollbar-thumb { background: #0E7C86; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0A4D56; }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 25px rgba(77, 208, 225, 0.35); }
+      50% { box-shadow: 0 0 45px rgba(77, 208, 225, 0.7); }
+    }
+    .brand-glow { animation: pulseGlow 2.5s infinite; }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+<body class="bg-[#F2F5F7] text-[#2B2E34] antialiased min-h-screen">
   <div id="root">
-    <div class="min-h-screen flex items-center justify-center bg-slate-900 text-white">
-      <div class="flex flex-col items-center gap-4">
-        <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center font-black text-slate-950 text-2xl shadow-xl animate-pulse">
-          360
+    <!-- Initial Loading State -->
+    <div class="min-h-screen flex items-center justify-center bg-[#061E23] text-white">
+      <div class="flex flex-col items-center gap-5 p-6 text-center animate-in fade-in">
+        <div class="relative">
+          <img src="/brand/logo.jpg" alt="Miftah 360" class="w-24 h-24 rounded-2xl object-cover shadow-2xl brand-glow border border-[#4DD0E1]/40" />
+          <div class="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-[#0E7C86] border-2 border-[#061E23] flex items-center justify-center text-[11px] font-black">
+            360
+          </div>
         </div>
-        <p class="text-sm font-semibold text-slate-300">جاري تحميل لوحة الإدارة لمفتاح 360...</p>
+        <div class="space-y-1">
+          <h1 class="text-2xl font-black tracking-wide text-white">MIFTAH 360 | مفتاح 360</h1>
+          <p class="text-xs font-bold text-[#4DD0E1] tracking-wider uppercase">YOUR CAR. A SMARTER WAY. | سيارتك . بطريقة أذكى</p>
+          <p class="text-xs text-slate-400 mt-2">منصة الإدارة والرقابة المركزية...</p>
+        </div>
+        <div class="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden mt-2">
+          <div class="h-full bg-gradient-to-r from-[#0A4D56] via-[#0E7C86] to-[#4DD0E1] animate-pulse w-2/3 rounded-full"></div>
+        </div>
       </div>
     </div>
   </div>

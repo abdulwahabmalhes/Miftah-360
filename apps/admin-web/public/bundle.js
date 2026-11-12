@@ -1091,7 +1091,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState11(initialState) {
+          function useState12(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1103,7 +1103,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect9(create, deps) {
+          function useEffect10(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1886,7 +1886,7 @@
           exports.useContext = useContext3;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect9;
+          exports.useEffect = useEffect10;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState11;
+          exports.useState = useState12;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React13 = require_react();
+          var React14 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React13.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3999,7 +3999,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React13.Children.forEach(props.children, function(child) {
+                  React14.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23595,7 +23595,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React13 = require_react();
+          var React14 = require_react();
           var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element");
           var REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment");
@@ -23621,7 +23621,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React13.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24471,11 +24471,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx13 = jsxWithValidationDynamic;
-          var jsxs10 = jsxWithValidationStatic;
+          var jsx14 = jsxWithValidationDynamic;
+          var jsxs11 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx13;
-          exports.jsxs = jsxs10;
+          exports.jsx = jsx14;
+          exports.jsxs = jsxs11;
         })();
       }
     }
@@ -24494,11 +24494,11 @@
   });
 
   // apps/admin-web/src/index.tsx
-  var import_react12 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // apps/admin-web/src/App.tsx
-  var import_react11 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
 
   // apps/admin-web/src/context/i18n-context.tsx
   var import_react = __toESM(require_react());
@@ -24925,6 +24925,7 @@
   var AdminLayout = ({
     currentView,
     onViewChange,
+    onReplayIntro,
     children
   }) => {
     const { t, language, setLanguage, direction } = useI18n();
@@ -24939,43 +24940,58 @@
       { id: "brands", labelKey: "nav.brands", icon: "\u{1F697}" }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: `min-h-screen bg-slate-100 flex flex-col ${direction === "rtl" ? "rtl" : "ltr"}`, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("header", { className: "bg-slate-900 text-white px-4 py-3 flex items-center justify-between shadow-md", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("header", { className: "bg-[#061E23] text-white px-4 py-3 flex items-center justify-between shadow-lg border-b border-[#0A4D56]", children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "button",
             {
               onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-              className: "md:hidden text-2xl px-2 py-1 bg-slate-800 rounded focus:outline-none",
+              className: "md:hidden text-2xl px-2 py-1 bg-[#0A4D56] rounded-xl focus:outline-none",
               children: "\u2630"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center font-bold text-slate-900", children: "360" }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "w-9 h-9 rounded-xl bg-white p-0.5 shadow-md border border-[#0E7C86]/40 flex items-center justify-center overflow-hidden shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("img", { src: "/brand/logo.jpg", alt: "Miftah 360", className: "w-full h-full object-contain" }) }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-lg font-bold tracking-tight", children: t("app.title") }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-slate-400 hidden sm:block", children: t("app.subtitle") })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-sm font-bold tracking-tight text-white", children: t("app.title") }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-2 py-0.5 rounded text-[10px] font-semibold bg-[#0A4D56] text-[#4DD0E1] border border-[#0E7C86]", children: "\u0627\u0644\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064A\u0629 (Super Admin)" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-[#C9CDD3] hidden sm:block", children: language === "ar" ? "\u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" : "YOUR CAR. A SMARTER WAY." })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
+          onReplayIntro && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+            "button",
+            {
+              onClick: onReplayIntro,
+              title: "\u0639\u0631\u0636 \u0645\u0642\u062F\u0645\u0629 \u0627\u0644\u0628\u0631\u0627\u0646\u062F",
+              className: "px-2.5 py-1.5 text-xs font-bold rounded-xl bg-[#0A4D56]/70 hover:bg-[#0E7C86] text-[#4DD0E1] border border-[#0E7C86]/50 transition flex items-center gap-1.5",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "\u{1F3AC}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "hidden sm:inline", children: language === "ar" ? "\u0627\u0644\u0645\u0642\u062F\u0645\u0629" : "Intro" })
+              ]
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "button",
             {
               onClick: () => setLanguage(language === "ar" ? "en" : "ar"),
-              className: "px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 transition",
+              className: "px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0A4D56] hover:bg-[#0E7C86] border border-[#0E7C86]/50 transition text-white",
               children: language === "ar" ? "English (LTR)" : "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (RTL)"
             }
           ),
           user && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "text-right hidden sm:block", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm font-medium", children: user.fullName }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-amber-400 font-mono", children: user.role })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-[#4DD0E1] font-mono", children: user.role })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "button",
               {
                 onClick: logout,
-                className: "px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded font-medium transition",
+                className: "px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition",
                 children: t("nav.logout")
               }
             )
@@ -24986,34 +25002,44 @@
         /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
           "aside",
           {
-            className: `bg-white border-slate-200 shadow-sm w-64 p-4 shrink-0 ${direction === "rtl" ? "border-l" : "border-r"} ${mobileMenuOpen ? "block fixed inset-y-0 z-50 shadow-2xl" : "hidden md:block"}`,
+            className: `bg-white border-slate-200 shadow-sm w-64 p-4 shrink-0 flex flex-col justify-between ${direction === "rtl" ? "border-l" : "border-r"} ${mobileMenuOpen ? "block fixed inset-y-0 z-50 shadow-2xl" : "hidden md:block"}`,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "md:hidden flex justify-end mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                "button",
-                {
-                  onClick: () => setMobileMenuOpen(false),
-                  className: "text-slate-500 hover:text-slate-800 font-bold text-xl",
-                  children: "\u2715"
-                }
-              ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("nav", { className: "space-y-1.5", children: navItems.map((item) => {
-                const active = currentView === item.id;
-                return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "md:hidden flex justify-end mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
                   "button",
                   {
-                    onClick: () => {
-                      onViewChange(item.id);
-                      setMobileMenuOpen(false);
+                    onClick: () => setMobileMenuOpen(false),
+                    className: "text-slate-500 hover:text-slate-800 font-bold text-xl",
+                    children: "\u2715"
+                  }
+                ) }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("nav", { className: "space-y-1.5", children: navItems.map((item) => {
+                  const active = currentView === item.id;
+                  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+                    "button",
+                    {
+                      onClick: () => {
+                        onViewChange(item.id);
+                        setMobileMenuOpen(false);
+                      },
+                      className: `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition text-right ${active ? "bg-[#0E7C86] text-white shadow-sm" : "text-slate-700 hover:bg-[#F2F5F7]"}`,
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-lg", children: item.icon }),
+                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: t(item.labelKey) })
+                      ]
                     },
-                    className: `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition text-left ${active ? "bg-blue-900 text-white shadow-sm" : "text-slate-700 hover:bg-slate-100"}`,
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-lg", children: item.icon }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: t(item.labelKey) })
-                    ]
-                  },
-                  item.id
-                );
-              }) })
+                    item.id
+                  );
+                }) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 bg-[#F2F5F7] rounded-2xl border border-slate-200 text-center mt-6", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center justify-center gap-1.5 mb-1", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("img", { src: "/brand/logo.jpg", alt: "360", className: "w-4 h-4 object-contain" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[10px] text-slate-800 font-black", children: "\u0645\u0646\u0638\u0648\u0645\u0629 \u0645\u0641\u062A\u0627\u062D 360 \u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[9px] text-[#0E7C86] font-bold", children: "YOUR CAR. A SMARTER WAY." }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[8px] text-slate-400 font-mono mt-0.5", children: "HQ Admin Console v1.2" })
+              ] })
             ]
           }
         ),
@@ -27151,16 +27177,125 @@
     }
   };
 
-  // apps/admin-web/src/App.tsx
+  // apps/admin-web/src/components/common/brand-intro.tsx
+  var import_react11 = __toESM(require_react());
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+  var BrandIntro = ({
+    onFinish,
+    autoCloseMs = 2800,
+    showSkip = true,
+    systemNameAr = "\u0645\u0646\u0635\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629 \u0648\u0627\u0644\u0631\u0642\u0627\u0628\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064A\u0629 \u0644\u0644\u0645\u0646\u0638\u0648\u0645\u0629",
+    systemNameEn = "Central Platform Governance"
+  }) => {
+    const [progress, setProgress] = (0, import_react11.useState)(0);
+    const [fadingOut, setFadingOut] = (0, import_react11.useState)(false);
+    (0, import_react11.useEffect)(() => {
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const pct = Math.min(100, Math.floor(elapsed / autoCloseMs * 100));
+        setProgress(pct);
+        if (elapsed >= autoCloseMs) {
+          clearInterval(interval);
+          handleClose();
+        }
+      }, 40);
+      return () => clearInterval(interval);
+    }, [autoCloseMs]);
+    const handleClose = () => {
+      setFadingOut(true);
+      setTimeout(() => {
+        if (onFinish) onFinish();
+      }, 400);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+      "div",
+      {
+        className: `fixed inset-0 z-[9999] flex flex-col items-center justify-between p-6 bg-[#061E23] text-white select-none transition-opacity duration-500 ${fadingOut ? "opacity-0 pointer-events-none" : "opacity-100"}`,
+        style: {
+          backgroundImage: `radial-gradient(circle at 50% 35%, rgba(14, 124, 134, 0.35) 0%, rgba(6, 30, 35, 0.95) 70%, #061E23 100%), url('/brand/splash-hero.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundBlendMode: "overlay"
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "w-full max-w-md flex items-center justify-between pt-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "w-2.5 h-2.5 rounded-full bg-[#4DD0E1] animate-ping" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-[11px] font-bold text-[#4DD0E1] uppercase tracking-wider", children: "MIFTAH 360 ADMIN" })
+            ] }),
+            showSkip && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "button",
+              {
+                onClick: handleClose,
+                className: "px-3.5 py-1.5 rounded-full bg-slate-900/60 hover:bg-[#0E7C86] text-white/90 hover:text-white text-xs font-bold border border-slate-700/60 transition backdrop-blur-md shadow-lg",
+                children: "\u062A\u062E\u0637\u064A \u2794"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex flex-col items-center text-center max-w-sm px-4 space-y-6", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "relative group", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "absolute -inset-4 bg-gradient-to-r from-[#0A4D56] via-[#4DD0E1] to-[#0E7C86] rounded-3xl blur-xl opacity-60 group-hover:opacity-100 animate-pulse transition duration-1000" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "relative w-32 h-32 rounded-3xl bg-slate-950/80 p-2 border border-[#4DD0E1]/50 shadow-2xl flex items-center justify-center overflow-hidden backdrop-blur-xl", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                "img",
+                {
+                  src: "/brand/logo.jpg",
+                  alt: "Miftah 360 Logo",
+                  className: "w-full h-full object-contain rounded-2xl transform transition-transform duration-700 group-hover:scale-105"
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "space-y-2.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex items-center justify-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("h1", { className: "text-3xl font-black tracking-wider text-white", children: [
+                "MIFTAH ",
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-[#4DD0E1]", children: "360" })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { className: "text-xl font-black text-white/95", children: [
+                "\u0645\u0640\u0641\u0640\u062A\u0640\u0627\u062D ",
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-[#4DD0E1]", children: "360" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "pt-2 border-t border-white/10 space-y-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "text-xs font-bold tracking-[0.2em] text-[#4DD0E1] uppercase", children: "YOUR CAR. A SMARTER WAY." }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "text-xs font-bold text-slate-300", children: "\u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { className: "text-[11px] font-semibold text-slate-400 pt-1", children: [
+                systemNameAr,
+                " \u2022 ",
+                systemNameEn
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "w-full max-w-xs space-y-2.5 pb-4 text-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "w-full h-2 bg-slate-900/80 rounded-full overflow-hidden border border-slate-700/50 p-0.5 backdrop-blur-md", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "div",
+              {
+                className: "h-full bg-gradient-to-r from-[#0A4D56] via-[#0E7C86] to-[#4DD0E1] rounded-full transition-all duration-100 shadow-[0_0_12px_rgba(77,208,225,0.7)]",
+                style: { width: `${progress}%` }
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between text-[11px] text-slate-400 font-mono px-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "\u062A\u062D\u0645\u064A\u0644 \u0645\u0624\u0634\u0631\u0627\u062A \u0627\u0644\u062D\u0648\u0643\u0645\u0629..." }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { className: "text-[#4DD0E1] font-bold", children: [
+                progress,
+                "%"
+              ] })
+            ] })
+          ] })
+        ]
+      }
+    );
+  };
+
+  // apps/admin-web/src/App.tsx
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
   var LoginView = () => {
     const { t, language } = useI18n();
     const { login, verifyMfa, mfaChallengeToken } = useAuth();
-    const [email, setEmail] = (0, import_react11.useState)("");
-    const [password, setPassword] = (0, import_react11.useState)("");
-    const [mfaCode, setMfaCode] = (0, import_react11.useState)("");
-    const [loading, setLoading] = (0, import_react11.useState)(false);
-    const [error, setError] = (0, import_react11.useState)(null);
+    const [email, setEmail] = (0, import_react12.useState)("");
+    const [password, setPassword] = (0, import_react12.useState)("");
+    const [mfaCode, setMfaCode] = (0, import_react12.useState)("");
+    const [loading, setLoading] = (0, import_react12.useState)(false);
+    const [error, setError] = (0, import_react12.useState)(null);
     const fillDemoAdmin = () => {
       setEmail("admin@miftah.local");
       setPassword("ReviewPass123!");
@@ -27190,143 +27325,170 @@
         setLoading(false);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "min-h-screen bg-slate-950 flex items-center justify-center p-4", dir: "rtl", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "text-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "w-16 h-16 bg-gradient-to-tr from-amber-600 to-amber-400 rounded-2xl mx-auto flex items-center justify-center font-black text-slate-950 text-2xl shadow-lg mb-3", children: "360" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { className: "text-xl font-black text-slate-900 tracking-tight", children: "\u0644\u0648\u062D\u0629 \u0625\u062F\u0627\u0631\u0629 \u0645\u0646\u0635\u0629 \u0645\u0641\u062A\u0627\u062D 360" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "text-xs text-slate-500 mt-1", children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u062D\u0648\u0643\u0645\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064A\u0629 \u0644\u0644\u0645\u0634\u0631\u0641\u064A\u0646 \u0627\u0644\u0645\u0639\u062A\u0645\u062F\u064A\u0646 \u0641\u0642\u0637" })
-      ] }),
-      !mfaChallengeToken && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "mb-5 p-3 bg-amber-50 border border-amber-200 rounded-xl text-center space-y-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "text-[11px] text-amber-900 font-bold", children: "\u062A\u062C\u0631\u0628\u0629 \u0627\u0644\u062F\u062E\u0648\u0644 \u0627\u0644\u0625\u062F\u0627\u0631\u064A \u0627\u0644\u0633\u0631\u064A\u0639 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629:" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-          "button",
-          {
-            type: "button",
-            onClick: fillDemoAdmin,
-            className: "w-full py-1.5 px-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-lg text-xs transition shadow-sm",
-            children: "\u26A1 \u062A\u0639\u0628\u0626\u0629 \u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0645\u0634\u0631\u0641 (\u0639\u0628\u062F\u0627\u0644\u0644\u0647 \u0627\u0644\u0645\u0647\u064A\u0631\u064A - Super Admin)"
-          }
-        )
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium leading-relaxed", children: error }),
-      !mfaChallengeToken ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: handleLogin, className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0627\u0644\u0625\u062F\u0627\u0631\u064A (Work Email)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "email",
-              required: true,
-              value: email,
-              onChange: (e) => setEmail(e.target.value),
-              placeholder: "admin@miftah.local",
-              className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-            }
-          )
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center p-4 relative overflow-hidden", dir: "rtl", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute top-1/4 -right-20 w-96 h-96 bg-[#0E7C86]/20 rounded-full blur-3xl pointer-events-none" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute bottom-1/4 -left-20 w-96 h-96 bg-[#4DD0E1]/15 rounded-full blur-3xl pointer-events-none" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-200/80 relative z-10", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "text-center mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "w-20 h-20 bg-[#F2F5F7] rounded-2xl mx-auto flex items-center justify-center p-2 shadow-sm border border-slate-200 mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("img", { src: "/brand/logo.jpg", alt: "Miftah 360", className: "w-full h-full object-contain" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h2", { className: "text-xl font-black text-slate-900 tracking-tight", children: "\u0644\u0648\u062D\u0629 \u0625\u062F\u0627\u0631\u0629 \u0645\u0646\u0635\u0629 \u0645\u0641\u062A\u0627\u062D 360" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-xs text-[#0E7C86] font-bold mt-1", children: "YOUR CAR. A SMARTER WAY. | \u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-[11px] text-slate-400 mt-0.5", children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u062D\u0648\u0643\u0645\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064A\u0629 \u0644\u0644\u0645\u0634\u0631\u0641\u064A\u0646 \u0627\u0644\u0645\u0639\u062A\u0645\u062F\u064A\u0646 \u0641\u0642\u0637" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u0633\u0631\u064A\u0629 (Password)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "password",
-              required: true,
-              value: password,
-              onChange: (e) => setPassword(e.target.value),
-              placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
-              className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-          "button",
-          {
-            type: "submit",
-            disabled: loading,
-            className: "w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-sm transition shadow-md disabled:opacity-50",
-            children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u0645\u062A\u0627\u0628\u0639\u0629 \u0625\u0644\u0649 \u062E\u0637\u0648\u0629 \u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u062B\u0646\u0627\u0626\u064A (MFA) \u2190"
-          }
-        )
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: handleVerifyMfa, className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-950 text-xs space-y-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { className: "font-bold flex items-center gap-1.5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "\u{1F510}" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "\u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u062B\u0646\u0627\u0626\u064A \u0644\u0644\u0645\u0634\u0631\u0641\u064A\u0646 (Admin MFA)" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { className: "text-[11px] text-indigo-700", children: [
-            "\u0644\u0623\u063A\u0631\u0627\u0636 \u0627\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0627\u0644\u062A\u0637\u0648\u064A\u0631\u060C \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A \u0627\u0644\u0645\u0639\u062A\u0645\u062F \u0647\u0648: ",
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("strong", { className: "font-mono text-sm text-indigo-950", children: "123456" })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0623\u062F\u062E\u0644 \u0631\u0645\u0632 \u0627\u0644\u0640 6 \u0623\u0631\u0642\u0627\u0645:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "text",
-              required: true,
-              maxLength: 6,
-              value: mfaCode,
-              onChange: (e) => setMfaCode(e.target.value),
-              placeholder: "123456",
-              className: "w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        !mfaChallengeToken && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "mb-5 p-3.5 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-2xl text-center space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-[11px] text-slate-800 font-bold", children: "\u062A\u062C\u0631\u0628\u0629 \u0627\u0644\u062F\u062E\u0648\u0644 \u0627\u0644\u0625\u062F\u0627\u0631\u064A \u0627\u0644\u0633\u0631\u064A\u0639 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
             "button",
             {
               type: "button",
-              onClick: () => setMfaCode("123456"),
-              className: "px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition",
-              children: "\u062A\u0639\u0628\u0626\u0629 \u0627\u0644\u0631\u0645\u0632 \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B"
+              onClick: fillDemoAdmin,
+              className: "w-full py-2.5 px-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-xs transition shadow-md",
+              children: "\u26A1 \u062A\u0639\u0628\u0626\u0629 \u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0645\u0634\u0631\u0641 (\u0639\u0628\u062F\u0627\u0644\u0644\u0647 \u0627\u0644\u0645\u0647\u064A\u0631\u064A - Super Admin)"
             }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          )
+        ] }),
+        error && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium leading-relaxed", children: error }),
+        !mfaChallengeToken ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: handleLogin, className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0627\u0644\u0625\u062F\u0627\u0631\u064A (Work Email)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "input",
+              {
+                type: "email",
+                required: true,
+                value: email,
+                onChange: (e) => setEmail(e.target.value),
+                placeholder: "admin@miftah.local",
+                className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u0633\u0631\u064A\u0629 (Password)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "input",
+              {
+                type: "password",
+                required: true,
+                value: password,
+                onChange: (e) => setPassword(e.target.value),
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+                className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
             "button",
             {
               type: "submit",
               disabled: loading,
-              className: "flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-sm transition shadow-md disabled:opacity-50",
-              children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0623\u0643\u064A\u062F \u0648\u062F\u062E\u0648\u0644 \u0627\u0644\u0644\u0648\u062D\u0629 \u2190"
+              className: "w-full py-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm transition shadow-md disabled:opacity-50",
+              children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u0645\u062A\u0627\u0628\u0639\u0629 \u0625\u0644\u0649 \u062E\u0637\u0648\u0629 \u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u062B\u0646\u0627\u0626\u064A (MFA) \u2190"
             }
           )
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: handleVerifyMfa, className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-3 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-xl text-slate-800 text-xs space-y-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { className: "font-bold flex items-center gap-1.5 text-[#0E7C86]", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u{1F510}" }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u0627\u0644\u062A\u062D\u0642\u0642 \u0627\u0644\u062B\u0646\u0627\u0626\u064A \u0644\u0644\u0645\u0634\u0631\u0641\u064A\u0646 (Admin MFA)" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { className: "text-[11px] text-slate-600", children: [
+              "\u0644\u0623\u063A\u0631\u0627\u0636 \u0627\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0627\u0644\u062A\u0637\u0648\u064A\u0631\u060C \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A \u0627\u0644\u0645\u0639\u062A\u0645\u062F \u0647\u0648: ",
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("strong", { className: "font-mono text-sm text-[#0E7C86]", children: "123456" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0623\u062F\u062E\u0644 \u0631\u0645\u0632 \u0627\u0644\u0640 6 \u0623\u0631\u0642\u0627\u0645:" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "input",
+              {
+                type: "text",
+                required: true,
+                maxLength: 6,
+                value: mfaCode,
+                onChange: (e) => setMfaCode(e.target.value),
+                placeholder: "123456",
+                className: "w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: () => setMfaCode("123456"),
+                className: "px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition",
+                children: "\u062A\u0639\u0628\u0626\u0629 \u0627\u0644\u0631\u0645\u0632 \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              "button",
+              {
+                type: "submit",
+                disabled: loading,
+                className: "flex-1 py-2.5 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-sm transition shadow-md disabled:opacity-50",
+                children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0623\u0643\u064A\u062F \u0648\u062F\u062E\u0648\u0644 \u0627\u0644\u0644\u0648\u062D\u0629 \u2190"
+              }
+            )
+          ] })
         ] })
       ] })
-    ] }) });
+    ] });
   };
   var DashboardContent = () => {
     const { isAuthenticated, isLoading } = useAuth();
-    const [currentView, setCurrentView] = (0, import_react11.useState)("dashboard");
+    const [currentView, setCurrentView] = (0, import_react12.useState)("dashboard");
+    const [showIntro, setShowIntro] = (0, import_react12.useState)(() => {
+      return sessionStorage.getItem("miftah_admin_intro_seen") !== "true";
+    });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "min-h-screen bg-slate-950 flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full" }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full" }) });
+    }
+    if (showIntro) {
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        BrandIntro,
+        {
+          onComplete: () => {
+            sessionStorage.setItem("miftah_admin_intro_seen", "true");
+            setShowIntro(false);
+          }
+        }
+      );
     }
     if (!isAuthenticated) {
-      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(LoginView, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(LoginView, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(AdminLayout, { currentView, onViewChange: setCurrentView, children: [
-      currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(OverviewDashboard, { onNavigate: setCurrentView }),
-      currentView === "queue" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(WorkshopQueue, {}),
-      currentView === "workshops" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(WorkshopQueue, { initialFilter: "ALL" }),
-      currentView === "modules" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ModuleEntitlementsView, {}),
-      currentView === "taxonomy" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TaxonomyManager, {}),
-      currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(BrandsManager, {})
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+      AdminLayout,
+      {
+        currentView,
+        onViewChange: setCurrentView,
+        onReplayIntro: () => setShowIntro(true),
+        children: [
+          currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(OverviewDashboard, { onNavigate: setCurrentView }),
+          currentView === "queue" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, {}),
+          currentView === "workshops" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(WorkshopQueue, { initialFilter: "ALL" }),
+          currentView === "modules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModuleEntitlementsView, {}),
+          currentView === "taxonomy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TaxonomyManager, {}),
+          currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BrandsManager, {})
+        ]
+      }
+    );
   };
   var App = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0644\u0648\u062D\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(DashboardContent, {}) }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0644\u0648\u062D\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DashboardContent, {}) }) }) });
   };
   var App_default = App;
 
   // apps/admin-web/src/index.tsx
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
   function mount() {
     const container = document.getElementById("root");
     if (container) {
       const root = import_client.default.createRoot(container);
       root.render(
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_react12.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(App_default, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_react13.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(App_default, {}) })
       );
     }
   }

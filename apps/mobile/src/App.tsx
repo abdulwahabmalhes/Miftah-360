@@ -3,6 +3,7 @@ import { I18nProvider, useI18n } from './context/i18n-context';
 import { AuthProvider, useAuth } from './context/auth-context';
 import { MobileContainer } from './components/common/mobile-container';
 import { BottomNavigation, MobileTab } from './components/common/bottom-navigation';
+import { BrandIntro } from './components/common/brand-intro';
 import { LoginScreen } from './screens/auth/login-screen';
 import { GarageScreen } from './screens/garage/garage-screen';
 import { AddVehicleScreen } from './screens/garage/add-vehicle-screen';
@@ -23,11 +24,31 @@ const MainContent: React.FC = () => {
   const [screen, setScreen] = useState<ScreenState>({ name: 'garage' });
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // Brand Intro State
+  const [showIntro, setShowIntro] = useState(() => {
+    return !sessionStorage.getItem('miftah_mobile_intro_seen');
+  });
+
+  const handleFinishIntro = () => {
+    sessionStorage.setItem('miftah_mobile_intro_seen', 'true');
+    setShowIntro(false);
+  };
+
+  if (showIntro) {
+    return (
+      <BrandIntro
+        onFinish={handleFinishIntro}
+        systemNameAr="تطبيق ملاك السيارات الذكي"
+        systemNameEn="Smart Automotive Platform"
+      />
+    );
+  }
+
   if (isLoading) {
     return (
       <MobileContainer>
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin inline-block w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full"></div>
+          <div className="animate-spin inline-block w-8 h-8 border-4 border-[#0E7C86] border-t-transparent rounded-full"></div>
         </div>
       </MobileContainer>
     );
@@ -35,8 +56,8 @@ const MainContent: React.FC = () => {
 
   if (!isAuthenticated) {
     return (
-      <MobileContainer>
-        <LoginScreen />
+      <MobileContainer onReplayIntro={() => setShowIntro(true)}>
+        <LoginScreen onReplayIntro={() => setShowIntro(true)} />
       </MobileContainer>
     );
   }
@@ -81,6 +102,7 @@ const MainContent: React.FC = () => {
       headerTitle={getHeaderTitle()}
       onBack={getBackButtonAction()}
       showLanguageToggle={screen.name === 'garage'}
+      onReplayIntro={() => setShowIntro(true)}
     >
       <div className="flex-1 flex flex-col overflow-y-auto">
         {screen.name === 'garage' && (
@@ -110,20 +132,28 @@ const MainContent: React.FC = () => {
         )}
 
         {screen.name === 'requests' && (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center space-y-3">
-            <div className="text-4xl">🛠️</div>
-            <h3 className="text-sm font-bold text-slate-800">
-              {language === 'ar' ? 'طلبات الصيانة وسوق مفتاح 360' : 'Service Requests & Marketplace'}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center space-y-4">
+            <div className="w-16 h-16 rounded-3xl bg-[#0E7C86]/10 flex items-center justify-center text-3xl border border-[#0E7C86]/20">
+              🚗
+            </div>
+            <h3 className="text-base font-black text-[#2B2E34]">
+              {language === 'ar' ? 'سوق خدمات مفتاح 360 الذكي' : 'Miftah 360 Smart Marketplace'}
             </h3>
-            <p className="text-xs text-slate-400 max-w-[260px]">
+            <p className="text-xs text-slate-500 max-w-[280px] leading-relaxed">
               {language === 'ar'
-                ? 'ميزة طلب عروض الأسعار وتصنيف الأعطال بالذكاء الاصطناعي والمطابقة ستتوفر في الموجة القادمة (Wave 3).'
-                : 'Service requests, AI classification, and workshop matching will be activated in Wave 3.'}
+                ? 'استكشف الورش المعتمدة، طلب عروض الأسعار الذرية، وحجز مواعيد الصيانة بنقرة واحدة.'
+                : 'Browse certified workshops, request atomic quotes, and book service appointments instantly.'}
             </p>
+            <button
+              onClick={() => setShowIntro(true)}
+              className="px-4 py-2 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] text-white text-xs font-bold rounded-xl shadow-md"
+            >
+              ✨ مشاهدة هوية البراند ومقدمة التطبيق
+            </button>
           </div>
         )}
 
-        {screen.name === 'profile' && <ProfileScreen />}
+        {screen.name === 'profile' && <ProfileScreen onReplayIntro={() => setShowIntro(true)} />}
       </div>
 
       <BottomNavigation currentTab={currentTab} onTabChange={handleTabChange} />
@@ -140,6 +170,4 @@ export const App: React.FC = () => {
     </I18nProvider>
   );
 };
-
 export default App;
-

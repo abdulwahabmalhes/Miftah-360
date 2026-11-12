@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useI18n } from '../../context/i18n-context';
 import { useAuth } from '../../context/auth-context';
 
-export const LoginScreen: React.FC = () => {
+interface LoginScreenProps {
+  onReplayIntro?: () => void;
+}
+
+export const LoginScreen: React.FC<LoginScreenProps> = ({ onReplayIntro }) => {
   const { t, language } = useI18n();
   const { loginEmail, registerEmail, sendPhoneOtp, verifyPhoneOtp, signInGoogle } = useAuth();
 
@@ -68,7 +72,6 @@ export const LoginScreen: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      // In mobile app context, Google Sign-In SDK produces an idToken
       await signInGoogle('mock_google_id_token_car_owner');
     } catch (err: any) {
       setError(err.message || t('common.error'));
@@ -78,21 +81,36 @@ export const LoginScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 p-6 flex flex-col justify-center">
+    <div className="flex-1 p-5 flex flex-col justify-center">
       {/* Brand Hero */}
-      <div className="text-center mb-6">
-        <div className="w-14 h-14 bg-gradient-to-tr from-amber-500 to-amber-400 rounded-2xl mx-auto flex items-center justify-center font-black text-slate-900 text-2xl shadow-lg mb-3">
-          360
+      <div className="text-center mb-5">
+        <div className="relative inline-block mb-3">
+          <div className="w-20 h-20 rounded-2xl mx-auto shadow-2xl p-1 bg-white border border-[#4DD0E1]/50 overflow-hidden flex items-center justify-center">
+            <img src="/brand/logo.jpg" alt="Miftah 360" className="w-full h-full object-contain" />
+          </div>
+          {onReplayIntro && (
+            <button
+              onClick={onReplayIntro}
+              type="button"
+              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#0E7C86] text-white flex items-center justify-center text-xs shadow-md hover:scale-110 transition"
+              title="مشاهدة المقدمة"
+            >
+              ▶
+            </button>
+          )}
         </div>
-        <h2 className="text-xl font-bold text-slate-900">{t('auth.welcome')}</h2>
-        <p className="text-xs text-slate-500 mt-1 max-w-[280px] mx-auto">
+        <h2 className="text-xl font-black text-[#2B2E34] tracking-tight">{t('auth.welcome')}</h2>
+        <p className="text-xs font-bold text-[#0E7C86] uppercase tracking-wider mt-0.5">
+          YOUR CAR. A SMARTER WAY.
+        </p>
+        <p className="text-[11px] font-semibold text-slate-500 mt-1 max-w-[280px] mx-auto">
           {t('auth.welcomeSubtitle')}
         </p>
       </div>
 
       {/* Demo Fast Login Shortcut */}
-      <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-2xl text-center space-y-1.5">
-        <p className="text-[11px] text-amber-950 font-bold">تجربة الدخول السريع كمالك سيارة:</p>
+      <div className="mb-4 p-3 bg-gradient-to-r from-[#0E7C86]/10 to-[#4DD0E1]/10 border border-[#0E7C86]/25 rounded-2xl text-center space-y-1.5">
+        <p className="text-[11px] text-[#0A4D56] font-bold">⚡ تجربة الدخول السريع كمالك سيارة معتمد:</p>
         <button
           type="button"
           onClick={() => {
@@ -102,14 +120,14 @@ export const LoginScreen: React.FC = () => {
             setAuthMethod('email');
             setError(null);
           }}
-          className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-xs transition shadow-sm"
+          className="w-full py-2 bg-[#0E7C86] hover:bg-[#0A4D56] text-white font-black rounded-xl text-xs transition shadow-md"
         >
-          ⚡ تعبئة حساب منصور المنصوري (3 مركبات)
+          🚗 تعبئة حساب منصور المنصوري (3 مركبات مسجلة)
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl text-center">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl text-center font-bold">
           {error}
         </div>
       )}
@@ -127,7 +145,7 @@ export const LoginScreen: React.FC = () => {
               }}
               className={`flex-1 py-1 text-xs font-bold text-center border-b-2 transition ${
                 tab === 'login'
-                  ? 'border-amber-500 text-amber-600'
+                  ? 'border-[#0E7C86] text-[#0E7C86]'
                   : 'border-transparent text-slate-400 hover:text-slate-600'
               }`}
             >
@@ -141,7 +159,7 @@ export const LoginScreen: React.FC = () => {
               }}
               className={`flex-1 py-1 text-xs font-bold text-center border-b-2 transition ${
                 tab === 'register'
-                  ? 'border-amber-500 text-amber-600'
+                  ? 'border-[#0E7C86] text-[#0E7C86]'
                   : 'border-transparent text-slate-400 hover:text-slate-600'
               }`}
             >
@@ -161,7 +179,7 @@ export const LoginScreen: React.FC = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="محمد الشامسي"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
             )}
@@ -176,7 +194,7 @@ export const LoginScreen: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -190,7 +208,7 @@ export const LoginScreen: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -205,7 +223,7 @@ export const LoginScreen: React.FC = () => {
                   placeholder="+971501234567"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
             )}
@@ -213,7 +231,7 @@ export const LoginScreen: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition shadow-sm disabled:opacity-50"
+              className="w-full py-2.5 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] hover:from-[#0E7C86] hover:to-[#4DD0E1] text-white font-bold rounded-xl text-xs transition shadow-md disabled:opacity-50"
             >
               {loading
                 ? t('common.loading')
@@ -252,7 +270,7 @@ export const LoginScreen: React.FC = () => {
                 disabled={loading}
                 className="w-full py-2 px-3 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition"
               >
-                <span className="font-bold text-red-500">G</span>
+                <span className="font-bold text-[#0E7C86]">G</span>
                 <span>{t('auth.googleBtn')}</span>
               </button>
             </div>
@@ -270,7 +288,7 @@ export const LoginScreen: React.FC = () => {
                 setOtpSent(false);
                 setError(null);
               }}
-              className="text-xs text-amber-600 font-semibold"
+              className="text-xs text-[#0E7C86] font-semibold"
             >
               {t('auth.back')}
             </button>
@@ -289,14 +307,14 @@ export const LoginScreen: React.FC = () => {
                   placeholder="+971501234567"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition shadow-sm disabled:opacity-50"
+                className="w-full py-2.5 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] hover:from-[#0E7C86] hover:to-[#4DD0E1] text-white font-bold rounded-xl text-xs transition shadow-md disabled:opacity-50"
               >
                 {loading ? t('common.loading') : t('auth.sendOtp')}
               </button>
@@ -314,14 +332,14 @@ export const LoginScreen: React.FC = () => {
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value)}
                   placeholder="123456"
-                  className="w-full text-center tracking-widest text-lg font-mono px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full text-center tracking-widest text-lg font-mono px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition shadow-sm disabled:opacity-50"
+                className="w-full py-2.5 bg-gradient-to-r from-[#0A4D56] to-[#0E7C86] hover:from-[#0E7C86] hover:to-[#4DD0E1] text-white font-bold rounded-xl text-xs transition shadow-md disabled:opacity-50"
               >
                 {loading ? t('common.loading') : t('auth.verifyOtp')}
               </button>

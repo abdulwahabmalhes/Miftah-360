@@ -1091,7 +1091,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState23(initialState) {
+          function useState24(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1103,7 +1103,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect14(create, deps) {
+          function useEffect15(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1886,7 +1886,7 @@
           exports.useContext = useContext3;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect14;
+          exports.useEffect = useEffect15;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState23;
+          exports.useState = useState24;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React25 = require_react();
+          var React26 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React26.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3999,7 +3999,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React25.Children.forEach(props.children, function(child) {
+                  React26.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -23595,7 +23595,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React25 = require_react();
+          var React26 = require_react();
           var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element");
           var REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment");
@@ -23621,7 +23621,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React26.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24471,11 +24471,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx25 = jsxWithValidationDynamic;
-          var jsxs22 = jsxWithValidationStatic;
+          var jsx26 = jsxWithValidationDynamic;
+          var jsxs23 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx25;
-          exports.jsxs = jsxs22;
+          exports.jsx = jsx26;
+          exports.jsxs = jsxs23;
         })();
       }
     }
@@ -24494,11 +24494,11 @@
   });
 
   // apps/workshop-web/src/index.tsx
-  var import_react24 = __toESM(require_react());
+  var import_react25 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // apps/workshop-web/src/App.tsx
-  var import_react23 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
 
   // apps/workshop-web/src/context/i18n-context.tsx
   var import_react = __toESM(require_react());
@@ -25442,6 +25442,7 @@
   var WorkshopLayout = ({
     currentView,
     onViewChange,
+    onReplayIntro,
     children
   }) => {
     const { t, language, setLanguage, direction } = useI18n();
@@ -25506,46 +25507,58 @@
       (m) => activeModules.length > 0 ? activeModules.includes(m.code) : true
     );
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: `min-h-screen bg-slate-100 flex flex-col ${direction === "rtl" ? "rtl" : "ltr"}`, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("header", { className: "bg-slate-900 text-white px-4 py-3 flex items-center justify-between shadow-md", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("header", { className: "bg-[#061E23] text-white px-4 py-3 flex items-center justify-between shadow-lg border-b border-[#0A4D56]", children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "button",
             {
               onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-              className: "md:hidden text-2xl px-2 py-1 bg-slate-800 rounded focus:outline-none",
+              className: "md:hidden text-2xl px-2 py-1 bg-[#0A4D56] rounded-xl focus:outline-none",
               children: "\u2630"
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950", children: "OS" }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "w-9 h-9 rounded-xl bg-white p-0.5 shadow-md border border-[#0E7C86]/40 flex items-center justify-center overflow-hidden shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("img", { src: "/brand/logo.jpg", alt: "Miftah 360", className: "w-full h-full object-contain" }) }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-sm font-bold tracking-tight", children: user ? (language === "ar" ? user.workshopNameAr || user.workshopNameEn : user.workshopNameEn || user.workshopNameAr) || t("app.title") : t("app.title") }),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800", children: t("app.primaryBranch") })
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-sm font-bold tracking-tight text-white", children: user ? (language === "ar" ? user.workshopNameAr || user.workshopNameEn : user.workshopNameEn || user.workshopNameAr) || t("app.title") : t("app.title") }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-2 py-0.5 rounded text-[10px] font-semibold bg-[#0A4D56] text-[#4DD0E1] border border-[#0E7C86]", children: t("app.primaryBranch") })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-slate-400 hidden sm:block", children: t("app.subtitle") })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-[#C9CDD3] hidden sm:block", children: language === "ar" ? "\u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" : "YOUR CAR. A SMARTER WAY." })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
+          onReplayIntro && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+            "button",
+            {
+              onClick: onReplayIntro,
+              title: "\u0639\u0631\u0636 \u0645\u0642\u062F\u0645\u0629 \u0627\u0644\u0628\u0631\u0627\u0646\u062F",
+              className: "px-2.5 py-1.5 text-xs font-bold rounded-xl bg-[#0A4D56]/70 hover:bg-[#0E7C86] text-[#4DD0E1] border border-[#0E7C86]/50 transition flex items-center gap-1.5",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "\u{1F3AC}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "hidden sm:inline", children: language === "ar" ? "\u0627\u0644\u0645\u0642\u062F\u0645\u0629" : "Intro" })
+              ]
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
             "button",
             {
               onClick: () => setLanguage(language === "ar" ? "en" : "ar"),
-              className: "px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 transition",
+              className: "px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#0A4D56] hover:bg-[#0E7C86] border border-[#0E7C86]/50 transition text-white",
               children: language === "ar" ? "English (LTR)" : "\u0627\u0644\u0639\u0631\u0628\u064A\u0629 (RTL)"
             }
           ),
           user && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "text-right hidden sm:block", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-sm font-medium", children: user.fullName }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-emerald-400 font-mono", children: t(`role.${user.role}`) })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-[#4DD0E1] font-mono", children: t(`role.${user.role}`) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "button",
               {
                 onClick: logout,
-                className: "px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded font-medium transition",
+                className: "px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition",
                 children: t("nav.logout")
               }
             )
@@ -25578,7 +25591,7 @@
                           onViewChange(item.id);
                           setMobileMenuOpen(false);
                         },
-                        className: `w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition text-right ${active ? "bg-emerald-700 text-white shadow-sm" : "text-slate-700 hover:bg-slate-100"}`,
+                        className: `w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition text-right ${active ? "bg-[#0E7C86] text-white shadow-sm" : "text-slate-700 hover:bg-[#F2F5F7]"}`,
                         children: [
                           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-base", children: item.icon }),
                           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: language === "ar" ? item.labelAr : item.labelEn })
@@ -25602,13 +25615,13 @@
                           onViewChange(item.id);
                           setMobileMenuOpen(false);
                         },
-                        className: `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition text-right ${active ? "bg-indigo-700 text-white shadow-sm" : "text-slate-700 hover:bg-indigo-50"}`,
+                        className: `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition text-right ${active ? "bg-[#0A4D56] text-[#4DD0E1] border border-[#0E7C86] shadow-sm" : "text-slate-700 hover:bg-[#F2F5F7]"}`,
                         children: [
                           /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2.5", children: [
                             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-base", children: item.icon }),
                             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: language === "ar" ? item.labelAr : item.labelEn })
                           ] }),
-                          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500" })
+                          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-[#4DD0E1]" })
                         ]
                       },
                       item.id
@@ -25616,9 +25629,13 @@
                   }) })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center mt-6", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[10px] text-slate-500 font-bold", children: "\u0645\u0646\u0638\u0648\u0645\u0629 \u0645\u0641\u062A\u0627\u062D 360 \u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A" }),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[9px] text-slate-400 font-mono mt-0.5", children: "Workshop OS V1.2" })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 bg-[#F2F5F7] rounded-2xl border border-slate-200 text-center mt-6", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center justify-center gap-1.5 mb-1", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("img", { src: "/brand/logo.jpg", alt: "360", className: "w-4 h-4 object-contain" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[10px] text-slate-800 font-black", children: "\u0645\u0646\u0638\u0648\u0645\u0629 \u0645\u0641\u062A\u0627\u062D 360 \u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[9px] text-[#0E7C86] font-bold", children: "YOUR CAR. A SMARTER WAY." }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-[8px] text-slate-400 font-mono mt-0.5", children: "Workshop OS v1.2" })
               ] })
             ]
           }
@@ -32961,19 +32978,128 @@ ${c.name} (${c.phone})
     }
   };
 
-  // apps/workshop-web/src/App.tsx
+  // apps/workshop-web/src/components/common/brand-intro.tsx
+  var import_react23 = __toESM(require_react());
   var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+  var BrandIntro = ({
+    onFinish,
+    autoCloseMs = 2800,
+    showSkip = true,
+    systemNameAr = "\u0646\u0638\u0627\u0645 \u0625\u062F\u0627\u0631\u0629 \u0648\u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634 \u0627\u0644\u0645\u062A\u0642\u062F\u0645",
+    systemNameEn = "Workshop Operations OS"
+  }) => {
+    const [progress, setProgress] = (0, import_react23.useState)(0);
+    const [fadingOut, setFadingOut] = (0, import_react23.useState)(false);
+    (0, import_react23.useEffect)(() => {
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const pct = Math.min(100, Math.floor(elapsed / autoCloseMs * 100));
+        setProgress(pct);
+        if (elapsed >= autoCloseMs) {
+          clearInterval(interval);
+          handleClose();
+        }
+      }, 40);
+      return () => clearInterval(interval);
+    }, [autoCloseMs]);
+    const handleClose = () => {
+      setFadingOut(true);
+      setTimeout(() => {
+        if (onFinish) onFinish();
+      }, 400);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
+      "div",
+      {
+        className: `fixed inset-0 z-[9999] flex flex-col items-center justify-between p-6 bg-[#061E23] text-white select-none transition-opacity duration-500 ${fadingOut ? "opacity-0 pointer-events-none" : "opacity-100"}`,
+        style: {
+          backgroundImage: `radial-gradient(circle at 50% 35%, rgba(14, 124, 134, 0.35) 0%, rgba(6, 30, 35, 0.95) 70%, #061E23 100%), url('/brand/splash-hero.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundBlendMode: "overlay"
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "w-full max-w-md flex items-center justify-between pt-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "w-2.5 h-2.5 rounded-full bg-[#4DD0E1] animate-ping" }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "text-[11px] font-bold text-[#4DD0E1] uppercase tracking-wider", children: "MIFTAH 360 WORKSHOP OS" })
+            ] }),
+            showSkip && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+              "button",
+              {
+                onClick: handleClose,
+                className: "px-3.5 py-1.5 rounded-full bg-slate-900/60 hover:bg-[#0E7C86] text-white/90 hover:text-white text-xs font-bold border border-slate-700/60 transition backdrop-blur-md shadow-lg",
+                children: "\u062A\u062E\u0637\u064A \u0648\u0645\u062A\u0627\u0628\u0639\u0629 \u2794"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-col items-center text-center max-w-sm px-4 space-y-6", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative group", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "absolute -inset-4 bg-gradient-to-r from-[#0A4D56] via-[#4DD0E1] to-[#0E7C86] rounded-3xl blur-xl opacity-60 group-hover:opacity-100 animate-pulse transition duration-1000" }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative w-32 h-32 rounded-3xl bg-slate-950/80 p-2 border border-[#4DD0E1]/50 shadow-2xl flex items-center justify-center overflow-hidden backdrop-blur-xl", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+                "img",
+                {
+                  src: "/brand/logo.jpg",
+                  alt: "Miftah 360 Logo",
+                  className: "w-full h-full object-contain rounded-2xl transform transition-transform duration-700 group-hover:scale-105"
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "flex items-center justify-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("h1", { className: "text-3xl font-black tracking-wider text-white", children: [
+                "MIFTAH ",
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "text-[#4DD0E1]", children: "360" })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xl font-black text-white/95", children: [
+                "\u0645\u0640\u0641\u0640\u062A\u0640\u0627\u062D ",
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "text-[#4DD0E1]", children: "360" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "pt-2 border-t border-white/10 space-y-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-xs font-bold tracking-[0.2em] text-[#4DD0E1] uppercase", children: "YOUR CAR. A SMARTER WAY." }),
+                /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-xs font-bold text-slate-300", children: "\u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-[11px] font-semibold text-slate-400 pt-1", children: [
+                systemNameAr,
+                " \u2022 ",
+                systemNameEn
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "w-full max-w-xs space-y-2.5 pb-4 text-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-full h-2 bg-slate-900/80 rounded-full overflow-hidden border border-slate-700/50 p-0.5 backdrop-blur-md", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+              "div",
+              {
+                className: "h-full bg-gradient-to-r from-[#0A4D56] via-[#0E7C86] to-[#4DD0E1] rounded-full transition-all duration-100 shadow-[0_0_12px_rgba(77,208,225,0.7)]",
+                style: { width: `${progress}%` }
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center justify-between text-[11px] text-slate-400 font-mono px-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: "\u062A\u0647\u064A\u0626\u0629 \u0628\u064A\u0626\u0629 \u0627\u0644\u0639\u0645\u0644..." }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: "text-[#4DD0E1] font-bold", children: [
+                progress,
+                "%"
+              ] })
+            ] })
+          ] })
+        ]
+      }
+    );
+  };
+
+  // apps/workshop-web/src/App.tsx
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
   var LoginView = () => {
     const { t, language } = useI18n();
     const { loginEmail, sendPhoneOtp, verifyPhoneOtp } = useAuth();
-    const [authMode, setAuthMode] = (0, import_react23.useState)("email");
-    const [email, setEmail] = (0, import_react23.useState)("");
-    const [password, setPassword] = (0, import_react23.useState)("");
-    const [phone, setPhone] = (0, import_react23.useState)("");
-    const [otpCode, setOtpCode] = (0, import_react23.useState)("");
-    const [otpSent, setOtpSent] = (0, import_react23.useState)(false);
-    const [loading, setLoading] = (0, import_react23.useState)(false);
-    const [error, setError] = (0, import_react23.useState)(null);
+    const [authMode, setAuthMode] = (0, import_react24.useState)("email");
+    const [email, setEmail] = (0, import_react24.useState)("");
+    const [password, setPassword] = (0, import_react24.useState)("");
+    const [phone, setPhone] = (0, import_react24.useState)("");
+    const [otpCode, setOtpCode] = (0, import_react24.useState)("");
+    const [otpSent, setOtpSent] = (0, import_react24.useState)(false);
+    const [loading, setLoading] = (0, import_react24.useState)(false);
+    const [error, setError] = (0, import_react24.useState)(null);
     const fillDemoOwner = () => {
       setEmail("owner@workshop.local");
       setPassword("ReviewPass123!");
@@ -33016,205 +33142,232 @@ ${c.name} (${c.phone})
         setLoading(false);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "min-h-screen bg-slate-950 flex items-center justify-center p-4", dir: "rtl", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "text-center mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-16 h-16 bg-gradient-to-tr from-emerald-600 to-emerald-400 rounded-2xl mx-auto flex items-center justify-center font-black text-slate-950 text-2xl shadow-lg mb-3", children: "OS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h2", { className: "text-xl font-black text-slate-900 tracking-tight", children: "\u0646\u0638\u0627\u0645 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634 (Workshop OS)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-xs text-slate-500 mt-1", children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u062F\u062E\u0648\u0644 \u0644\u0623\u0635\u062D\u0627\u0628 \u0627\u0644\u0648\u0631\u0634 \u0648\u0645\u0633\u062A\u0634\u0627\u0631\u064A \u0627\u0644\u062E\u062F\u0645\u0629 \u0648\u0627\u0644\u0641\u0646\u064A\u064A\u0646" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mb-5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-[11px] text-emerald-950 font-bold", children: "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 \u0627\u0644\u0633\u0631\u064A\u0639 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0627\u0644\u062A\u062C\u0631\u0628\u0629:" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "button",
-          {
-            type: "button",
-            onClick: fillDemoOwner,
-            className: "w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs transition shadow-sm",
-            children: "\u26A1 \u062A\u0639\u0628\u0626\u0629 \u062D\u0633\u0627\u0628 \u0645\u0627\u0644\u0643 \u0627\u0644\u0648\u0631\u0634\u0629 (\u0631\u0627\u0634\u062F \u0627\u0644\u0646\u0639\u064A\u0645\u064A - \u0643\u0631\u0627\u062C \u0645\u0641\u062A\u0627\u062D \u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A)"
-          }
-        )
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mb-4 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-2xl font-bold leading-relaxed", children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex border-b border-slate-200 mb-5", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "button",
-          {
-            type: "button",
-            onClick: () => {
-              setAuthMode("email");
-              setError(null);
-            },
-            className: `flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${authMode === "email" ? "border-emerald-600 text-emerald-700" : "border-transparent text-slate-400 hover:text-slate-700"}`,
-            children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0627\u0644\u0645\u0647\u0646\u064A"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "button",
-          {
-            type: "button",
-            onClick: () => {
-              setAuthMode("phone");
-              setError(null);
-            },
-            className: `flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${authMode === "phone" ? "border-emerald-600 text-emerald-700" : "border-transparent text-slate-400 hover:text-slate-700"}`,
-            children: "\u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 (SMS / OTP)"
-          }
-        )
-      ] }),
-      authMode === "email" ? /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleEmailLogin, className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0644\u0644\u0648\u0631\u0634\u0629 (Work Email)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              type: "email",
-              required: true,
-              value: email,
-              onChange: (e) => setEmail(e.target.value),
-              placeholder: "owner@workshop.local",
-              className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
-            }
-          )
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center p-4 relative overflow-hidden", dir: "rtl", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "absolute top-1/4 -right-20 w-96 h-96 bg-[#0E7C86]/20 rounded-full blur-3xl pointer-events-none" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "absolute bottom-1/4 -left-20 w-96 h-96 bg-[#4DD0E1]/15 rounded-full blur-3xl pointer-events-none" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-200/80 relative z-10", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "text-center mb-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "w-20 h-20 bg-[#F2F5F7] rounded-2xl mx-auto flex items-center justify-center p-2 shadow-sm border border-slate-200 mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("img", { src: "/brand/logo.jpg", alt: "Miftah 360", className: "w-full h-full object-contain" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h2", { className: "text-xl font-black text-slate-900 tracking-tight", children: "\u0646\u0638\u0627\u0645 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634 (Workshop OS)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-xs text-[#0E7C86] font-bold mt-1", children: "YOUR CAR. A SMARTER WAY. | \u0633\u064A\u0627\u0631\u062A\u0643 . \u0628\u0637\u0631\u064A\u0642\u0629 \u0623\u0630\u0643\u0649" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-[11px] text-slate-400 mt-0.5", children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u062F\u062E\u0648\u0644 \u0644\u0623\u0635\u062D\u0627\u0628 \u0627\u0644\u0648\u0631\u0634 \u0648\u0645\u0633\u062A\u0634\u0627\u0631\u064A \u0627\u0644\u062E\u062F\u0645\u0629 \u0648\u0627\u0644\u0641\u0646\u064A\u064A\u0646" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 (Password)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              type: "password",
-              required: true,
-              value: password,
-              onChange: (e) => setPassword(e.target.value),
-              placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
-              className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "button",
-          {
-            type: "submit",
-            disabled: loading,
-            className: "w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50",
-            children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0648\u0631\u0634\u0629 \u2190"
-          }
-        )
-      ] }) : !otpSent ? /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleSendOtp, className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0631\u0642\u0645 \u0647\u0627\u062A\u0641 \u0627\u0644\u0648\u0631\u0634\u0629 \u0627\u0644\u0645\u0633\u062C\u0644" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              type: "tel",
-              required: true,
-              dir: "ltr",
-              placeholder: "+971501112233",
-              value: phone,
-              onChange: (e) => setPhone(e.target.value),
-              className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 font-mono text-center"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "button",
-          {
-            type: "submit",
-            disabled: loading,
-            className: "w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50",
-            children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u0625\u0631\u0633\u0627\u0644..." : "\u0625\u0631\u0633\u0627\u0644 \u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 (OTP) \u2190"
-          }
-        )
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleVerifyOtp, className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 text-xs", children: [
-          "\u062A\u0645 \u0625\u0631\u0633\u0627\u0644 \u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 \u0625\u0644\u0649 \u0627\u0644\u0631\u0642\u0645 ",
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { className: "font-mono", children: phone })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0623\u062F\u062E\u0644 \u0631\u0645\u0632 \u0627\u0644\u0640 6 \u0623\u0631\u0642\u0627\u0645 (\u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A 123456):" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "input",
-            {
-              type: "text",
-              required: true,
-              maxLength: 6,
-              value: otpCode,
-              onChange: (e) => setOtpCode(e.target.value),
-              placeholder: "123456",
-              className: "w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "mb-5 p-3.5 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-2xl text-center space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-[11px] text-slate-800 font-bold", children: "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 \u0627\u0644\u0633\u0631\u064A\u0639 \u0644\u0644\u0645\u0631\u0627\u062C\u0639\u0629 \u0648\u0627\u0644\u062A\u062C\u0631\u0628\u0629:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             "button",
             {
               type: "button",
-              onClick: () => setOtpSent(false),
-              className: "px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100",
-              children: "\u0631\u062C\u0648\u0639"
+              onClick: fillDemoOwner,
+              className: "w-full py-2.5 px-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-xs transition shadow-md",
+              children: "\u26A1 \u062A\u0639\u0628\u0626\u0629 \u062D\u0633\u0627\u0628 \u0645\u0627\u0644\u0643 \u0627\u0644\u0648\u0631\u0634\u0629 (\u0631\u0627\u0634\u062F \u0627\u0644\u0646\u0639\u064A\u0645\u064A - \u0643\u0631\u0627\u062C \u0645\u0641\u062A\u0627\u062D \u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A)"
+            }
+          )
+        ] }),
+        error && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "mb-4 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-2xl font-bold leading-relaxed", children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex border-b border-slate-200 mb-5", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: () => {
+                setAuthMode("email");
+                setError(null);
+              },
+              className: `flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${authMode === "email" ? "border-[#0E7C86] text-[#0E7C86]" : "border-transparent text-slate-400 hover:text-slate-700"}`,
+              children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0627\u0644\u0645\u0647\u0646\u064A"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: () => {
+                setAuthMode("phone");
+                setError(null);
+              },
+              className: `flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${authMode === "phone" ? "border-[#0E7C86] text-[#0E7C86]" : "border-transparent text-slate-400 hover:text-slate-700"}`,
+              children: "\u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 (SMS / OTP)"
+            }
+          )
+        ] }),
+        authMode === "email" ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("form", { onSubmit: handleEmailLogin, className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A \u0644\u0644\u0648\u0631\u0634\u0629 (Work Email)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "input",
+              {
+                type: "email",
+                required: true,
+                value: email,
+                onChange: (e) => setEmail(e.target.value),
+                placeholder: "owner@workshop.local",
+                className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 (Password)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "input",
+              {
+                type: "password",
+                required: true,
+                value: password,
+                onChange: (e) => setPassword(e.target.value),
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+                className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             "button",
             {
               type: "submit",
               disabled: loading,
-              className: "flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-sm transition disabled:opacity-50",
-              children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0623\u0643\u064A\u062F \u0648\u062F\u062E\u0648\u0644 \u2190"
+              className: "w-full py-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50",
+              children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0648\u0631\u0634\u0629 \u2190"
             }
           )
+        ] }) : !otpSent ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("form", { onSubmit: handleSendOtp, className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0631\u0642\u0645 \u0647\u0627\u062A\u0641 \u0627\u0644\u0648\u0631\u0634\u0629 \u0627\u0644\u0645\u0633\u062C\u0644" }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "input",
+              {
+                type: "tel",
+                required: true,
+                dir: "ltr",
+                placeholder: "+971501112233",
+                value: phone,
+                onChange: (e) => setPhone(e.target.value),
+                className: "w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 font-mono text-center"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+            "button",
+            {
+              type: "submit",
+              disabled: loading,
+              className: "w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50",
+              children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u0625\u0631\u0633\u0627\u0644..." : "\u0625\u0631\u0633\u0627\u0644 \u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 (OTP) \u2190"
+            }
+          )
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("form", { onSubmit: handleVerifyOtp, className: "space-y-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "p-3 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-xl text-slate-800 text-xs", children: [
+            "\u062A\u0645 \u0625\u0631\u0633\u0627\u0644 \u0631\u0645\u0632 \u0627\u0644\u062A\u062D\u0642\u0642 \u0625\u0644\u0649 \u0627\u0644\u0631\u0642\u0645 ",
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("strong", { className: "font-mono text-[#0E7C86]", children: phone })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("label", { className: "block text-xs font-bold text-slate-700 mb-1", children: "\u0623\u062F\u062E\u0644 \u0631\u0645\u0632 \u0627\u0644\u0640 6 \u0623\u0631\u0642\u0627\u0645 (\u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A 123456):" }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "input",
+              {
+                type: "text",
+                required: true,
+                maxLength: 6,
+                value: otpCode,
+                onChange: (e) => setOtpCode(e.target.value),
+                placeholder: "123456",
+                className: "w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: () => setOtpSent(false),
+                className: "px-4 py-2 border border-slate-300 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100",
+                children: "\u0631\u062C\u0648\u0639"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+              "button",
+              {
+                type: "submit",
+                disabled: loading,
+                className: "flex-1 py-2.5 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50",
+                children: loading ? "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0642\u0642..." : "\u062A\u0623\u0643\u064A\u062F \u0648\u062F\u062E\u0648\u0644 \u2190"
+              }
+            )
+          ] })
         ] })
       ] })
-    ] }) });
+    ] });
   };
   var DashboardContent = () => {
     const { isAuthenticated, isLoading } = useAuth();
-    const [currentView, setCurrentView] = (0, import_react23.useState)("dashboard");
+    const [currentView, setCurrentView] = (0, import_react24.useState)("dashboard");
+    const [showIntro, setShowIntro] = (0, import_react24.useState)(() => {
+      return sessionStorage.getItem("miftah_workshop_intro_seen") !== "true";
+    });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "min-h-screen bg-slate-950 flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full" }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "min-h-screen bg-[#061E23] flex items-center justify-center text-white", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full" }) });
+    }
+    if (showIntro) {
+      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        BrandIntro,
+        {
+          onComplete: () => {
+            sessionStorage.setItem("miftah_workshop_intro_seen", "true");
+            setShowIntro(false);
+          }
+        }
+      );
     }
     if (!isAuthenticated) {
-      return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(LoginView, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(LoginView, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(WorkshopLayout, { currentView, onViewChange: setCurrentView, children: [
-      currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(WorkshopHomeDashboard, { onNavigate: setCurrentView }),
-      currentView === "requests" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        ServiceRequestsManager,
-        {
-          onNavigateToBooking: () => setCurrentView("bookings")
-        }
-      ),
-      currentView === "bookings" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(BookingsManager, {}),
-      currentView === "profile" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ProfileEditor, { initialTab: "info" }),
-      currentView === "hours" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ProfileEditor, { initialTab: "hours" }),
-      currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ProfileEditor, { initialTab: "brands" }),
-      currentView === "services" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ProfileEditor, { initialTab: "services" }),
-      currentView === "staff" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(StaffManager, {}),
-      currentView === "customers" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(CustomersList, {}),
-      currentView === "inventory" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InventoryManager, {}),
-      currentView === "warranty" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(WarrantyManager, {}),
-      currentView === "suppliers" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(SuppliersManager, {}),
-      currentView === "pos" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(PosCheckout, {}),
-      currentView === "crm" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(CrmManager, {}),
-      currentView === "tasks" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(TasksManager, {}),
-      currentView === "contracts" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ContractsManager, {}),
-      currentView === "hr" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(HrManager, {}),
-      currentView === "reports" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ReportsManager, {})
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+      WorkshopLayout,
+      {
+        currentView,
+        onViewChange: setCurrentView,
+        onReplayIntro: () => setShowIntro(true),
+        children: [
+          currentView === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WorkshopHomeDashboard, { onNavigate: setCurrentView }),
+          currentView === "requests" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+            ServiceRequestsManager,
+            {
+              onNavigateToBooking: () => setCurrentView("bookings")
+            }
+          ),
+          currentView === "bookings" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(BookingsManager, {}),
+          currentView === "profile" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "info" }),
+          currentView === "hours" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "hours" }),
+          currentView === "brands" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "brands" }),
+          currentView === "services" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProfileEditor, { initialTab: "services" }),
+          currentView === "staff" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(StaffManager, {}),
+          currentView === "customers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CustomersList, {}),
+          currentView === "inventory" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(InventoryManager, {}),
+          currentView === "warranty" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WarrantyManager, {}),
+          currentView === "suppliers" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SuppliersManager, {}),
+          currentView === "pos" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PosCheckout, {}),
+          currentView === "crm" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CrmManager, {}),
+          currentView === "tasks" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TasksManager, {}),
+          currentView === "contracts" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ContractsManager, {}),
+          currentView === "hr" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(HrManager, {}),
+          currentView === "reports" && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ReportsManager, {})
+        ]
+      }
+    );
   };
   var App = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0646\u0638\u0627\u0645 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DashboardContent, {}) }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ErrorBoundary, { fallbackTitle: "\u062D\u062F\u062B \u062A\u0646\u0628\u064A\u0647 \u0641\u064A \u0646\u0638\u0627\u0645 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(I18nProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AuthProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DashboardContent, {}) }) }) });
   };
   var App_default = App;
 
   // apps/workshop-web/src/index.tsx
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   function mount() {
     const container = document.getElementById("root");
     if (container) {
       const root = import_client.default.createRoot(container);
       root.render(
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_react24.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(App_default, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_react25.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(App_default, {}) })
       );
     }
   }

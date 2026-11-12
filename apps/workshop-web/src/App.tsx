@@ -21,6 +21,7 @@ import { ContractsManager } from './components/contracts/contracts-manager';
 import { HrManager } from './components/hr/hr-manager';
 import { ReportsManager } from './components/reports/reports-manager';
 import { ErrorBoundary } from './components/common/error-boundary';
+import { BrandIntro } from './components/common/brand-intro';
 
 const LoginView: React.FC = () => {
   const { t, language } = useI18n();
@@ -86,23 +87,28 @@ const LoginView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4" dir="rtl">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100">
+    <div className="min-h-screen bg-[#061E23] flex items-center justify-center p-4 relative overflow-hidden" dir="rtl">
+      {/* Background ambient glow */}
+      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-[#0E7C86]/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-[#4DD0E1]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-200/80 relative z-10">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-emerald-600 to-emerald-400 rounded-2xl mx-auto flex items-center justify-center font-black text-slate-950 text-2xl shadow-lg mb-3">
-            OS
+          <div className="w-20 h-20 bg-[#F2F5F7] rounded-2xl mx-auto flex items-center justify-center p-2 shadow-sm border border-slate-200 mb-3">
+            <img src="/brand/logo.jpg" alt="Miftah 360" className="w-full h-full object-contain" />
           </div>
           <h2 className="text-xl font-black text-slate-900 tracking-tight">نظام تشغيل الورش (Workshop OS)</h2>
-          <p className="text-xs text-slate-500 mt-1">بوابة الدخول لأصحاب الورش ومستشاري الخدمة والفنيين</p>
+          <p className="text-xs text-[#0E7C86] font-bold mt-1">YOUR CAR. A SMARTER WAY. | سيارتك . بطريقة أذكى</p>
+          <p className="text-[11px] text-slate-400 mt-0.5">بوابة الدخول لأصحاب الورش ومستشاري الخدمة والفنيين</p>
         </div>
 
         {/* Demo Fast Login Shortcut */}
-        <div className="mb-5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-2">
-          <p className="text-[11px] text-emerald-950 font-bold">تسجيل الدخول السريع للمراجعة والتجربة:</p>
+        <div className="mb-5 p-3.5 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-2xl text-center space-y-2">
+          <p className="text-[11px] text-slate-800 font-bold">تسجيل الدخول السريع للمراجعة والتجربة:</p>
           <button
             type="button"
             onClick={fillDemoOwner}
-            className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs transition shadow-sm"
+            className="w-full py-2.5 px-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-black rounded-xl text-xs transition shadow-md"
           >
             ⚡ تعبئة حساب مالك الورشة (راشد النعيمي - كراج مفتاح الإمارات)
           </button>
@@ -124,7 +130,7 @@ const LoginView: React.FC = () => {
             }}
             className={`flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${
               authMode === 'email'
-                ? 'border-emerald-600 text-emerald-700'
+                ? 'border-[#0E7C86] text-[#0E7C86]'
                 : 'border-transparent text-slate-400 hover:text-slate-700'
             }`}
           >
@@ -138,7 +144,7 @@ const LoginView: React.FC = () => {
             }}
             className={`flex-1 py-2.5 text-xs font-bold text-center border-b-2 transition ${
               authMode === 'phone'
-                ? 'border-emerald-600 text-emerald-700'
+                ? 'border-[#0E7C86] text-[#0E7C86]'
                 : 'border-transparent text-slate-400 hover:text-slate-700'
             }`}
           >
@@ -158,7 +164,7 @@ const LoginView: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="owner@workshop.local"
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -172,14 +178,14 @@ const LoginView: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50"
+              className="w-full py-3 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50"
             >
               {loading ? 'جاري التحقق...' : 'تسجيل الدخول إلى الورشة ←'}
             </button>
@@ -211,8 +217,8 @@ const LoginView: React.FC = () => {
           </form>
         ) : (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
-            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 text-xs">
-              تم إرسال رمز التحقق إلى الرقم <strong className="font-mono">{phone}</strong>
+            <div className="p-3 bg-[#F2F5F7] border border-[#0E7C86]/30 rounded-xl text-slate-800 text-xs">
+              تم إرسال رمز التحقق إلى الرقم <strong className="font-mono text-[#0E7C86]">{phone}</strong>
             </div>
 
             <div>
@@ -226,7 +232,7 @@ const LoginView: React.FC = () => {
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value)}
                 placeholder="123456"
-                className="w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                className="w-full text-center tracking-widest text-xl font-mono py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0E7C86]"
               />
             </div>
 
@@ -241,7 +247,7 @@ const LoginView: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-sm transition disabled:opacity-50"
+                className="flex-1 py-2.5 bg-gradient-to-r from-[#0E7C86] to-[#0A4D56] hover:from-[#0A4D56] hover:to-[#061E23] text-white font-bold rounded-xl text-sm shadow-md transition disabled:opacity-50"
               >
                 {loading ? 'جاري التحقق...' : 'تأكيد ودخول ←'}
               </button>
@@ -256,12 +262,26 @@ const LoginView: React.FC = () => {
 const DashboardContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
   const [currentView, setCurrentView] = useState<WorkshopView>('dashboard');
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    return sessionStorage.getItem('miftah_workshop_intro_seen') !== 'true';
+  });
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
-        <div className="animate-spin inline-block w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen bg-[#061E23] flex items-center justify-center text-white">
+        <div className="animate-spin inline-block w-10 h-10 border-4 border-[#0E7C86] border-t-transparent rounded-full"></div>
       </div>
+    );
+  }
+
+  if (showIntro) {
+    return (
+      <BrandIntro
+        onComplete={() => {
+          sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
+          setShowIntro(false);
+        }}
+      />
     );
   }
 
@@ -270,7 +290,11 @@ const DashboardContent: React.FC = () => {
   }
 
   return (
-    <WorkshopLayout currentView={currentView} onViewChange={setCurrentView}>
+    <WorkshopLayout
+      currentView={currentView}
+      onViewChange={setCurrentView}
+      onReplayIntro={() => setShowIntro(true)}
+    >
       {currentView === 'dashboard' && <WorkshopHomeDashboard onNavigate={setCurrentView} />}
       {currentView === 'requests' && (
         <ServiceRequestsManager

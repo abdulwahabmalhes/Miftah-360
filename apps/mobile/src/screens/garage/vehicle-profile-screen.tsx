@@ -4,6 +4,26 @@ import { mobileApi } from '../../api/mobile-client';
 import { VehicleResponseDto, VehicleStatus } from '@miftah/contracts';
 import { UaePlateBadge } from '../../components/common/uae-plate';
 
+const VEHICLE_PHOTOS: Record<string, string> = {
+  'nissan': 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80',
+  'patrol': 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80',
+  'toyota': 'https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=800&q=80',
+  'land cruiser': 'https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=800&q=80',
+  'lexus': 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=800&q=80',
+  'porsche': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+  'mercedes': 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80',
+  'bmw': 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80',
+  'default': 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80',
+};
+
+const getVehiclePhoto = (brandName?: string, modelName?: string): string => {
+  const query = `${brandName || ''} ${modelName || ''}`.toLowerCase();
+  for (const [key, url] of Object.entries(VEHICLE_PHOTOS)) {
+    if (key !== 'default' && query.includes(key)) return url;
+  }
+  return VEHICLE_PHOTOS.default;
+};
+
 interface VehicleProfileScreenProps {
   vehicle: VehicleResponseDto;
   onBack: () => void;
@@ -87,7 +107,7 @@ export const VehicleProfileScreen: React.FC<VehicleProfileScreenProps> = ({
       <div className="flex items-center justify-between">
         <button
           onClick={onBack}
-          className="text-xs font-semibold text-amber-600 hover:text-amber-700 flex items-center gap-1"
+          className="text-xs font-bold text-[#0E7C86] hover:text-[#0A4D56] flex items-center gap-1"
         >
           <span>←</span>
           <span>{t('garage.title')}</span>
@@ -110,71 +130,82 @@ export const VehicleProfileScreen: React.FC<VehicleProfileScreenProps> = ({
         </div>
       )}
 
-      {/* Hero Vehicle Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-xl font-black text-slate-900 leading-tight">
+      {/* Hero Vehicle Card with Photo */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden space-y-0">
+        <div className="h-44 w-full relative overflow-hidden bg-slate-900">
+          <img
+            src={getVehiclePhoto(vehicle.brand?.name, vehicle.model?.name)}
+            alt={`${vehicle.brand?.name || ''} ${vehicle.model?.name || ''}`}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
+
+          <div className="absolute top-3 right-3 shadow-lg">
+            <UaePlateBadge
+              emirate={vehicle.emirate}
+              plateCode={vehicle.plateCode || ''}
+              plateNumber={vehicle.plateNumber || ''}
+            />
+          </div>
+
+          <div className="absolute bottom-3 right-4 left-4 text-white">
+            <h2 className="text-xl font-black leading-tight drop-shadow-md">
               {vehicle.brand?.name || 'Vehicle'} {vehicle.model?.name || ''}
             </h2>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
+            <p className="text-xs text-[#4DD0E1] font-semibold drop-shadow">
               {vehicle.year} {vehicle.trim ? `• ${vehicle.trim}` : ''}
             </p>
           </div>
-
-          <UaePlateBadge
-            emirate={vehicle.emirate}
-            plateCode={vehicle.plateCode || ''}
-            plateNumber={vehicle.plateNumber || ''}
-          />
         </div>
 
-        {/* Mileage with in-place edit */}
-        <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-          <div>
-            <span className="text-[11px] text-slate-400 block">{t('garage.mileage')}</span>
-            {!editingMileage ? (
-              <span className="text-base font-bold font-mono text-slate-900">
-                {vehicle.mileage.toLocaleString()} km
-              </span>
-            ) : (
-              <div className="flex items-center gap-2 mt-1">
-                <input
-                  type="number"
-                  min={0}
-                  step={100}
-                  value={newMileage}
-                  onChange={(e) => setNewMileage(Number(e.target.value))}
-                  className="w-28 px-2 py-1 border border-slate-300 rounded text-xs font-mono"
-                />
-                <button
-                  onClick={handleSaveMileage}
-                  disabled={actionLoading}
-                  className="px-2 py-1 bg-amber-500 rounded text-[11px] font-bold text-slate-950"
-                >
-                  ✓
-                </button>
-                <button
-                  onClick={() => setEditingMileage(false)}
-                  className="px-2 py-1 bg-slate-100 rounded text-[11px] text-slate-600"
-                >
-                  ✕
-                </button>
-              </div>
+        <div className="p-4 space-y-3">
+          {/* Mileage with in-place edit */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-[11px] text-slate-400 block">{t('garage.mileage')}</span>
+              {!editingMileage ? (
+                <span className="text-lg font-bold font-mono text-slate-900">
+                  {vehicle.mileage.toLocaleString()} km
+                </span>
+              ) : (
+                <div className="flex items-center gap-2 mt-1">
+                  <input
+                    type="number"
+                    min={0}
+                    step={100}
+                    value={newMileage}
+                    onChange={(e) => setNewMileage(Number(e.target.value))}
+                    className="w-28 px-2 py-1 border border-slate-300 rounded text-xs font-mono"
+                  />
+                  <button
+                    onClick={handleSaveMileage}
+                    disabled={actionLoading}
+                    className="px-2 py-1 bg-[#0E7C86] rounded text-[11px] font-bold text-white shadow-xs"
+                  >
+                    ✓
+                  </button>
+                  <button
+                    onClick={() => setEditingMileage(false)}
+                    className="px-2 py-1 bg-slate-100 rounded text-[11px] text-slate-600"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {!editingMileage && (
+              <button
+                onClick={() => {
+                  setNewMileage(vehicle.mileage);
+                  setEditingMileage(true);
+                }}
+                className="text-xs text-[#0E7C86] font-bold hover:underline"
+              >
+                {language === 'ar' ? 'تحديث العداد' : 'Update'}
+              </button>
             )}
           </div>
-
-          {!editingMileage && (
-            <button
-              onClick={() => {
-                setNewMileage(vehicle.mileage);
-                setEditingMileage(true);
-              }}
-              className="text-xs text-amber-600 font-semibold hover:underline"
-            >
-              {language === 'ar' ? 'تحديث العداد' : 'Update'}
-            </button>
-          )}
         </div>
       </div>
 
@@ -239,7 +270,7 @@ export const VehicleProfileScreen: React.FC<VehicleProfileScreenProps> = ({
 
         {loadingHistory ? (
           <div className="p-6 text-center text-slate-400 text-xs">
-            <div className="animate-spin inline-block w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full mb-1"></div>
+            <div className="animate-spin inline-block w-4 h-4 border-2 border-[#0E7C86] border-t-transparent rounded-full mb-1"></div>
             <p>{t('common.loading')}</p>
           </div>
         ) : history.length === 0 ? (
