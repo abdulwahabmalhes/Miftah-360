@@ -32983,6 +32983,7 @@ ${c.name} (${c.phone})
   var import_jsx_runtime23 = __toESM(require_jsx_runtime());
   var BrandIntro = ({
     onFinish,
+    onComplete,
     autoCloseMs = 2800,
     showSkip = true,
     systemNameAr = "\u0646\u0638\u0627\u0645 \u0625\u062F\u0627\u0631\u0629 \u0648\u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0648\u0631\u0634 \u0627\u0644\u0645\u062A\u0642\u062F\u0645",
@@ -33007,6 +33008,7 @@ ${c.name} (${c.phone})
       setFadingOut(true);
       setTimeout(() => {
         if (onFinish) onFinish();
+        if (onComplete) onComplete();
       }, 400);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
@@ -33311,6 +33313,10 @@ ${c.name} (${c.phone})
       return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         BrandIntro,
         {
+          onFinish: () => {
+            sessionStorage.setItem("miftah_workshop_intro_seen", "true");
+            setShowIntro(false);
+          },
           onComplete: () => {
             sessionStorage.setItem("miftah_workshop_intro_seen", "true");
             setShowIntro(false);

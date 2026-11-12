@@ -27182,6 +27182,7 @@
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var BrandIntro = ({
     onFinish,
+    onComplete,
     autoCloseMs = 2800,
     showSkip = true,
     systemNameAr = "\u0645\u0646\u0635\u0629 \u0627\u0644\u0625\u062F\u0627\u0631\u0629 \u0648\u0627\u0644\u0631\u0642\u0627\u0628\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064A\u0629 \u0644\u0644\u0645\u0646\u0638\u0648\u0645\u0629",
@@ -27206,6 +27207,7 @@
       setFadingOut(true);
       setTimeout(() => {
         if (onFinish) onFinish();
+        if (onComplete) onComplete();
       }, 400);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
@@ -27449,6 +27451,10 @@
       return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
         BrandIntro,
         {
+          onFinish: () => {
+            sessionStorage.setItem("miftah_admin_intro_seen", "true");
+            setShowIntro(false);
+          },
           onComplete: () => {
             sessionStorage.setItem("miftah_admin_intro_seen", "true");
             setShowIntro(false);

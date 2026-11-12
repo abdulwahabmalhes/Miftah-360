@@ -25069,6 +25069,7 @@
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var BrandIntro = ({
     onFinish,
+    onComplete,
     autoCloseMs = 2800,
     showSkip = true,
     systemNameAr = "\u062A\u0637\u0628\u064A\u0642 \u0645\u0644\u0627\u0643 \u0627\u0644\u0633\u064A\u0627\u0631\u0627\u062A \u0627\u0644\u0630\u0643\u064A",
@@ -25093,6 +25094,7 @@
       setFadingOut(true);
       setTimeout(() => {
         if (onFinish) onFinish();
+        if (onComplete) onComplete();
       }, 400);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(

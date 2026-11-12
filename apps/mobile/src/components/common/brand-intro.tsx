@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 interface BrandIntroProps {
   onFinish?: () => void;
+  onComplete?: () => void;
   autoCloseMs?: number;
   showSkip?: boolean;
   systemNameAr?: string;
@@ -10,6 +11,7 @@ interface BrandIntroProps {
 
 export const BrandIntro: React.FC<BrandIntroProps> = ({
   onFinish,
+  onComplete,
   autoCloseMs = 2800,
   showSkip = true,
   systemNameAr = 'تطبيق ملاك السيارات الذكي',
@@ -38,6 +40,7 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
     setFadingOut(true);
     setTimeout(() => {
       if (onFinish) onFinish();
+      if (onComplete) onComplete();
     }, 400);
   };
 
@@ -128,3 +131,4 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
     </div>
   );
 };
+

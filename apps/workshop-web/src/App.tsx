@@ -277,6 +277,10 @@ const DashboardContent: React.FC = () => {
   if (showIntro) {
     return (
       <BrandIntro
+        onFinish={() => {
+          sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
+          setShowIntro(false);
+        }}
         onComplete={() => {
           sessionStorage.setItem('miftah_workshop_intro_seen', 'true');
           setShowIntro(false);
